@@ -1,0 +1,54 @@
+Code tree: 
+- (sub)
+  1
+  5
+Code size: 19 bytes.
+Code execution:
+-4
+
+Code tree: 
+- (sub)
+  - (sub)
+    100
+    15
+  20
+Code size: 30 bytes.
+Code execution:
+65
+
+Code tree: 
++ (add)
+  - (sub)
+    + (add)
+      1
+      2
+    3
+  4
+Code size: 41 bytes.
+Code execution:
+4
+
+Code tree: 
+- (sub)
+  + (add)
+    1
+    2
+  + (add)
+    3
+    4
+Code size: 41 bytes.
+Code execution:
+-4
+
+Code tree: 
++ (add)
+  + (add)
+    1
+    - (sub)
+      2
+      3
+  4
+Code size: 41 bytes.
+Code execution:
+4
+

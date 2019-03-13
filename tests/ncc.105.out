@@ -1,0 +1,64 @@
+Code tree: 
+- (neg)
+  6
+Code size: 12 bytes.
+Code execution:
+-6
+
+Code tree: 
++ (pos)
+  5
+Code size: 8 bytes.
+Code execution:
+5
+
+Code tree: 
++ (add)
+  - (neg)
+    7
+  3
+Code size: 23 bytes.
+Code execution:
+-4
+
+Code tree: 
++ (add)
+  - (neg)
+    7
+  + (pos)
+    3
+Code size: 23 bytes.
+Code execution:
+-4
+
+Code tree: 
++ (add)
+  - (neg)
+    7
+  - (neg)
+    3
+Code size: 27 bytes.
+Code execution:
+-10
+
+Code tree: 
+- (sub)
+  - (neg)
+    7
+  - (neg)
+    3
+Code size: 27 bytes.
+Code execution:
+-4
+
+Code tree: 
++ (add)
+  45
+  - (neg)
+    + (add)
+      6
+      4
+Code size: 34 bytes.
+Code execution:
+35
+

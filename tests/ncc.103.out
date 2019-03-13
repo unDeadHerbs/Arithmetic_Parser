@@ -1,0 +1,66 @@
+Code tree: 
++ (add)
+  5
+  7
+Code size: 19 bytes.
+Code execution:
+12
+
+Code tree: 
++ (add)
+  8
+  3
+Code size: 19 bytes.
+Code execution:
+11
+
+Code tree: 
++ (add)
+  6
+  4
+Code size: 19 bytes.
+Code execution:
+10
+
+Code tree: 
++ (add)
+  5
+  9
+Code size: 19 bytes.
+Code execution:
+14
+
+Code tree: 
++ (add)
+  + (add)
+    1
+    2
+  3
+Code size: 30 bytes.
+Code execution:
+6
+
+Code tree: 
++ (add)
+  1
+  + (add)
+    2
+    3
+Code size: 30 bytes.
+Code execution:
+6
+
+Code tree: 
++ (add)
+  4
+  5
+Code size: 19 bytes.
+Code execution:
+9
+
+Unexpected symbol at 14:6
+Code tree: 
+Code size: 1 bytes.
+Code execution:
+-1031577600
+

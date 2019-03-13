@@ -1,5 +1,5 @@
 CXX         = clang++
-LIBARYFLAGS = -lncurses
+LIBARYFLAGS = 
 CXXFLAGS    = -std=c++1z -Wall -Wextra -Wparentheses -g $(SANS)
 
 .PHONY:all seg msan
