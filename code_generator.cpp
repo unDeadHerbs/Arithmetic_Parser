@@ -54,6 +54,7 @@ program generateI(Code_Tree ct) {
 		auto p2 = generateI(ct.sub_tokens[1]);
 		if (ct.t.id == '*') return p2 + PUSH_EAX + p1 + POP_EDX + MUL_EAX_EDX;
 		if (ct.t.id == '/')
+			// TODO: properly handel sign extention
 			return ZERO + PUSH_EAX + p2 + PUSH_EAX + p1 + POP_ECX + POP_EDX +
 			       DIV_EDAX_ECX;
 		if (ct.t.text == "mod")
