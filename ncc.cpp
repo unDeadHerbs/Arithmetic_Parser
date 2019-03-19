@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
 	if (!initialize(argv[1])) exit(-1);
 	while (Token t = get_token()) tokens.push_back(t);
 	cleanup();
-	//*
+	/*
 	cout << "| Token Type | Token Value" << endl
 	     << "+------------+-- - - -  -  -" << endl;
 	for (auto& t : tokens) cout << t << endl;
@@ -32,9 +32,10 @@ int main(int argc, char* argv[]) {
 		auto ct = parse(tokens);
 		cout << "Code tree: " << endl << ct;
 		// if (ct.name == "Error") continue;
-		// auto prog = generate(ct);
-		cout << "Code size: " << /*prog.size()<<*/ " bytes." << endl
-		     << "Code execution:" << endl /*<<prog()<<endl*/;
+		auto prog = generate(ct);
+		cout << "Code size: " << prog.size() << " bytes." << endl
+		     << "Code execution:" << endl
+		     << prog() << endl;
 	}
 	cout.flush();
 }
