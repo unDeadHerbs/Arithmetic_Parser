@@ -19,13 +19,17 @@ public:
     buffer.push_back(c);
     return *this;
   }
-  program operator+(char c){
-    program p(*this);
-    return p+=c;
+  program operator+(program p){
+    program t(*this);
+    return t+=p;
   }
-    //operator += vec<opcode>
-    //operator [] for indexing
-    //Add an insert? Nope that's hard.
+  program operator+(char c){
+    program t(*this);
+    return t+=c;
+  }
+  //operator += vec<opcode>
+  //operator [] for indexing
+  //Add an insert? Nope that's hard.
 };
 program generate(Code_Tree);
 

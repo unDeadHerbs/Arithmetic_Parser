@@ -6,36 +6,45 @@ Code_Tree parse_expression(std::vector<Token>& tokens);
 #define ERROR(x, t) Code_Tree(Token(ERROR, t.line, t.col, x))
 
 Code_Tree parse_literal(std::vector<Token>& tokens) {
-	if (tokens.size()) {
-		auto t = tokens[0];
-		tokens.erase(tokens.begin(), tokens.begin() + 1);
-		if (t.id == INT || t.id == STRING || t.id == REAL)
-			return Code_Tree("literal", t);
-		throw ERROR("Not a Litteral", t);
-	}
-	throw EOF_ERROR("parse_ident: Reached end of Token Stream");
+	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
+	auto t = tokens[0];
+	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	if (t.id == INT || t.id == STRING || t.id == REAL)
+		return Code_Tree("literal", t);
+	throw ERROR("Not a Litteral", t);
 }
 
 Code_Tree parse_value(std::vector<Token>& tokens) {
-	if (tokens.size()) {
-		auto t = tokens[0];
-		if (t.id == LPAREN) {
-			tokens.erase(tokens.begin(), tokens.begin() + 1);
-			auto ret = parse_expression(tokens);
-			if (!tokens.size()) throw EOF_ERROR("Expected ')'.");
-			t = tokens[0];
-			if (t.id != RPAREN) throw ERROR("Expected ')'.", t);
-			tokens.erase(tokens.begin(), tokens.begin() + 1);
-			return ret;
-		} else {
-			return parse_literal(tokens);
-		}
-	}
-	throw EOF_ERROR("parse_value: Reached end of Token Stream");
+	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
+	auto t = tokens[0];
+	if (t.id != '(') return parse_literal(tokens);
+	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	auto ret = parse_expression(tokens);
+	if (!tokens.size()) throw EOF_ERROR("Expected ')'.");
+	t = tokens[0];
+	if (t.id != ')') throw ERROR("Expected ')'.", t);
+	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	return ret;
+}
+
+Code_Tree parse_sum_dif_prime(std::vector<Token>& tokens,
+                              Code_Tree accumulator) {
+	if (!tokens.size()) return accumulator;
+	auto t = tokens[0];
+	if (!(t.id == '+' || t.id == '-')) return accumulator;
+	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	return parse_sum_dif_prime(
+	    tokens, Code_Tree("add", t, {accumulator, parse_value(tokens)}));
+}
+
+Code_Tree parse_sum_dif(std::vector<Token>& tokens) {
+	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
+	auto ret = parse_value(tokens);
+	return parse_sum_dif_prime(tokens, ret);
 }
 
 Code_Tree parse_expression(std::vector<Token>& tokens) {
-	return parse_value(tokens);
+	return parse_sum_dif(tokens);
 }
 
 Code_Tree parse(std::vector<Token>& tokens) {

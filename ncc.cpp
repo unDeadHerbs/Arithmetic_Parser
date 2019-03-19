@@ -35,6 +35,7 @@ int main(int argc, char* argv[]) {
 			continue;
 		}
 		cout << "Code tree: " << endl << ct;
+		cout.flush();
 		auto prog = generate(ct);
 		cout << "Code size: " << prog.size() << " bytes." << endl
 		     << "Code execution:" << endl
