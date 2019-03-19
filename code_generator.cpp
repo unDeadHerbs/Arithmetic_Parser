@@ -60,6 +60,9 @@ program generateI(Code_Tree ct) {
 			return ZERO + PUSH_EAX + p2 + PUSH_EAX + p1 + POP_ECX + POP_EDX +
 			       MOD_EDAX_ECX;
 	}
+	if (ct.name == "exp") {
+		if (ct.t.id == '^') return generateI(ct.sub_tokens[0]);
+	}
 	if (ct.name == "unary") {
 		auto p = generateI(ct.sub_tokens[0]);
 		if (ct.t.id == '+') return p;

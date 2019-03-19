@@ -35,6 +35,16 @@ Code_Tree parse_unary_signs(std::vector<Token>& tokens) {
 	return Code_Tree("unary", t, {parse_value(tokens)});
 }
 
+Code_Tree parse_exp(std::vector<Token>& tokens) {
+	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
+	auto ret = parse_unary_signs(tokens);
+	if (!tokens.size()) return ret;
+	auto t = tokens[0];
+	if (t.id != '^') return ret;
+	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	return Code_Tree("exp", t, {ret, parse_exp(tokens)});
+}
+
 Code_Tree parse_mul_div_prime(std::vector<Token>& tokens,
                               Code_Tree accumulator) {
 	if (!tokens.size()) return accumulator;
@@ -42,12 +52,12 @@ Code_Tree parse_mul_div_prime(std::vector<Token>& tokens,
 	if (!(t.id == '*' || t.id == '/' || t.text == "mod")) return accumulator;
 	tokens.erase(tokens.begin(), tokens.begin() + 1);
 	return parse_mul_div_prime(
-	    tokens, Code_Tree("mul", t, {accumulator, parse_unary_signs(tokens)}));
+	    tokens, Code_Tree("mul", t, {accumulator, parse_exp(tokens)}));
 }
 
 Code_Tree parse_mul_div(std::vector<Token>& tokens) {
 	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
-	auto ret = parse_unary_signs(tokens);
+	auto ret = parse_exp(tokens);
 	return parse_mul_div_prime(tokens, ret);
 }
 

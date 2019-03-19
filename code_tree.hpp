@@ -13,5 +13,6 @@ struct Code_Tree{
   friend std::ostream& operator<<(std::ostream&,Code_Tree);
   Code_Tree(Token tok):t(tok){}
   Code_Tree(std::string n,Token tok):name(n),t(tok){}
+  Code_Tree(std::string n,Token tok,std::vector<Code_Tree> vct):name(n),sub_tokens(vct),t(tok){}
 };
 #endif
