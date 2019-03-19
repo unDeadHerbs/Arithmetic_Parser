@@ -26,12 +26,16 @@ int program::operator()() {
 #define PUSH_EAX ((char)(0x50))
 #define POP_EAX ((char)(0x58))
 #define POP_EDX ((char)(0x58 + 0x02))
+#define ZERO \
+	{ (char)0xb8, 0, 0, 0, 0 }
 #define LOADI(x) \
 	{ MOVI_EAX, LITTLEENDIAN((int)strtol(x.c_str(), NULL, 10)) }
 
 program generateI(Code_Tree ct) {
-	if (ct.name == "literal")
+	if (ct.name == "literal") {
 		if (ct.t.id == INT) return program(LOADI(ct.t.text));
+		throw "Unusported Literal Type";
+	}
 	if (ct.name == "add") {
 		auto p1 = generateI(ct.sub_tokens[0]);
 		auto p2 = generateI(ct.sub_tokens[1]);
@@ -39,6 +43,12 @@ program generateI(Code_Tree ct) {
 			return p1 + PUSH_EAX + p2 + POP_EDX + program({ADD_EAX_EDX});
 		if (ct.t.id == '-')
 			return p2 + PUSH_EAX + p1 + POP_EDX + program({SUB_EAX_EDX});
+	}
+	if (ct.name == "unary") {
+		auto p = generateI(ct.sub_tokens[0]);
+		if (ct.t.id == '+') return p;
+		if (ct.t.id == '-')
+			return p + PUSH_EAX + program(ZERO) + POP_EDX + program({SUB_EAX_EDX});
 	}
 
 	throw "Bad Parse Tree";

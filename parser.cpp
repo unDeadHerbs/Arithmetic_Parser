@@ -27,6 +27,14 @@ Code_Tree parse_value(std::vector<Token>& tokens) {
 	return ret;
 }
 
+Code_Tree parse_unary_signs(std::vector<Token>& tokens) {
+	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
+	auto t = tokens[0];
+	if (t.id != '+' && t.id != '-') return parse_value(tokens);
+	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	return Code_Tree("unary", t, {parse_value(tokens)});
+}
+
 Code_Tree parse_sum_dif_prime(std::vector<Token>& tokens,
                               Code_Tree accumulator) {
 	if (!tokens.size()) return accumulator;
@@ -34,12 +42,12 @@ Code_Tree parse_sum_dif_prime(std::vector<Token>& tokens,
 	if (!(t.id == '+' || t.id == '-')) return accumulator;
 	tokens.erase(tokens.begin(), tokens.begin() + 1);
 	return parse_sum_dif_prime(
-	    tokens, Code_Tree("add", t, {accumulator, parse_value(tokens)}));
+	    tokens, Code_Tree("add", t, {accumulator, parse_unary_signs(tokens)}));
 }
 
 Code_Tree parse_sum_dif(std::vector<Token>& tokens) {
 	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
-	auto ret = parse_value(tokens);
+	auto ret = parse_unary_signs(tokens);
 	return parse_sum_dif_prime(tokens, ret);
 }
 

@@ -36,11 +36,15 @@ int main(int argc, char* argv[]) {
 		}
 		cout << "Code tree: " << endl << ct;
 		cout.flush();
-		auto prog = generate(ct);
-		cout << "Code size: " << prog.size() << " bytes." << endl
-		     << "Code execution:" << endl
-		     << prog() << endl
-		     << endl;
+		try {
+			auto prog = generate(ct);
+			cout << "Code size: " << prog.size() << " bytes." << endl
+			     << "Code execution:" << endl
+			     << prog() << endl
+			     << endl;
+		} catch (std::string err) {
+			cout << "Parsing Error:" << err << endl;
+		}
 	}
 	cout.flush();
 }
