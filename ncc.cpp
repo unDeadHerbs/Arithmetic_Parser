@@ -35,7 +35,8 @@ int main(int argc, char* argv[]) {
 		auto prog = generate(ct);
 		cout << "Code size: " << prog.size() << " bytes." << endl
 		     << "Code execution:" << endl
-		     << prog() << endl;
+		     << prog() << endl
+		     << endl;
 	}
 	cout.flush();
 }
