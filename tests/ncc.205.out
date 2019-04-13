@@ -1,0 +1,46 @@
+Code tree: 
+statement block
+  print
+    - (sub)
+      1
+      1
+    1
+    + (add)
+      1
+      1
+    + (add)
+      + (add)
+        1
+        1
+      1
+    + (add)
+      + (add)
+        + (add)
+          1
+          1
+        1
+      1
+    5
+    * (mult)
+      2
+      3
+    - (sub)
+      8
+      1
+    - (sub)
+      - (sub)
+        - (sub)
+          11
+          1
+        1
+      1
+    * (mult)
+      3
+      3
+    - (sub)
+      11
+      1
+Code size: 331 bytes.
+Code execution:
+012345678910
+

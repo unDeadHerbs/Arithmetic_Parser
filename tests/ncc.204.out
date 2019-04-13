@@ -1,0 +1,14 @@
+Code tree: 
+statement block
+  print
+    mod
+      - (sub)
+        * (mult)
+          1024
+          1024
+        1
+      17
+Code size: 50 bytes.
+Code execution:
+15
+

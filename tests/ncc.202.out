@@ -1,0 +1,10 @@
+Code tree: 
+statement block
+  print
+    + (add)
+      3
+      4
+Code size: 28 bytes.
+Code execution:
+7
+

@@ -1,0 +1,3 @@
+# print statement
+
+print( (1024*1024-1) mod 17 );

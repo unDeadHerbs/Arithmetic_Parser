@@ -1,0 +1,20 @@
+Code tree: 
+statement block
+  print
+    Hello,
+     World!
+    
+
+  print
+    The value of 3x3 is 
+    * (mult)
+      3
+      3
+    
+
+Code size: 148 bytes.
+Code execution:
+Hello, World!
+The value of 3x3 is 9
+
+

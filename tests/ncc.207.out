@@ -1,0 +1,9 @@
+Code tree: 
+statement block
+  print
+    Hello,
+     World!
+Code size: 49 bytes.
+Code execution:
+Hello, World!
+
