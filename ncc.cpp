@@ -43,7 +43,7 @@ int main(int argc, char* argv[]) {
 			     << prog() << endl
 			     << endl;
 		} catch (std::string err) {
-			cout << "Parsing Error:" << err << endl;
+			cout << "Parsing Error : " << err << endl;
 		}
 	}
 	cout.flush();
