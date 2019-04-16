@@ -9,6 +9,7 @@ namespace {
 #include <iostream>
 #include <string>
 void print_int(long long int x) { std::cout << x; }
+void print_str(char* s) { std::cout << s; }
 }  // namespace
 
 void program::operator()() {
@@ -54,6 +55,11 @@ void program::operator()() {
 #define ZERO _LOADI(0)
 #define LOADI(x) _LOADI(strtol(x.c_str(), NULL, 10))
 #define _MOVI_RSI program({((char)(0x48)), ((char)(0xbe))})
+#define _MOVI_RDI program({((char)(0x48)), ((char)(0xc7)), ((char)0xc7)})
+#define _MOVI_RAX program({((char)(0x48)), ((char)(0xc7)), ((char)0xc7)})
+#define LOADLL_RDI(x) _MOVI_RDI + LITTLEENDIAN8((x))
+#define LOADLL_RAX(x) _MOVI_RAX + LITTLEENDIAN8((x))
+#define LOADLL_STR(x) _MOVI_RDI + LITTLEENDIAN8((x))
 #define LOADLL_RSI(x) _MOVI_RSI + LITTLEENDIAN8((x))
 #define CALL_RSI program({((char)(0xff)), ((char)(0xd6))})
 #define PRINT_EAX_I \
@@ -105,6 +111,9 @@ program generateI(Code_Tree ct) {
 		for (auto c : ct.sub_tokens)
 			if (c.name == "print_i")
 				ret += generateI(c.sub_tokens[0]) + PRINT_EAX_I;
+			else if (c.name == "print_s")
+				ret += LOADLL_STR((long long int)c.sub_tokens[0].t->text.c_str()) +
+				       LOADLL_RSI((long long int)print_str) + CALL_RSI;
 			else
 				throw "Unknown print mode "s + c.name;
 		return ret;
