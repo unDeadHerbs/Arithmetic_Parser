@@ -30,8 +30,8 @@ int main(int argc, char* argv[]) {
 	     << "Parsing" << endl;  //*/
 	while (tokens.size()) {
 		auto ct = parse(tokens);
-		if (ct.t.id == ERROR) {
-			cout << "Parse Failed - Restarting" << endl;
+		if (ct.t->id == ERROR) {
+			cout << "Parse Failed" << endl << ct << endl << "Restarting" << endl;
 			continue;
 		}
 		cout << "Code tree: " << endl << ct;
@@ -39,11 +39,11 @@ int main(int argc, char* argv[]) {
 		try {
 			auto prog = generate(ct);
 			cout << "Code size: " << prog.size() << " bytes." << endl
-			     << "Code execution:" << endl
-			     << prog() << endl
-			     << endl;
+			     << "Code execution:" << endl;
+			prog();
+			cout << endl << endl;
 		} catch (std::string err) {
-			cout << "Parsing Error:" << err << endl;
+			cout << "Parsing Error : " << err << endl;
 		}
 	}
 	cout.flush();

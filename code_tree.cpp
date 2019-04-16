@@ -7,9 +7,12 @@ using std::setw;
 ostream& operator<<(ostream& o, Code_Tree ct) {
 	static int depth = 0;
 	for (int i = 0; i < depth; i++) o << "  ";
-	o << ct.t.text << "\n";
-	// o << ct.name << ct.t << "\n";
+	if (ct.t)
+		o << ct.t->text << "\n";
+	else
+		o << ct.name << "\n";
 	depth++;
+
 	for (auto& e : ct.sub_tokens) o << e;
 	depth--;
 	return o;

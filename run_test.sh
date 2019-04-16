@@ -9,12 +9,12 @@ ls tests | sed 's/[.]\(in\|out\)//' | uniq |
 	[ -e "$(echo $r | sed 's/.*/tests\/&.in/')"  ] || { echo "Unable to find $(echo $r | sed 's/.*/&.in/')" ; exit 1 ; }
 	# existance of output
 	if [ -e "$(echo $r | sed 's/.*/tests\/&.out/')"  ] ; then
-	    $(echo $r | sed 's/[.].*/.bin/'|sed 's/.*/.\/&/') $(echo $r | sed 's/.*/tests\/&.in/') |
-		diff -C 1 - $(echo $r | sed 's/.*/tests\/&.out/') ||
+	    $(echo $r | sed 's/[.].*/.bin/'|sed 's/.*/.\/&/') $(echo $r | sed 's/.*/tests\/&.in/') 2>&1 |
+		diff -baC 1 - $(echo $r | sed 's/.*/tests\/&.out/') ||
 		{ echo "\n--- From Input ---\n" ; cat $(echo $r | sed 's/.*/tests\/&.in/') ; exit 1 ; }
 	else
 	    echo
-	    $(echo $r | sed 's/[.].*/.bin/'|sed 's/.*/.\/&/') $(echo $r | sed 's/.*/tests\/&.in/')
+	    $(echo $r | sed 's/[.].*/.bin/'|sed 's/.*/.\/&/') $(echo $r | sed 's/.*/tests\/&.in/') 2>&1
 	    echo
 	fi
 	echo "Test $r compleate."

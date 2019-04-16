@@ -1,9 +1,0 @@
-# Addition and subtraction
-
-1 - 5
-
-100 - 15 -20  # Important test of order
-
-1 + 2 - 3 + 4
-(1+2) - (3+4)  # Important test of ()
-1+(2-3)+4
