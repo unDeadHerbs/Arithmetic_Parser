@@ -1,5 +1,5 @@
 Code tree: 
-statement block
+block
   print
     3
 Code size: 19 bytes.

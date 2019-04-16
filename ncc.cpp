@@ -31,7 +31,7 @@ int main(int argc, char* argv[]) {
 	while (tokens.size()) {
 		auto ct = parse(tokens);
 		if (ct.t.id == ERROR) {
-			cout << "Parse Failed - Restarting" << endl;
+			cout << "Parse Failed" << endl << ct << endl << "Restarting" << endl;
 			continue;
 		}
 		cout << "Code tree: " << endl << ct;
