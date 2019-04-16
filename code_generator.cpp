@@ -65,22 +65,22 @@ void program::operator()() {
 #define PRINT_EAX_I \
 	MOV_RDI_RAX + LOADLL_RSI((long long int)print_int) + CALL_RSI
 
-program generateI(Code_Tree ct) {
+program generateI(Code_Tree ct, std::shared_ptr<Env> e) {
 	// TODO: Those throws should get the TOKEN's name.
 	if (ct.name == "numeric_literal") {
-		if (ct.t->id == INT) return program(LOADI(ct.t->text));
+		if (ct.t->id == INT) return LOADI(ct.t->text);
 		throw "Unusported Literal Type"s;
 	}
 	if (ct.name == "add") {
-		auto p1 = generateI(ct.sub_tokens[0]);
-		auto p2 = generateI(ct.sub_tokens[1]);
+		auto p1 = generateI(ct.sub_tokens[0], e);
+		auto p2 = generateI(ct.sub_tokens[1], e);
 		if (ct.t->id == '+') return p2 + PUSH_EAX + p1 + POP_EDX + ADD_EAX_EDX;
 		if (ct.t->id == '-') return p2 + PUSH_EAX + p1 + POP_EDX + SUB_EAX_EDX;
 		throw "Unknown add OP "s + (char)ct.t->id;
 	}
 	if (ct.name == "mul") {
-		auto p1 = generateI(ct.sub_tokens[0]);
-		auto p2 = generateI(ct.sub_tokens[1]);
+		auto p1 = generateI(ct.sub_tokens[0], e);
+		auto p2 = generateI(ct.sub_tokens[1], e);
 		if (ct.t->id == '*') return p2 + PUSH_EAX + p1 + POP_EDX + MUL_EAX_EDX;
 		if (ct.t->id == '/')
 			// TODO: properly handel sign extention
@@ -92,29 +92,31 @@ program generateI(Code_Tree ct) {
 		throw "Unknown mul OP "s + (char)ct.t->id;
 	}
 	if (ct.name == "exp") {
-		if (ct.t->id == '^') return generateI(ct.sub_tokens[0]);
+		if (ct.t->id == '^') return generateI(ct.sub_tokens[0], e);
 		throw "Unknown exp OP "s + (char)ct.t->id;
 	}
 	if (ct.name == "unary") {
-		auto p = generateI(ct.sub_tokens[0]);
+		auto p = generateI(ct.sub_tokens[0], e);
 		if (ct.t->id == '+') return p;
 		if (ct.t->id == '-')
 			return p + PUSH_EAX + program(ZERO) + POP_EDX + program({SUB_EAX_EDX});
 		throw "Unknown Unary Op "s + (char)ct.t->id;
 	}
 	if (ct.name == "block") {
-		return accumulate(ct.sub_tokens.begin(), ct.sub_tokens.end(), program(),
-		                  [](program p, Code_Tree c) { return p + generateI(c); });
+		return accumulate(
+		    ct.sub_tokens.begin(), ct.sub_tokens.end(), program(),
+		    [&e](program p, Code_Tree c) { return p + generateI(c, e); });
 	}
 	if (ct.name == "print") {
 		auto ret = program();
 		for (auto c : ct.sub_tokens)
 			if (c.name == "print_i")
-				ret += generateI(c.sub_tokens[0]) + PRINT_EAX_I;
-			else if (c.name == "print_s")
-				ret += LOADLL_STR((long long int)c.sub_tokens[0].t->text.c_str()) +
+				ret += generateI(c.sub_tokens[0], e) + PRINT_EAX_I;
+			else if (c.name == "print_s") {
+				auto p = e->push(c.sub_tokens[0].t->text);
+				ret += LOADLL_STR((long long int)p) +
 				       LOADLL_RSI((long long int)print_str) + CALL_RSI;
-			else
+			} else
 				throw "Unknown print mode "s + c.name;
 		return ret;
 	}
@@ -122,4 +124,8 @@ program generateI(Code_Tree ct) {
 	throw "Bad Parse Tree - unknown '"s + ct.name + "'";
 }
 #define RETURN ((char)(0xC3))
-program generate(Code_Tree ct) { return generateI(ct) + RETURN; }
+program generate(Code_Tree ct) {
+	program r;
+	r.init();
+	return r + generateI(ct, r.e) + RETURN;
+}

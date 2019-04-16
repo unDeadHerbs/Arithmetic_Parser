@@ -1,9 +1,11 @@
 Code tree: 
 block
   print
-    Hello,
-     World!
-Code size: 49 bytes.
+    print_s
+      Hello,
+    print_s
+       World!
+Code size: 45 bytes.
 Code execution:
 Hello, World!
 

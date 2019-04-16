@@ -3,7 +3,7 @@ block
   print
     print_s
       Hello
-Code size: 24 bytes.
+Code size: 23 bytes.
 Code execution:
 Hello
 
