@@ -61,7 +61,7 @@ void program::operator()() {
 
 program generateI(Code_Tree ct) {
 	// TODO: Those throws should get the TOKEN's name.
-	if (ct.name == "literal") {
+	if (ct.name == "numeric_literal") {
 		if (ct.t->id == INT) return program(LOADI(ct.t->text));
 		throw "Unusported Literal Type"s;
 	}

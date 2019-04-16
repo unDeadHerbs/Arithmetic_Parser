@@ -19,19 +19,26 @@ Code_Tree parse_expression(vector<Token>& tokens);
 	if (t.text != str) throw ERROR(std::string("Expected '") + str + "'", t);   \
 	tokens.erase(tokens.begin(), tokens.begin() + 1);
 
-Code_Tree parse_literal(vector<Token>& tokens) {
+#define EAT_STRING(t, tokens)                                            \
+	if (!tokens.size()) throw EOF_ERROR(std::string("Expected 'string'")); \
+	auto t = tokens[0];                                                    \
+	if (t.id != STRING) throw ERROR(std::string("Expected 'string'"), t);  \
+	tokens.erase(tokens.begin(), tokens.begin() + 1);
+
+Code_Tree parse_number(vector<Token>& tokens) {
 	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
 	auto t = tokens[0];
-	tokens.erase(tokens.begin(), tokens.begin() + 1);
-	if (t.id == INT || t.id == STRING || t.id == REAL)
-		return Code_Tree("literal", t);
+	if (t.id == INT || t.id == REAL) {
+		tokens.erase(tokens.begin(), tokens.begin() + 1);
+		return Code_Tree("numeric_literal", t);
+	}
 	throw ERROR("Not a Litteral", t);
 }
 
 Code_Tree parse_value(vector<Token>& tokens) {
 	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
 	auto t = tokens[0];
-	if (t.id != '(') return parse_literal(tokens);
+	if (t.id != '(') return parse_number(tokens);
 	tokens.erase(tokens.begin(), tokens.begin() + 1);
 	auto ret = parse_expression(tokens);
 	if (!tokens.size()) throw EOF_ERROR("Expected ')'.");
@@ -93,11 +100,22 @@ Code_Tree parse_expression(vector<Token>& tokens) {
 	return parse_sum_dif(tokens);
 }
 
+Code_Tree parse_string(vector<Token>& tokens) {
+	EAT_STRING(t, tokens);
+	return Code_Tree("String", t);
+}
+
 Code_Tree parse_printable(vector<Token>& tokens) {
 	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
-	auto t = tokens[0];
-	return Code_Tree("print_i", {parse_expression(tokens)});
-	// else parse string
+	try {
+		return Code_Tree("print_i", {parse_expression(tokens)});
+	} catch (Code_Tree err) {
+		try {
+			return Code_Tree("print_s", {parse_string(tokens)});
+		} catch (Code_Tree err2) {
+			throw Code_Tree("Error - Expected expression or string.", {err, err2});
+		}
+	}
 }
 
 vector<Code_Tree> parse_printables_prime(vector<Token>& tokens,

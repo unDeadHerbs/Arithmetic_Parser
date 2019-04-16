@@ -1,7 +1,8 @@
 Code tree: 
 block
   print
-    Hello
+    print_s
+      "Hello"
 Code size: 25 bytes.
 Code execution:
 Hello
