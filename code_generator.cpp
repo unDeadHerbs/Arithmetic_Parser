@@ -120,12 +120,18 @@ program generateI(Code_Tree ct, std::shared_ptr<Env> e) {
 				throw "Unknown print mode "s + c.name;
 		return ret;
 	}
-
+	if (ct.name == "Declaration") {
+		e->cleanup.push_back(POP_EAX);
+		e->syms.push_back({ct.sub_tokens[0].t->text, {}});
+		return PUSH_EAX;
+	}
 	throw "Bad Parse Tree - unknown '"s + ct.name + "'";
 }
 #define RETURN ((char)(0xC3))
 program generate(Code_Tree ct) {
 	program r;
 	r.init();
-	return r + generateI(ct, r.e) + RETURN;
+	r += generateI(ct, r.e);
+	r.cleanup();
+	return r + RETURN;
 }

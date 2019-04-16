@@ -142,8 +142,27 @@ Code_Tree parse_print_f(vector<Token>& tokens) {
 	return Code_Tree("print", t1, ret);
 }
 
+Code_Tree parse_declare(vector<Token>& tokens) {
+	EAT_IDENT(t1, tokens, "int4");
+	if (!tokens.size()) throw EOF_ERROR("Expected variable name");
+	auto t = tokens[0];
+	if (t.id != IDENT) throw ERROR("Expected variable name", t);
+	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	EAT_OP(t2, tokens, ';');
+	return Code_Tree("Declaration", t1, {Code_Tree("Variable", t, {})});
+}
+
 Code_Tree parse_statement(vector<Token>& tokens) {
-	return parse_print_f(tokens);
+	try {
+		return parse_print_f(tokens);
+	} catch (Code_Tree err) {
+		try {
+			return parse_declare(tokens);
+		} catch (Code_Tree err2) {
+			throw Code_Tree("Error - Expected a \"print\" or decleration.",
+			                {err, err2});
+		}
+	}
 }
 
 vector<Code_Tree> parse_statements(vector<Token>& tokens,

@@ -1,12 +1,18 @@
 #ifndef __CODE_GENERATOR_HPP__
 #define __CODE_GENERATOR_HPP__
 #include "code_tree.hpp"
+#include <utility>
 #include <memory>
 
 typedef unsigned char binary;
+
+struct sym_props{};
+struct program;
 struct Env{
   char string_table[5000];
   char* end;
+  std::vector<program> cleanup;
+  std::vector<std::pair<std::string,sym_props>> syms;
 public:
   Env():string_table{0},end(string_table){}
   char* push(std::string s){
@@ -25,6 +31,7 @@ public:
   program(std::vector<char>b):buffer(b){}
   void operator()(); //TODO: add optional parameters
   void init(){e=std::make_shared<Env>();}
+  void cleanup(){for(auto &c:e->cleanup)operator+=(c);}
   int size(){return buffer.size();}
   program& operator+=(program p){
     for(auto c:p.buffer)
