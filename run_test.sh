@@ -10,7 +10,7 @@ ls tests | sed 's/[.]\(in\|out\)//' | uniq |
 	# existance of output
 	if [ -e "$(echo $r | sed 's/.*/tests\/&.out/')"  ] ; then
 	    $(echo $r | sed 's/[.].*/.bin/'|sed 's/.*/.\/&/') $(echo $r | sed 's/.*/tests\/&.in/') 2>&1 |
-		diff -C 1 - $(echo $r | sed 's/.*/tests\/&.out/') ||
+		diff -aC 1 - $(echo $r | sed 's/.*/tests\/&.out/') ||
 		{ echo "\n--- From Input ---\n" ; cat $(echo $r | sed 's/.*/tests\/&.in/') ; exit 1 ; }
 	else
 	    echo

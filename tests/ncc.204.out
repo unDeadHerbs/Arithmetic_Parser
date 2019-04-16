@@ -1,14 +1,15 @@
 Code tree: 
 block
   print
-    mod
-      - (sub)
-        * (mult)
-          1024
-          1024
-        1
-      17
-Code size: 50 bytes.
+    print_i
+      mod
+        -
+          *
+            1024
+            1024
+          1
+        17
+Code size: 57 bytes.
 Code execution:
 15
 

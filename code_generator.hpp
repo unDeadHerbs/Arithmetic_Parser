@@ -2,8 +2,7 @@
 #define __CODE_GENERATOR_HPP__
 #include "code_tree.hpp"
 typedef unsigned char binary;
-class program{
-private:
+struct program{
   std::vector<char> buffer;
 public:
   program(){}
@@ -32,6 +31,5 @@ public:
   //Add an insert? Nope that's hard.
 };
 program generate(Code_Tree);
-
 
 #endif

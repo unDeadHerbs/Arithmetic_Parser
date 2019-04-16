@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
 	     << "Parsing" << endl;  //*/
 	while (tokens.size()) {
 		auto ct = parse(tokens);
-		if (ct.t.id == ERROR) {
+		if (ct.t->id == ERROR) {
 			cout << "Parse Failed" << endl << ct << endl << "Restarting" << endl;
 			continue;
 		}
@@ -41,6 +41,7 @@ int main(int argc, char* argv[]) {
 			cout << "Code size: " << prog.size() << " bytes." << endl
 			     << "Code execution:" << endl;
 			prog();
+			cout << endl << endl;
 		} catch (std::string err) {
 			cout << "Parsing Error : " << err << endl;
 		}

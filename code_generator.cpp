@@ -5,7 +5,12 @@
 using std::accumulate;
 using namespace std::string_literals;
 
-#define BUFFER_SIZE 50000
+namespace {
+#include <iostream>
+#include <string>
+void print_int(long long int x) { std::cout << x; }
+}  // namespace
+
 void program::operator()() {
 	auto prog =
 	    (char*)mmap(NULL /*we don't care where we point to.*/,
@@ -19,10 +24,16 @@ void program::operator()() {
 	((int (*)())prog)();
 	munmap(prog, buffer.size());
 }
-#define LITTLEENDIAN(x)                                                        \
+#define LITTLEENDIAN4(x)                                                       \
 	program({(char)(((x) >> 0x08 * 0) & 0xFF), (char)(((x) >> 0x08 * 1) & 0xFF), \
 	         (char)(((x) >> 0x08 * 2) & 0xFF),                                   \
 	         (char)(((x) >> 0x08 * 3) & 0xFF)})
+#define LITTLEENDIAN8(x)                                                       \
+	program({(char)(((x) >> 0x08 * 0) & 0xFF), (char)(((x) >> 0x08 * 1) & 0xFF), \
+	         (char)(((x) >> 0x08 * 2) & 0xFF), (char)(((x) >> 0x08 * 3) & 0xFF), \
+	         (char)(((x) >> 0x08 * 4) & 0xFF), (char)(((x) >> 0x08 * 5) & 0xFF), \
+	         (char)(((x) >> 0x08 * 6) & 0xFF),                                   \
+	         (char)(((x) >> 0x08 * 7) & 0xFF)})
 #define _MOVI_EAX program({((char)(0xB8 + 0x0))})
 
 #define ADD_EAX_EDX program({((char)(0x01 + 0x00)), ((char)(0xd0))})
@@ -36,51 +47,67 @@ void program::operator()() {
 #define POP_EAX program({((char)(0x58 + 0x00))})
 #define POP_ECX program({((char)(0x58 + 0x01))})
 #define POP_EDX program({((char)(0x58 + 0x02))})
+#define POP_RDI program({((char)(0x58 + 0x07))})
+#define MOV_RDI_RAX program({((char)0x89), ((char)0xc7)})
 #define MOD_EDAX_ECX DIV_EDAX_ECX + PUSH_EDX + POP_EAX
-#define _LOADI(x) _MOVI_EAX + LITTLEENDIAN((int)(x))
+#define _LOADI(x) _MOVI_EAX + LITTLEENDIAN4((int)(x))
 #define ZERO _LOADI(0)
 #define LOADI(x) _LOADI(strtol(x.c_str(), NULL, 10))
+#define _MOVI_RSI program({((char)(0x48)), ((char)(0xbe))})
+#define LOADLL_RSI(x) _MOVI_RSI + LITTLEENDIAN8((x))
+#define CALL_RSI program({((char)(0xff)), ((char)(0xd6))})
+#define PRINT_EAX_I \
+	MOV_RDI_RAX + LOADLL_RSI((long long int)print_int) + CALL_RSI
 
 program generateI(Code_Tree ct) {
 	// TODO: Those throws should get the TOKEN's name.
 	if (ct.name == "literal") {
-		if (ct.t.id == INT) return program(LOADI(ct.t.text));
+		if (ct.t->id == INT) return program(LOADI(ct.t->text));
 		throw "Unusported Literal Type"s;
 	}
 	if (ct.name == "add") {
 		auto p1 = generateI(ct.sub_tokens[0]);
 		auto p2 = generateI(ct.sub_tokens[1]);
-		if (ct.t.id == '+') return p2 + PUSH_EAX + p1 + POP_EDX + ADD_EAX_EDX;
-		if (ct.t.id == '-') return p2 + PUSH_EAX + p1 + POP_EDX + SUB_EAX_EDX;
-		throw "Unknown add OP "s + (char)ct.t.id;
+		if (ct.t->id == '+') return p2 + PUSH_EAX + p1 + POP_EDX + ADD_EAX_EDX;
+		if (ct.t->id == '-') return p2 + PUSH_EAX + p1 + POP_EDX + SUB_EAX_EDX;
+		throw "Unknown add OP "s + (char)ct.t->id;
 	}
 	if (ct.name == "mul") {
 		auto p1 = generateI(ct.sub_tokens[0]);
 		auto p2 = generateI(ct.sub_tokens[1]);
-		if (ct.t.id == '*') return p2 + PUSH_EAX + p1 + POP_EDX + MUL_EAX_EDX;
-		if (ct.t.id == '/')
+		if (ct.t->id == '*') return p2 + PUSH_EAX + p1 + POP_EDX + MUL_EAX_EDX;
+		if (ct.t->id == '/')
 			// TODO: properly handel sign extention
 			return ZERO + PUSH_EAX + p2 + PUSH_EAX + p1 + POP_ECX + POP_EDX +
 			       DIV_EDAX_ECX;
-		if (ct.t.text == "mod")
+		if (ct.t->text == "mod")
 			return ZERO + PUSH_EAX + p2 + PUSH_EAX + p1 + POP_ECX + POP_EDX +
 			       MOD_EDAX_ECX;
-		throw "Unknown mul OP "s + (char)ct.t.id;
+		throw "Unknown mul OP "s + (char)ct.t->id;
 	}
 	if (ct.name == "exp") {
-		if (ct.t.id == '^') return generateI(ct.sub_tokens[0]);
-		throw "Unknown exp OP "s + (char)ct.t.id;
+		if (ct.t->id == '^') return generateI(ct.sub_tokens[0]);
+		throw "Unknown exp OP "s + (char)ct.t->id;
 	}
 	if (ct.name == "unary") {
 		auto p = generateI(ct.sub_tokens[0]);
-		if (ct.t.id == '+') return p;
-		if (ct.t.id == '-')
+		if (ct.t->id == '+') return p;
+		if (ct.t->id == '-')
 			return p + PUSH_EAX + program(ZERO) + POP_EDX + program({SUB_EAX_EDX});
-		throw "Unknown Unary Op "s + (char)ct.t.id;
+		throw "Unknown Unary Op "s + (char)ct.t->id;
 	}
 	if (ct.name == "block") {
 		return accumulate(ct.sub_tokens.begin(), ct.sub_tokens.end(), program(),
 		                  [](program p, Code_Tree c) { return p + generateI(c); });
+	}
+	if (ct.name == "print") {
+		auto ret = program();
+		for (auto c : ct.sub_tokens)
+			if (c.name == "print_i")
+				ret += generateI(c.sub_tokens[0]) + PRINT_EAX_I;
+			else
+				throw "Unknown print mode "s + c.name;
+		return ret;
 	}
 
 	throw "Bad Parse Tree - unknown '"s + ct.name + "'";
