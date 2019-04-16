@@ -54,9 +54,9 @@ csyntax:
 	$(CXX) $(CXXFLAGS) -c ${CHK_SOURCES} -o /dev/null
 
 .PHONY: clean
-clean:
-	rm -f *.o *.bin .d/*.d
-	rmdir .d
+clean: deps
+	find .d/*|xargs cat|grep -E -o "[^ ]*[.]o"|uniq|xargs rm -f
+	rm -rf .d
 
 .PHONY: format
 format:
