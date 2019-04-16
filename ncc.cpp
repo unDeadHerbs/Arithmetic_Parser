@@ -39,9 +39,8 @@ int main(int argc, char* argv[]) {
 		try {
 			auto prog = generate(ct);
 			cout << "Code size: " << prog.size() << " bytes." << endl
-			     << "Code execution:" << endl
-			     << prog() << endl
-			     << endl;
+			     << "Code execution:" << endl;
+			prog();
 		} catch (std::string err) {
 			cout << "Parsing Error : " << err << endl;
 		}

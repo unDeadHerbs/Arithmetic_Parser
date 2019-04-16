@@ -8,7 +8,7 @@ private:
 public:
   program(){}
   program(std::vector<char>b):buffer(b){}
-  int operator()(); //TODO: add optional parameters
+  void operator()(); //TODO: add optional parameters
   int size(){return buffer.size();}
   program& operator+=(program p){
     for(auto c:p.buffer)
