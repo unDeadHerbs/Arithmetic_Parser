@@ -3,7 +3,11 @@ LIBARYFLAGS =
 CXXFLAGS    = -std=c++1z -Wall -Wextra -Wparentheses -g $(SANS)
 
 .PHONY:all seg msan
-all: format TAGS deps mains
+all:
+	@make -j1 format --no-print-directory
+	@make -j1 TAGS --no-print-directory
+	@make -j1 deps --no-print-directory
+	@make -j1 mains --no-print-directory
 seg: clean msan
 msan:
 	make --no-print-directory all SANS=-fsanitize=address
