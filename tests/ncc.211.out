@@ -1,0 +1,30 @@
+Code tree: 
+statement block
+  variable: a
+  variable: b
+  print
+    Please input a value: 
+  read
+    variable: a
+  print
+    a: 
+    variable: a
+    
+
+  <-
+    variable: b
+    * (mult)
+      2
+      variable: a
+  print
+    b: 
+    variable: b
+    
+
+Code size: 256 bytes.
+Code execution:
+Please input a value: 2345
+a: 2345
+b: 4690
+
+
