@@ -3,27 +3,37 @@ using std::vector;
 
 Code_Tree parse_expression(vector<Token>& tokens);
 
+#define _FUN std::string(__func__)
 #define EOF_ERROR(x) Code_Tree(Token(ERROR, -1, -1, x))
 #define ERROR(x, t) \
 	Code_Tree("ERROR", Token(ERROR, t.line, t.col, x), {Code_Tree(t)})
-#define EAT_OP(t, tokens, op)                                                \
-	if (!tokens.size()) throw EOF_ERROR(std::string("Expected '") + op + "'"); \
-	auto t = tokens[0];                                                        \
-	if (t.id != op) throw ERROR(std::string("Expected '") + op + "'", t);      \
+#define EAT_OP(t, tokens, op)                                           \
+	if (!tokens.size()) throw EOF_ERROR(_FUN + " Expected '" + op + "'"); \
+	auto t = tokens[0];                                                   \
+	if (t.id != op) throw ERROR(_FUN + " Expected '" + op + "'", t);      \
 	tokens.erase(tokens.begin(), tokens.begin() + 1);
 
-#define EAT_IDENT(t, tokens, str)                                             \
-	if (!tokens.size()) throw EOF_ERROR(std::string("Expected '") + str + "'"); \
-	auto t = tokens[0];                                                         \
-	if (t.id != IDENT) throw ERROR(std::string("Expected '") + str + "'", t);   \
-	if (t.text != str) throw ERROR(std::string("Expected '") + str + "'", t);   \
-	tokens.erase(tokens.begin(), tokens.begin() + 1);
-
-#define EAT_STRING(t, tokens)                                            \
-	if (!tokens.size()) throw EOF_ERROR(std::string("Expected 'string'")); \
+#define EAT_IDENT(t, tokens, str)                                        \
+	if (!tokens.size()) throw EOF_ERROR(_FUN + " Expected '" + str + "'"); \
 	auto t = tokens[0];                                                    \
-	if (t.id != STRING) throw ERROR(std::string("Expected 'string'"), t);  \
+	if (t.id != IDENT) throw ERROR(_FUN + " Expected '" + str + "'", t);   \
+	if (t.text != str) throw ERROR(_FUN + " Expected '" + str + "'", t);   \
 	tokens.erase(tokens.begin(), tokens.begin() + 1);
+
+#define EAT_STRING(t, tokens)                                       \
+	if (!tokens.size()) throw EOF_ERROR(_FUN + " Expected 'string'"); \
+	auto t = tokens[0];                                               \
+	if (t.id != STRING) throw ERROR(_FUN + " Expected 'string'", t);  \
+	tokens.erase(tokens.begin(), tokens.begin() + 1);
+
+Code_Tree parse_ident(vector<Token>& tokens) {
+	if (!tokens.size()) throw EOF_ERROR("Expected variable name");
+	auto t = tokens[0];
+	if (t.id != IDENT) throw ERROR("Expected identifier name", t);
+	// TODO: check that it's not a keyword
+	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	return Code_Tree("Ident", t, {});
+}
 
 Code_Tree parse_number(vector<Token>& tokens) {
 	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
@@ -36,16 +46,31 @@ Code_Tree parse_number(vector<Token>& tokens) {
 }
 
 Code_Tree parse_value(vector<Token>& tokens) {
-	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
-	auto t = tokens[0];
-	if (t.id != '(') return parse_number(tokens);
-	tokens.erase(tokens.begin(), tokens.begin() + 1);
-	auto ret = parse_expression(tokens);
-	if (!tokens.size()) throw EOF_ERROR("Expected ')'.");
-	t = tokens[0];
-	if (t.id != ')') throw ERROR("Expected ')'.", t);
-	tokens.erase(tokens.begin(), tokens.begin() + 1);
-	return ret;
+	auto toks = tokens;
+	try {
+		EAT_OP(t, toks, '(');
+		auto ret = parse_expression(toks);
+		EAT_OP(t1, toks, ')');
+		tokens = toks;
+		return ret;
+	} catch (Code_Tree err1) {
+		try {
+			auto ret = parse_number(toks);
+			tokens = toks;
+			return ret;
+		} catch (Code_Tree err2) {
+			try {
+				auto ret = parse_ident(toks);
+				tokens = toks;
+				return ret;
+			} catch (Code_Tree err3) {
+				throw Code_Tree(
+				    "Expected a parenthetical, number, or ident.",
+				    Token(ERROR, -1, -1, "Expected a parenthetical, number, or ident."),
+				    {err1, err2, err3});
+			}
+		}
+	}
 }
 
 Code_Tree parse_unary_signs(vector<Token>& tokens) {
@@ -107,13 +132,22 @@ Code_Tree parse_string(vector<Token>& tokens) {
 
 Code_Tree parse_printable(vector<Token>& tokens) {
 	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
+	auto t = tokens[0];
+	auto toks = tokens;
 	try {
-		return Code_Tree("print_i", {parse_expression(tokens)});
+		auto ret = Code_Tree("print_i", {parse_expression(toks)});
+		tokens = toks;
+		return ret;
 	} catch (Code_Tree err) {
 		try {
-			return Code_Tree("print_s", {parse_string(tokens)});
+			auto ret = Code_Tree("print_s", {parse_string(toks)});
+			tokens = toks;
+			return ret;
 		} catch (Code_Tree err2) {
-			throw Code_Tree("Error - Expected expression or string.", {err, err2});
+			throw Code_Tree(
+			    "Expected expression or string.",
+			    Token(ERROR, t.line, t.col, "Expected expression or string."),
+			    {err, err2});
 		}
 	}
 }
@@ -122,7 +156,9 @@ vector<Code_Tree> parse_printables_prime(vector<Token>& tokens,
                                          vector<Code_Tree> accumulator) {
 	try {
 		EAT_OP(t, tokens, ',');
-		accumulator.push_back(parse_printable(tokens));
+		auto toks = tokens;
+		accumulator.push_back(parse_printable(toks));
+		tokens = toks;
 		return parse_printables_prime(tokens, accumulator);
 	} catch (Code_Tree err) {
 		return accumulator;
@@ -142,25 +178,64 @@ Code_Tree parse_print_f(vector<Token>& tokens) {
 	return Code_Tree("print", t1, ret);
 }
 
+Code_Tree parse_read_f(vector<Token>& tokens) {
+	EAT_IDENT(t1, tokens, "read");
+	EAT_OP(t2, tokens, '(');
+	auto ret = parse_ident(tokens);
+	EAT_OP(t3, tokens, ')');
+	EAT_OP(t4, tokens, ';');
+	return Code_Tree("Read", t1, {ret});
+}
+
+Code_Tree parse_func_f(vector<Token>& tokens) {
+	if (!tokens.size())
+		throw EOF_ERROR("Expected a call to a function or function-like builtin");
+	auto t = tokens[0];
+	auto toks = tokens;
+	try {
+		auto ret = parse_print_f(toks);
+		tokens = toks;
+		return ret;
+	} catch (Code_Tree err1) {
+		try {
+			auto ret = parse_read_f(toks);
+			tokens = toks;
+			return ret;
+		} catch (Code_Tree err2) {
+			throw Code_Tree(
+			    "Expected a call to a function or function-like builtin",
+			    Token(ERROR, t.line, t.col,
+			          "Expected a call to a function or function-like builtin"),
+			    {err1, err2});
+		}
+	}
+}
+
 Code_Tree parse_declare(vector<Token>& tokens) {
 	EAT_IDENT(t1, tokens, "int4");
-	if (!tokens.size()) throw EOF_ERROR("Expected variable name");
-	auto t = tokens[0];
-	if (t.id != IDENT) throw ERROR("Expected variable name", t);
-	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	auto ret = parse_ident(tokens);
 	EAT_OP(t2, tokens, ';');
-	return Code_Tree("Declaration", t1, {Code_Tree("Variable", t, {})});
+	return Code_Tree("Declaration", t1, {ret});
 }
 
 Code_Tree parse_statement(vector<Token>& tokens) {
+	if (!tokens.size()) throw EOF_ERROR("Expected variable name");
+	auto t = tokens[0];
+	auto toks = tokens;
 	try {
-		return parse_print_f(tokens);
+		auto ret = parse_func_f(toks);
+		tokens = toks;
+		return ret;
 	} catch (Code_Tree err) {
 		try {
-			return parse_declare(tokens);
+			auto ret = parse_declare(toks);
+			tokens = toks;
+			return ret;
 		} catch (Code_Tree err2) {
-			throw Code_Tree("Error - Expected a \"print\" or decleration.",
-			                {err, err2});
+			throw Code_Tree(
+			    "Expected a \"print\" or decleration.",
+			    Token(ERROR, t.line, t.col, "Expected a \"print\" or decleration."),
+			    {err, err2});
 		}
 	}
 }

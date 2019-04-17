@@ -1,15 +1,19 @@
 Code tree: 
-statement block
-  variable: a
+block
+  int4
+    a
   print
-    Please input a value: 
+    print_s
+      Please input a value: 
   read
-    variable: a
+    a
   print
-    a doubled: 
-    * (mult)
-      2
-      variable: a
+    print_s
+      a doubled:
+    print_i  
+      *
+        2
+        a
 Code size: 121 bytes.
 Code execution:
 Please input a value: 234987
