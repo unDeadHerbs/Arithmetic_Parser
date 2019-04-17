@@ -28,24 +28,18 @@ int main(int argc, char* argv[]) {
 	     << endl
 	     << endl
 	     << "Parsing" << endl;  //*/
-	while (tokens.size()) {
-		auto ct = parse(tokens);
-		if (ct.t->id == ERROR) {
-			cout << "Parse Failed" << endl << ct << endl << "Restarting" << endl;
-			break;
-		}
-		cout << "Code tree: " << endl << ct;
-		cout.flush();
-		try {
-			auto prog = generate(ct);
-			cout << "Code size: " << prog.size() << " bytes." << endl
-			     << "Code execution:" << endl;
-			prog();
-			cout << endl << endl;
-		} catch (std::string err) {
-			cout << "Parsing Error : " << err << endl;
-			break;
-		}
+	auto ct = parse(tokens);
+	if (ct.t->id == ERROR) cout << "Parse Failed" << endl << ct << endl;
+	cout << "Code tree: " << endl << ct;
+	cout.flush();
+	try {
+		auto prog = generate(ct);
+		cout << "Code size: " << prog.size() << " bytes." << endl
+		     << "Code execution:" << endl;
+		prog();
+		cout << endl << endl;
+	} catch (std::string err) {
+		cout << "Parsing Error : " << err << endl;
 	}
 	cout.flush();
 }
