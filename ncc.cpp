@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
 		auto ct = parse(tokens);
 		if (ct.t->id == ERROR) {
 			cout << "Parse Failed" << endl << ct << endl << "Restarting" << endl;
-			continue;
+			break;
 		}
 		cout << "Code tree: " << endl << ct;
 		cout.flush();
@@ -44,6 +44,7 @@ int main(int argc, char* argv[]) {
 			cout << endl << endl;
 		} catch (std::string err) {
 			cout << "Parsing Error : " << err << endl;
+			break;
 		}
 	}
 	cout.flush();
