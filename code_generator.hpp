@@ -2,6 +2,7 @@
 #define __CODE_GENERATOR_HPP__
 #include "code_tree.hpp"
 #include <utility>
+#include <string.h>
 #include <memory>
 
 typedef unsigned char binary;
