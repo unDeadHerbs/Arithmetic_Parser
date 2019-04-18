@@ -29,7 +29,10 @@ int main(int argc, char* argv[]) {
 	     << endl
 	     << "Parsing" << endl;  //*/
 	auto ct = parse(tokens);
-	if (ct.t->id == ERROR) cout << "Parse Failed" << endl << ct << endl;
+	if (ct.t->id == ERROR) {
+		cout << "Parse Failed" << endl << ct << endl;
+		return 1;
+	}
 	cout << "Code tree: " << endl << ct;
 	cout.flush();
 	try {
