@@ -21,7 +21,7 @@ ls tests | sed 's/[.]\(input\|file\|output\)//' | uniq |
 	[ -e "$(echo $r | sed 's/[.].*//').bin"  ] || { echo "Unable to find $(echo $r | sed 's/[.].*//').bin" ; exit 1 ; }
 	# existance of output
 	if [ -e "tests/$r.input" ]; then
-	    cat "test/$r.input"
+	    cat "tests/$r.input"
 	fi |
 	timeout 2 "./$(echo $r|sed 's/[.].*//').bin" $([ -e "tests/$r.file" ] && \
 				 echo "tests/$r.file") 2>&1 |
