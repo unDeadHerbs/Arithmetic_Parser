@@ -1,6 +1,8 @@
 #ifndef __CODE_GENERATOR_HPP__
 #define __CODE_GENERATOR_HPP__
 #include <string.h>
+#include <algorithm>
+#include <iterator>
 #include <memory>
 #include <utility>
 #include "code_tree.hpp"
@@ -13,7 +15,7 @@ struct Env {
 	char string_table[5000];
 	char* end;
 	std::vector<program> cleanup;
-	std::vector<std::pair<std::string, sym_props>> syms;
+	std::vector</*std::pair<*/ std::string /*, sym_props>*/> syms;
 
  public:
 	Env() : string_table{0}, end(string_table) {}
@@ -23,6 +25,11 @@ struct Env {
 		while (*end++)
 			;
 		return ret;
+	}
+	int lookup(std::string sym) {
+		auto it = std::find(syms.begin(), syms.end(), sym);
+		if (it == syms.end()) throw std::string("Unable to find sym '") + sym + "'";
+		return std::distance(syms.begin(), it);
 	}
 };
 
