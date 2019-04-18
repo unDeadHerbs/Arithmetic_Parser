@@ -144,6 +144,10 @@ program generateI(Code_Tree ct, std::shared_ptr<Env> e) {
 		auto var = ct.sub_tokens[0].t->text;
 		return READ_EAX + MOV_STACK_EAX(e->lookup(var));
 	}
+	if (ct.name == "Assignment") {
+		auto var = ct.sub_tokens[0].t->text;
+		return generateI(ct.sub_tokens[1], e) + MOV_STACK_EAX(e->lookup(var));
+	}
 	throw "Bad Parse Tree - unknown '"s + ct.name + "'";
 }
 #define RETURN ((char)(0xC3))

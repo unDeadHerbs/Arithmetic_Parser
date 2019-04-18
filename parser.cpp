@@ -7,10 +7,10 @@ Code_Tree parse_expression(vector<Token>& tokens);
 #define EOF_ERROR(x) Code_Tree(Token(ERROR, -1, -1, x))
 #define ERROR(x, t) \
 	Code_Tree("ERROR", Token(ERROR, t.line, t.col, x), {Code_Tree(t)})
-#define EAT_OP(t, tokens, op)                                           \
-	if (!tokens.size()) throw EOF_ERROR(_FUN + " Expected '" + op + "'"); \
-	auto t = tokens[0];                                                   \
-	if (t.id != op) throw ERROR(_FUN + " Expected '" + op + "'", t);      \
+#define EAT_OP(t, tokens, op)                                            \
+	if (!tokens.size()) throw EOF_ERROR(_FUN + " Expected '" + #op + "'"); \
+	auto t = tokens[0];                                                    \
+	if (t.id != op) throw ERROR(_FUN + " Expected '" + #op + "'", t);      \
 	tokens.erase(tokens.begin(), tokens.begin() + 1);
 
 #define EAT_IDENT(t, tokens, str)                                        \
@@ -218,6 +218,14 @@ Code_Tree parse_declare(vector<Token>& tokens) {
 	return Code_Tree("Declaration", t1, {ret});
 }
 
+Code_Tree parse_assignment(vector<Token>& tokens) {
+	auto var = parse_ident(tokens);
+	EAT_OP(t1, tokens, ASSIGN);
+	auto val = parse_expression(tokens);
+	EAT_OP(t2, tokens, ';');
+	return Code_Tree("Assignment", t1, {var, val});
+}
+
 Code_Tree parse_statement(vector<Token>& tokens) {
 	if (!tokens.size()) throw EOF_ERROR("Expected variable name");
 	auto t = tokens[0];
@@ -232,10 +240,19 @@ Code_Tree parse_statement(vector<Token>& tokens) {
 			tokens = toks;
 			return ret;
 		} catch (Code_Tree err2) {
-			throw Code_Tree(
-			    "Expected a \"print\" or decleration.",
-			    Token(ERROR, t.line, t.col, "Expected a \"print\" or decleration."),
-			    {err, err2});
+			try {
+				auto ret = parse_assignment(toks);
+				// TODO: move assignment to being a normal operator rather than
+				// a builtin
+				tokens = toks;
+				return ret;
+			} catch (Code_Tree err3) {
+				throw Code_Tree(
+				    "Expected a function, decleration, or assignment.",
+				    Token(ERROR, t.line, t.col,
+				          "Expected a function, decleration, or assignment."),
+				    {err, err2, err3});
+			}
 		}
 	}
 }
