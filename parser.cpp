@@ -264,6 +264,16 @@ Code_Tree parse(vector<Token>& tokens) {
 	try {
 		return parse_global_block(tokens);
 	} catch (Code_Tree err) {
-		return err;
+		if (tokens.size()) {
+			auto t = tokens[0];
+			return Code_Tree("Parsing Error at " + std::to_string(t.line) + ':' +
+			                     std::to_string(t.col),
+			                 Token(ERROR, t.line, t.col,
+			                       "Parsing Error at " + std::to_string(t.line) +
+			                           ':' + std::to_string(t.col)),
+			                 {err});
+		}
+		return Code_Tree("Parsing Error - EOF",
+		                 Token(ERROR, -1, -1, "Parsing Error - EOF"), {err});
 	}
 }
