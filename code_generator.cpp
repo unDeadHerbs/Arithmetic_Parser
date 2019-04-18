@@ -10,6 +10,11 @@ namespace {
 #include <string>
 void print_int(long long int x) { std::cout << x; }
 void print_str(char* s) { std::cout << s; }
+int read_int() {
+	int x;
+	std::cin >> x;
+	return x;
+}
 }  // namespace
 
 void program::operator()() {
@@ -64,6 +69,12 @@ void program::operator()() {
 #define CALL_RSI program({((char)(0xff)), ((char)(0xd6))})
 #define PRINT_EAX_I \
 	MOV_RDI_RAX + LOADLL_RSI((long long int)print_int) + CALL_RSI
+#define READ_EAX LOADLL_RSI((long long int)read_int) + CALL_RSI
+#define MOV_EAX_STACK(d) \
+	program({((char)0x8b), ((char)0x45), ((char)((-4 * (d + 1)) & 0xff))})
+#define MOV_STACK_EAX(d) \
+	program({((char)0x89), ((char)0x45), ((char)((-4 * (d + 1)) & 0xff))})
+// mov eax,[ebp-4*d]
 
 program generateI(Code_Tree ct, std::shared_ptr<Env> e) {
 	// TODO: Those throws should get the TOKEN's name.
@@ -122,8 +133,20 @@ program generateI(Code_Tree ct, std::shared_ptr<Env> e) {
 	}
 	if (ct.name == "Declaration") {
 		e->cleanup.push_back(POP_EAX);
-		e->syms.push_back({ct.sub_tokens[0].t->text, {}});
+		e->syms.push_back(ct.sub_tokens[0].t->text);
 		return PUSH_EAX;
+	}
+	if (ct.name == "Ident") {
+		auto var = ct.t->text;
+		return MOV_EAX_STACK(e->lookup(var));
+	}
+	if (ct.name == "Read") {
+		auto var = ct.sub_tokens[0].t->text;
+		return READ_EAX + MOV_STACK_EAX(e->lookup(var));
+	}
+	if (ct.name == "Assignment") {
+		auto var = ct.sub_tokens[0].t->text;
+		return generateI(ct.sub_tokens[1], e) + MOV_STACK_EAX(e->lookup(var));
 	}
 	throw "Bad Parse Tree - unknown '"s + ct.name + "'";
 }

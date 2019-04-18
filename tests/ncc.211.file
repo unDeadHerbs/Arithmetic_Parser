@@ -1,0 +1,11 @@
+# Assignment
+
+int4 a;
+int4 b;
+
+print ("Please input a value: ");
+read(a);
+
+print("a: ", a, "\n");
+b <- 2 * a;
+print ("b: ", b, "\n");

@@ -60,7 +60,7 @@ clean: deps
 
 .PHONY: format
 format:
-	@find|egrep '.*[.](cpp|cxx|cc|c++|c|tpp|txx)$$'|sed 's/[] ()'\''\\[&;]/\\&/g'|xargs clang-format -i -style=file
+	@find|egrep '.*[.](cpp|hpp|cxx|hxx|cc|c++|c|h|tpp|txx)$$'|sed 's/[] ()'\''\\[&;]/\\&/g'|xargs clang-format -i -style=file
 	@echo "reformatted code"
 
 include $(wildcard $(DEPDIR)/*.d)
