@@ -1,0 +1,24 @@
+Code tree: 
+statement block
+  variable: i
+  while
+    <
+      variable: i
+      10
+    statement block
+      print
+        variable: i
+         
+      <-
+        variable: i
+        + (add)
+          variable: i
+          1
+  print
+    
+
+Code size: 151 bytes.
+Code execution:
+0 1 2 3 4 5 6 7 8 9 
+
+

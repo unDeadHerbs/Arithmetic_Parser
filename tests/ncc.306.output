@@ -1,0 +1,96 @@
+Code tree: 
+statement block
+  print
+    Not true is  
+    not
+      true
+    
+
+  print
+    Not false is 
+    not
+      false
+    
+
+  variable: a
+  variable: b
+  <-
+    variable: a
+    15
+  <-
+    variable: b
+    25
+  print
+    a: 
+    variable: a
+    
+
+  print
+    b: 
+    variable: b
+    
+
+  print
+    Is a >= 10 and b >= 10? 
+    and
+      not
+        <
+          variable: a
+          10
+      not
+        <
+          variable: b
+          10
+    
+
+  print
+    Is a >= 20 and b >= 10? 
+    and
+      not
+        <
+          variable: a
+          20
+      not
+        <
+          variable: b
+          10
+    
+
+  print
+    Is a >= 10 and b >= 30? 
+    and
+      not
+        <
+          variable: a
+          10
+      not
+        <
+          variable: b
+          30
+    
+
+  print
+    Is a >= 20 and b >= 30? 
+    and
+      not
+        <
+          variable: a
+          20
+      not
+        <
+          variable: b
+          30
+    
+
+Code size: 833 bytes.
+Code execution:
+Not true is  false
+Not false is true
+a: 15
+b: 25
+Is a >= 10 and b >= 10? true
+Is a >= 20 and b >= 10? false
+Is a >= 10 and b >= 30? false
+Is a >= 20 and b >= 30? false
+
+

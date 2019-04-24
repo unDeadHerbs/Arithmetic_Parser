@@ -1,0 +1,45 @@
+# If / else decisions
+
+
+int4 a;
+int4 b;
+
+print("Input a value for a: ");
+read(a);
+
+print("Input a value for b: ");
+read(b);
+
+print("a: ", a, "  b: ", b, "\n");
+
+if(a < b)
+  print("a is less than b\n");
+else
+  print("a is not less than b\n");
+
+
+if ( a>b )
+  print("a is greater than b\n");
+else
+  print("a is not greater than b\n");
+
+
+if(a <= b)
+  print("a is less than or equal to b\n");
+else
+  print("a is not less than or equal to b\n");
+
+if ( a>=b )
+  print("a is greater than or equal to b\n");
+else
+  print("a is not greater than or equal to b\n");
+  
+if( a = b)
+  print("a is equal to b\n");
+else
+  print("a is not equal to b\n");
+
+if( a~= b)
+  print("a is not equal to b\n");
+else
+  print ("a is not not equal to b\n");

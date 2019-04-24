@@ -1,0 +1,226 @@
+Code tree: 
+statement block
+  variable: a
+  variable: b
+  variable: c
+  variable: d
+  variable: e
+  variable: f
+  variable: g
+  variable: h
+  variable: i
+  variable: k
+  variable: l
+  variable: m
+  variable: n
+  variable: p
+  variable: year
+  print
+    This program calculates the date of Easter for the Gregorian calendar
+
+  print
+    (1583 on).
+
+
+  print
+    Please enter a year (< 0 to quit): 
+  read
+    variable: year
+  while
+    <=
+      variable: year
+      0
+    statement block
+      if
+        <=
+          variable: year
+          1583
+        print
+          Inavlid year.  Must be greater than 1582.
+
+        statement block
+          <-
+            variable: a
+            mod
+              variable: year
+              19
+          <-
+            variable: b
+            / (div)
+              variable: year
+              100
+          <-
+            variable: c
+            mod
+              variable: year
+              100
+          <-
+            variable: d
+            / (div)
+              variable: b
+              4
+          <-
+            variable: e
+            mod
+              variable: b
+              4
+          <-
+            variable: f
+            / (div)
+              + (add)
+                variable: b
+                8
+              25
+          <-
+            variable: g
+            / (div)
+              + (add)
+                - (sub)
+                  variable: b
+                  variable: f
+                1
+              3
+          <-
+            variable: h
+            mod
+              + (add)
+                - (sub)
+                  - (sub)
+                    + (add)
+                      * (mult)
+                        19
+                        variable: a
+                      variable: b
+                    variable: d
+                  variable: g
+                15
+              30
+          <-
+            variable: i
+            / (div)
+              variable: c
+              4
+          <-
+            variable: k
+            mod
+              variable: c
+              4
+          <-
+            variable: l
+            mod
+              - (sub)
+                - (sub)
+                  + (add)
+                    + (add)
+                      32
+                      * (mult)
+                        2
+                        variable: e
+                    * (mult)
+                      2
+                      variable: i
+                  variable: h
+                variable: k
+              7
+          <-
+            variable: m
+            / (div)
+              + (add)
+                + (add)
+                  variable: a
+                  * (mult)
+                    11
+                    variable: h
+                * (mult)
+                  22
+                  variable: l
+              451
+          <-
+            variable: n
+            / (div)
+              + (add)
+                - (sub)
+                  + (add)
+                    variable: h
+                    variable: l
+                  * (mult)
+                    7
+                    variable: m
+                114
+              31
+          <-
+            variable: p
+            mod
+              + (add)
+                - (sub)
+                  + (add)
+                    variable: h
+                    variable: l
+                  * (mult)
+                    7
+                    variable: m
+                114
+              31
+          print
+            Easter Sunday 
+            variable: year
+             is 
+            + (add)
+              variable: p
+              1
+          if
+            =
+              variable: n
+              3
+            print
+               March.
+
+
+            if
+              =
+                variable: n
+                4
+              print
+                 April.
+
+
+              print
+                Inavlid month: 
+                variable: m
+                
+
+      print
+        Please enter a year (< 0 to quit): 
+      read
+        variable: year
+      <-
+        variable: i
+        + (add)
+          variable: i
+          1
+  print
+    Exiting...
+
+Code size: 1623 bytes.
+Code execution:
+This program calculates the date of Easter for the Gregorian calendar
+(1583 on).
+
+Please enter a year (< 0 to quit): 1066
+Inavlid year.  Must be greater than 1582.
+Please enter a year (< 0 to quit): 1999
+Easter Sunday 1999 is 4 April.
+
+Please enter a year (< 0 to quit): 2000
+Easter Sunday 2000 is 23 April.
+
+Please enter a year (< 0 to quit): 2001
+Easter Sunday 2001 is 15 April.
+
+Please enter a year (< 0 to quit): 2019
+Easter Sunday 2019 is 21 April.
+
+Please enter a year (< 0 to quit): -2
+Exiting...
+
+

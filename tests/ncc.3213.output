@@ -1,0 +1,92 @@
+Code tree: 
+statement block
+  variable: a
+  variable: b
+  print
+    Input a value for a: 
+  read
+    variable: a
+  print
+    Input a value for b: 
+  read
+    variable: b
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+    
+
+  if
+    <
+      variable: a
+      variable: b
+    print
+      a is less than b
+
+    print
+      a is not less than b
+
+  if
+    <
+      variable: a
+      variable: b
+    print
+      a is greater than b
+
+    print
+      a is not greater than b
+
+  if
+    <=
+      variable: a
+      variable: b
+    print
+      a is less than or equal to b
+
+    print
+      a is not less than or equal to b
+
+  if
+    <=
+      variable: a
+      variable: b
+    print
+      a is greater than or equal to b
+
+    print
+      a is not greater than or equal to b
+
+  if
+    =
+      variable: a
+      variable: b
+    print
+      a is equal to b
+
+    print
+      a is not equal to b
+
+  if
+    ~=
+      variable: a
+      variable: b
+    print
+      a is not equal to b
+
+    print
+      a is not not equal to b
+
+Code size: 757 bytes.
+Code execution:
+Input a value for a: 3
+Input a value for b: 3
+a: 3  b: 3
+a is not less than b
+a is not greater than b
+a is less than or equal to b
+a is greater than or equal to b
+a is equal to b
+a is not not equal to b
+
+

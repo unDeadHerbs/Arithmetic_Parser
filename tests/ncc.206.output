@@ -1,9 +1,0 @@
-Code tree: 
-block
-  print
-    print_s
-      Hello
-Code size: 23 bytes.
-Code execution:
-Hello
-

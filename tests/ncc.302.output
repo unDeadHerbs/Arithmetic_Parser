@@ -1,0 +1,34 @@
+Code tree: 
+statement block
+  variable: a
+  variable: b
+  <-
+    variable: a
+    3
+  <-
+    variable: b
+    4
+  print
+    Is 
+    variable: a
+     < 
+    variable: b
+    ? 
+    <
+      variable: a
+      variable: b
+    
+
+  <-
+    variable: a
+    - (neg)
+      3
+  <-
+    variable: b
+    - (neg)
+      4
+Code size: 295 bytes.
+Code execution:
+Is 3 < 4? true
+
+

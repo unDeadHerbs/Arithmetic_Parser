@@ -1,0 +1,4 @@
+# Boolean constants
+
+print("The true  value is ", true,  "\n");
+print("The false value is ", false, "\n");

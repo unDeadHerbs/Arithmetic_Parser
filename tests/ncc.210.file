@@ -1,7 +1,0 @@
-# Read
-
-int4 a;
-
-print ("Please input a value: ");
-read(a);
-print ("a doubled: ", 2 * a);

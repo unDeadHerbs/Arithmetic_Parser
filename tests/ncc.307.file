@@ -1,0 +1,192 @@
+# Logical sequences
+
+
+int4 a;
+int4 b;
+int4 c;
+int4 d;
+
+print("The following expression should be true if exactly two of the four\n",
+ "variables have the same value.\n");
+
+a <- 15;
+b <- 25;
+c <- 35;
+d <- 45;
+
+print("a: ", a, "  b: ", b, "  c: ", c, "  d: ", d, "  expr: ",
+(a = b | b = c | a = c | a = d | b = d | c = d)  & !(
+(a = b & a = c) | (a = b & b = d) | (b = c & b = d) | (a = c & c = d)),
+ "\n");
+
+# a = b
+a <- 25;
+print("a: ", a, "  b: ", b, "  c: ", c, "  d: ", d, "  expr: ",
+(a = b | b = c | a = c | a = d | b = d | c = d)  & !(
+(a = b & a = c) | (a = b & b = d) | (b = c & b = d) | (a = c & c = d)),
+ "\n");
+
+# a = c
+a <- 35;
+print("a: ", a, "  b: ", b, "  c: ", c, "  d: ", d, "  expr: ",
+(a = b | b = c | a = c | a = d | b = d | c = d)  & !(
+(a = b & a = c) | (a = b & b = d) | (b = c & b = d) | (a = c & c = d)),
+ "\n");
+
+
+# a = d
+a <- 45;
+print("a: ", a, "  b: ", b, "  c: ", c, "  d: ", d, "  expr: ",
+(a = b | b = c | a = c | a = d | b = d | c = d)  & !(
+(a = b & a = c) | (a = b & b = d) | (b = c & b = d) | (a = c & c = d)),
+ "\n");
+
+
+# b = c
+a <- 15;
+b <- 35;
+print("a: ", a, "  b: ", b, "  c: ", c, "  d: ", d, "  expr: ",
+(a = b | b = c | a = c | a = d | b = d | c = d)  & !(
+(a = b & a = c) | (a = b & b = d) | (b = c & b = d) | (a = c & c = d)),
+ "\n");
+
+# b = d
+b <- 45;
+print("a: ", a, "  b: ", b, "  c: ", c, "  d: ", d, "  expr: ",
+(a = b | b = c | a = c | a = d | b = d | c = d)  & !(
+(a = b & a = c) | (a = b & b = d) | (b = c & b = d) | (a = c & c = d)),
+ "\n");
+
+# c = d
+b <- 25;
+c <- 45;
+print("a: ", a, "  b: ", b, "  c: ", c, "  d: ", d, "  expr: ",
+(a = b | b = c | a = c | a = d | b = d | c = d)  & !(
+(a = b & a = c) | (a = b & b = d) | (b = c & b = d) | (a = c & c = d)),
+ "\n");
+
+# a = b = c
+a <- 15;
+b <- a;
+c <- b;
+print("a: ", a, "  b: ", b, "  c: ", c, "  d: ", d, "  expr: ",
+(a = b | b = c | a = c | a = d | b = d | c = d)  & !(
+(a = b & a = c) | (a = b & b = d) | (b = c & b = d) | (a = c & c = d)),
+ "\n");
+
+# a = b = d
+c <- 35;
+d <- a;
+print("a: ", a, "  b: ", b, "  c: ", c, "  d: ", d, "  expr: ",
+(a = b | b = c | a = c | a = d | b = d | c = d)  & !(
+(a = b & a = c) | (a = b & b = d) | (b = c & b = d) | (a = c & c = d)),
+ "\n");
+
+# a = c = d
+b <- 25;
+c <- d;
+print("a: ", a, "  b: ", b, "  c: ", c, "  d: ", d, "  expr: ",
+(a = b | b = c | a = c | a = d | b = d | c = d)  & !(
+(a = b & a = c) | (a = b & b = d) | (b = c & b = d) | (a = c & c = d)),
+ "\n");
+
+# b = c = d
+b<- c;
+a<-25;
+print("a: ", a, "  b: ", b, "  c: ", c, "  d: ", d, "  expr: ",
+(a = b | b = c | a = c | a = d | b = d | c = d)  & !(
+(a = b & a = c) | (a = b & b = d) | (b = c & b = d) | (a = c & c = d)),
+ "\n");
+
+print("The following expressions should be identical to the ones above\n",
+  "even though they are calculated differently.\n");
+  
+a <- 15;
+b <- 25;
+c <- 35;
+d <- 45;
+
+print("a: ", a, "  b: ", b, "  c: ", c, "  d: ", d, "  expr: ",
+!(a ~= b & b ~= c & a ~= c & a ~= d & b ~= d & c ~= d)  & (
+(a ~= b | a ~= c) & (a ~= b | b ~= d) & (b ~= c | b ~= d) & (a ~= c | c ~= d)),
+ "\n");
+
+# a = b
+a <- 25;
+print("a: ", a, "  b: ", b, "  c: ", c, "  d: ", d, "  expr: ",
+!(a ~= b & b ~= c & a ~= c & a ~= d & b ~= d & c ~= d)  & (
+(a ~= b | a ~= c) & (a ~= b | b ~= d) & (b ~= c | b ~= d) & (a ~= c | c ~= d)),
+ "\n");
+
+# a = c
+a <- 35;
+print("a: ", a, "  b: ", b, "  c: ", c, "  d: ", d, "  expr: ",
+!(a ~= b & b ~= c & a ~= c & a ~= d & b ~= d & c ~= d)  & (
+(a ~= b | a ~= c) & (a ~= b | b ~= d) & (b ~= c | b ~= d) & (a ~= c | c ~= d)),
+ "\n");
+
+
+# a = d
+a <- 45;
+print("a: ", a, "  b: ", b, "  c: ", c, "  d: ", d, "  expr: ",
+!(a ~= b & b ~= c & a ~= c & a ~= d & b ~= d & c ~= d)  & (
+(a ~= b | a ~= c) & (a ~= b | b ~= d) & (b ~= c | b ~= d) & (a ~= c | c ~= d)),
+ "\n");
+
+
+# b = c
+a <- 15;
+b <- 35;
+print("a: ", a, "  b: ", b, "  c: ", c, "  d: ", d, "  expr: ",
+!(a ~= b & b ~= c & a ~= c & a ~= d & b ~= d & c ~= d)  & (
+(a ~= b | a ~= c) & (a ~= b | b ~= d) & (b ~= c | b ~= d) & (a ~= c | c ~= d)),
+ "\n");
+
+# b = d
+b <- 45;
+print("a: ", a, "  b: ", b, "  c: ", c, "  d: ", d, "  expr: ",
+!(a ~= b & b ~= c & a ~= c & a ~= d & b ~= d & c ~= d)  & (
+(a ~= b | a ~= c) & (a ~= b | b ~= d) & (b ~= c | b ~= d) & (a ~= c | c ~= d)),
+ "\n");
+
+# c = d
+b <- 25;
+c <- 45;
+print("a: ", a, "  b: ", b, "  c: ", c, "  d: ", d, "  expr: ",
+!(a ~= b & b ~= c & a ~= c & a ~= d & b ~= d & c ~= d)  & (
+(a ~= b | a ~= c) & (a ~= b | b ~= d) & (b ~= c | b ~= d) & (a ~= c | c ~= d)),
+ "\n");
+
+# a = b = c
+a <- 15;
+b <- a;
+c <- b;
+print("a: ", a, "  b: ", b, "  c: ", c, "  d: ", d, "  expr: ",
+!(a ~= b & b ~= c & a ~= c & a ~= d & b ~= d & c ~= d)  & (
+(a ~= b | a ~= c) & (a ~= b | b ~= d) & (b ~= c | b ~= d) & (a ~= c | c ~= d)),
+ "\n");
+
+# a = b = d
+c <- 35;
+d <- a;
+print("a: ", a, "  b: ", b, "  c: ", c, "  d: ", d, "  expr: ",
+!(a ~= b & b ~= c & a ~= c & a ~= d & b ~= d & c ~= d)  & (
+(a ~= b | a ~= c) & (a ~= b | b ~= d) & (b ~= c | b ~= d) & (a ~= c | c ~= d)),
+ "\n");
+
+# a = c = d
+b <- 25;
+c <- d;
+print("a: ", a, "  b: ", b, "  c: ", c, "  d: ", d, "  expr: ",
+!(a ~= b & b ~= c & a ~= c & a ~= d & b ~= d & c ~= d)  & (
+(a ~= b | a ~= c) & (a ~= b | b ~= d) & (b ~= c | b ~= d) & (a ~= c | c ~= d)),
+ "\n");
+
+
+# b = c = d
+b<- c;
+a<-25;
+print("a: ", a, "  b: ", b, "  c: ", c, "  d: ", d, "  expr: ",
+!(a ~= b & b ~= c & a ~= c & a ~= d & b ~= d & c ~= d)  & (
+(a ~= b | a ~= c) & (a ~= b | b ~= d) & (b ~= c | b ~= d) & (a ~= c | c ~= d)),
+ "\n");

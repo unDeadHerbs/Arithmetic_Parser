@@ -1,0 +1,335 @@
+Code tree: 
+statement block
+  variable: a
+  variable: b
+  <-
+    variable: a
+    3
+  <-
+    variable: b
+    4
+  print
+    Is 
+    variable: a
+     < 
+    variable: b
+    ? 
+    <
+      variable: a
+      variable: b
+    
+
+  print
+    Is 
+    variable: a
+     <= 
+    variable: b
+    ? 
+    <=
+      variable: a
+      variable: b
+    
+
+  print
+    Is 
+    variable: a
+     > 
+    variable: b
+    ? 
+    <
+      variable: a
+      variable: b
+    
+
+  print
+    Is 
+    variable: a
+     >= 
+    variable: b
+    ? 
+    <=
+      variable: a
+      variable: b
+    
+
+  print
+    Is 
+    variable: a
+     = 
+    variable: b
+    ? 
+    =
+      variable: a
+      variable: b
+    
+
+  print
+    Is 
+    variable: a
+     ~= 
+    variable: b
+    ? 
+    ~=
+      variable: a
+      variable: b
+    
+
+  print
+    
+
+  <-
+    variable: a
+    - (neg)
+      3
+  <-
+    variable: b
+    - (neg)
+      4
+  print
+    Is 
+    variable: a
+     < 
+    variable: b
+    ? 
+    <
+      variable: a
+      variable: b
+    
+
+  print
+    Is 
+    variable: a
+     <= 
+    variable: b
+    ? 
+    <=
+      variable: a
+      variable: b
+    
+
+  print
+    Is 
+    variable: a
+     > 
+    variable: b
+    ? 
+    <
+      variable: a
+      variable: b
+    
+
+  print
+    Is 
+    variable: a
+     >= 
+    variable: b
+    ? 
+    <=
+      variable: a
+      variable: b
+    
+
+  print
+    Is 
+    variable: a
+     = 
+    variable: b
+    ? 
+    =
+      variable: a
+      variable: b
+    
+
+  print
+    Is 
+    variable: a
+     ~= 
+    variable: b
+    ? 
+    ~=
+      variable: a
+      variable: b
+    
+
+  print
+    
+
+  <-
+    variable: a
+    3
+  <-
+    variable: b
+    - (neg)
+      4
+  print
+    Is 
+    variable: a
+     < 
+    variable: b
+    ? 
+    <
+      variable: a
+      variable: b
+    
+
+  print
+    Is 
+    variable: a
+     <= 
+    variable: b
+    ? 
+    <=
+      variable: a
+      variable: b
+    
+
+  print
+    Is 
+    variable: a
+     > 
+    variable: b
+    ? 
+    <
+      variable: a
+      variable: b
+    
+
+  print
+    Is 
+    variable: a
+     >= 
+    variable: b
+    ? 
+    <=
+      variable: a
+      variable: b
+    
+
+  print
+    Is 
+    variable: a
+     = 
+    variable: b
+    ? 
+    =
+      variable: a
+      variable: b
+    
+
+  print
+    Is 
+    variable: a
+     ~= 
+    variable: b
+    ? 
+    ~=
+      variable: a
+      variable: b
+    
+
+  print
+    
+
+  <-
+    variable: a
+    3
+  <-
+    variable: b
+    3
+  print
+    Is 
+    variable: a
+     < 
+    variable: b
+    ? 
+    <
+      variable: a
+      variable: b
+    
+
+  print
+    Is 
+    variable: a
+     <= 
+    variable: b
+    ? 
+    <=
+      variable: a
+      variable: b
+    
+
+  print
+    Is 
+    variable: a
+     > 
+    variable: b
+    ? 
+    <
+      variable: a
+      variable: b
+    
+
+  print
+    Is 
+    variable: a
+     >= 
+    variable: b
+    ? 
+    <=
+      variable: a
+      variable: b
+    
+
+  print
+    Is 
+    variable: a
+     = 
+    variable: b
+    ? 
+    =
+      variable: a
+      variable: b
+    
+
+  print
+    Is 
+    variable: a
+     ~= 
+    variable: b
+    ? 
+    ~=
+      variable: a
+      variable: b
+    
+
+Code size: 4899 bytes.
+Code execution:
+Is 3 < 4? true
+Is 3 <= 4? true
+Is 3 > 4? false
+Is 3 >= 4? false
+Is 3 = 4? false
+Is 3 ~= 4? true
+
+Is -3 < -4? false
+Is -3 <= -4? false
+Is -3 > -4? true
+Is -3 >= -4? true
+Is -3 = -4? false
+Is -3 ~= -4? true
+
+Is 3 < -4? false
+Is 3 <= -4? false
+Is 3 > -4? true
+Is 3 >= -4? true
+Is 3 = -4? false
+Is 3 ~= -4? true
+
+Is 3 < 3? false
+Is 3 <= 3? true
+Is 3 > 3? false
+Is 3 >= 3? true
+Is 3 = 3? true
+Is 3 ~= 3? false
+
+

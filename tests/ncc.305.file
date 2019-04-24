@@ -1,0 +1,14 @@
+# Logical AND
+
+int4 a;
+int4 b;
+
+a <- 15;
+b <- 25;
+
+print("a: ", a, "\n");
+print("b: ", b, "\n");
+print("Is a < 10 and b < 10? ", a < 10 & b < 10, "\n");
+print("Is a < 20 and b < 10? ", a < 20 & b < 10, "\n");
+print("Is a < 10 and b < 30? ", a < 10 & b < 30, "\n");
+print("Is a < 20 and b < 30? ", a < 20 & b < 30, "\n");

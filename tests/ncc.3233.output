@@ -1,0 +1,243 @@
+Code tree: 
+statement block
+  print
+    This program converts a number to roman numerals
+
+
+  print
+    Please enter a number between 1 and 3999: 
+  variable: number
+  read
+    variable: number
+  if
+    or
+      <
+        variable: number
+        1
+      <
+        variable: number
+        3999
+    print
+      Invalid number... Exiting.
+
+    statement block
+      variable: thousands
+      <-
+        variable: thousands
+        / (div)
+          variable: number
+          1000
+      <-
+        variable: number
+        mod
+          variable: number
+          1000
+      if
+        =
+          variable: thousands
+          1
+        print
+          M
+        if
+          =
+            variable: thousands
+            2
+          print
+            MM
+          if
+            =
+              variable: thousands
+              3
+            print
+              MMM
+      variable: hundreds
+      <-
+        variable: hundreds
+        / (div)
+          variable: number
+          100
+      <-
+        variable: number
+        mod
+          variable: number
+          100
+      if
+        =
+          variable: hundreds
+          1
+        print
+          C
+        if
+          =
+            variable: hundreds
+            2
+          print
+            CC
+          if
+            =
+              variable: hundreds
+              3
+            print
+              CCC
+            if
+              =
+                variable: hundreds
+                4
+              print
+                CD
+              if
+                =
+                  variable: hundreds
+                  5
+                print
+                  D
+                if
+                  =
+                    variable: hundreds
+                    6
+                  print
+                    DC
+                  if
+                    =
+                      variable: hundreds
+                      7
+                    print
+                      DCC
+                    if
+                      =
+                        variable: hundreds
+                        8
+                      print
+                        DCCC
+                      if
+                        =
+                          variable: hundreds
+                          9
+                        print
+                          CM
+      variable: tens
+      <-
+        variable: tens
+        / (div)
+          variable: number
+          10
+      <-
+        variable: number
+        mod
+          variable: number
+          10
+      if
+        =
+          variable: tens
+          1
+        print
+          X
+        if
+          =
+            variable: tens
+            2
+          print
+            XX
+          if
+            =
+              variable: tens
+              3
+            print
+              XXX
+            if
+              =
+                variable: tens
+                4
+              print
+                XL
+              if
+                =
+                  variable: tens
+                  5
+                print
+                  L
+                if
+                  =
+                    variable: tens
+                    6
+                  print
+                    LX
+                  if
+                    =
+                      variable: tens
+                      7
+                    print
+                      LXX
+                    if
+                      =
+                        variable: tens
+                        8
+                      print
+                        LXXX
+                      if
+                        =
+                          variable: tens
+                          9
+                        print
+                          XC
+      if
+        =
+          variable: number
+          1
+        print
+          I
+        if
+          =
+            variable: number
+            2
+          print
+            II
+          if
+            =
+              variable: number
+              3
+            print
+              III
+            if
+              =
+                variable: number
+                4
+              print
+                IV
+              if
+                =
+                  variable: number
+                  5
+                print
+                  V
+                if
+                  =
+                    variable: number
+                    6
+                  print
+                    VI
+                  if
+                    =
+                      variable: number
+                      7
+                    print
+                      VII
+                    if
+                      =
+                        variable: number
+                        8
+                      print
+                        VIII
+                      if
+                        =
+                          variable: number
+                          9
+                        print
+                          IX
+Code size: 2093 bytes.
+Code execution:
+This program converts a number to roman numerals
+
+Please enter a number between 1 and 3999: 144
+CXLIV
+

@@ -1,0 +1,18 @@
+Code tree: 
+statement block
+  print
+    The true  value is 
+    true
+    
+
+  print
+    The false value is 
+    false
+    
+
+Code size: 137 bytes.
+Code execution:
+The true  value is true
+The false value is false
+
+

@@ -1,0 +1,74 @@
+Code tree: 
+statement block
+  variable: a
+  variable: b
+  <-
+    variable: a
+    15
+  <-
+    variable: b
+    25
+  print
+    a: 
+    variable: a
+    
+
+  print
+    b: 
+    variable: b
+    
+
+  print
+    Is a < 10 and b < 10? 
+    and
+      <
+        variable: a
+        10
+      <
+        variable: b
+        10
+    
+
+  print
+    Is a < 20 and b < 10? 
+    and
+      <
+        variable: a
+        20
+      <
+        variable: b
+        10
+    
+
+  print
+    Is a < 10 and b < 30? 
+    and
+      <
+        variable: a
+        10
+      <
+        variable: b
+        30
+    
+
+  print
+    Is a < 20 and b < 30? 
+    and
+      <
+        variable: a
+        20
+      <
+        variable: b
+        30
+    
+
+Code size: 677 bytes.
+Code execution:
+a: 15
+b: 25
+Is a < 10 and b < 10? false
+Is a < 20 and b < 10? false
+Is a < 10 and b < 30? false
+Is a < 20 and b < 30? true
+
+

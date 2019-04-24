@@ -1,5 +1,0 @@
-# print statement
-
-print( "Hello,", " World!", "\n" );
-
-print( "The value of 3x3 is ", 3*3, "\n");

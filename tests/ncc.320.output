@@ -1,0 +1,45 @@
+Code tree: 
+statement block
+  variable: a
+  variable: b
+  <-
+    variable: a
+    15
+  <-
+    variable: b
+    25
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+    
+
+  if
+    <
+      variable: a
+      variable: b
+    print
+      Inside body of decision 1.
+
+  print
+    Outside body of decision 1.
+
+  if
+    <
+      variable: a
+      variable: b
+    print
+      Inside body of decision 2.
+
+  print
+    Outside body of decision 2.
+
+Code size: 351 bytes.
+Code execution:
+a: 15  b: 25
+Inside body of decision 1.
+Outside body of decision 1.
+Outside body of decision 2.
+
+

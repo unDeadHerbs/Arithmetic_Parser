@@ -1,0 +1,1668 @@
+Code tree: 
+statement block
+  variable: a
+  variable: b
+  variable: c
+  variable: d
+  print
+    The following expression should be true if exactly two of the four
+
+    variables have the same value.
+
+  <-
+    variable: a
+    15
+  <-
+    variable: b
+    25
+  <-
+    variable: c
+    35
+  <-
+    variable: d
+    45
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+      c: 
+    variable: c
+      d: 
+    variable: d
+      expr: 
+    and
+      or
+        or
+          or
+            or
+              or
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: b
+                  variable: c
+              =
+                variable: a
+                variable: c
+            =
+              variable: a
+              variable: d
+          =
+            variable: b
+            variable: d
+        =
+          variable: c
+          variable: d
+      not
+        or
+          or
+            or
+              and
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: a
+                  variable: c
+              and
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: b
+                  variable: d
+            and
+              =
+                variable: b
+                variable: c
+              =
+                variable: b
+                variable: d
+          and
+            =
+              variable: a
+              variable: c
+            =
+              variable: c
+              variable: d
+    
+
+  <-
+    variable: a
+    25
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+      c: 
+    variable: c
+      d: 
+    variable: d
+      expr: 
+    and
+      or
+        or
+          or
+            or
+              or
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: b
+                  variable: c
+              =
+                variable: a
+                variable: c
+            =
+              variable: a
+              variable: d
+          =
+            variable: b
+            variable: d
+        =
+          variable: c
+          variable: d
+      not
+        or
+          or
+            or
+              and
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: a
+                  variable: c
+              and
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: b
+                  variable: d
+            and
+              =
+                variable: b
+                variable: c
+              =
+                variable: b
+                variable: d
+          and
+            =
+              variable: a
+              variable: c
+            =
+              variable: c
+              variable: d
+    
+
+  <-
+    variable: a
+    35
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+      c: 
+    variable: c
+      d: 
+    variable: d
+      expr: 
+    and
+      or
+        or
+          or
+            or
+              or
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: b
+                  variable: c
+              =
+                variable: a
+                variable: c
+            =
+              variable: a
+              variable: d
+          =
+            variable: b
+            variable: d
+        =
+          variable: c
+          variable: d
+      not
+        or
+          or
+            or
+              and
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: a
+                  variable: c
+              and
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: b
+                  variable: d
+            and
+              =
+                variable: b
+                variable: c
+              =
+                variable: b
+                variable: d
+          and
+            =
+              variable: a
+              variable: c
+            =
+              variable: c
+              variable: d
+    
+
+  <-
+    variable: a
+    45
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+      c: 
+    variable: c
+      d: 
+    variable: d
+      expr: 
+    and
+      or
+        or
+          or
+            or
+              or
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: b
+                  variable: c
+              =
+                variable: a
+                variable: c
+            =
+              variable: a
+              variable: d
+          =
+            variable: b
+            variable: d
+        =
+          variable: c
+          variable: d
+      not
+        or
+          or
+            or
+              and
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: a
+                  variable: c
+              and
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: b
+                  variable: d
+            and
+              =
+                variable: b
+                variable: c
+              =
+                variable: b
+                variable: d
+          and
+            =
+              variable: a
+              variable: c
+            =
+              variable: c
+              variable: d
+    
+
+  <-
+    variable: a
+    15
+  <-
+    variable: b
+    35
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+      c: 
+    variable: c
+      d: 
+    variable: d
+      expr: 
+    and
+      or
+        or
+          or
+            or
+              or
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: b
+                  variable: c
+              =
+                variable: a
+                variable: c
+            =
+              variable: a
+              variable: d
+          =
+            variable: b
+            variable: d
+        =
+          variable: c
+          variable: d
+      not
+        or
+          or
+            or
+              and
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: a
+                  variable: c
+              and
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: b
+                  variable: d
+            and
+              =
+                variable: b
+                variable: c
+              =
+                variable: b
+                variable: d
+          and
+            =
+              variable: a
+              variable: c
+            =
+              variable: c
+              variable: d
+    
+
+  <-
+    variable: b
+    45
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+      c: 
+    variable: c
+      d: 
+    variable: d
+      expr: 
+    and
+      or
+        or
+          or
+            or
+              or
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: b
+                  variable: c
+              =
+                variable: a
+                variable: c
+            =
+              variable: a
+              variable: d
+          =
+            variable: b
+            variable: d
+        =
+          variable: c
+          variable: d
+      not
+        or
+          or
+            or
+              and
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: a
+                  variable: c
+              and
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: b
+                  variable: d
+            and
+              =
+                variable: b
+                variable: c
+              =
+                variable: b
+                variable: d
+          and
+            =
+              variable: a
+              variable: c
+            =
+              variable: c
+              variable: d
+    
+
+  <-
+    variable: b
+    25
+  <-
+    variable: c
+    45
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+      c: 
+    variable: c
+      d: 
+    variable: d
+      expr: 
+    and
+      or
+        or
+          or
+            or
+              or
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: b
+                  variable: c
+              =
+                variable: a
+                variable: c
+            =
+              variable: a
+              variable: d
+          =
+            variable: b
+            variable: d
+        =
+          variable: c
+          variable: d
+      not
+        or
+          or
+            or
+              and
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: a
+                  variable: c
+              and
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: b
+                  variable: d
+            and
+              =
+                variable: b
+                variable: c
+              =
+                variable: b
+                variable: d
+          and
+            =
+              variable: a
+              variable: c
+            =
+              variable: c
+              variable: d
+    
+
+  <-
+    variable: a
+    15
+  <-
+    variable: b
+    variable: a
+  <-
+    variable: c
+    variable: b
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+      c: 
+    variable: c
+      d: 
+    variable: d
+      expr: 
+    and
+      or
+        or
+          or
+            or
+              or
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: b
+                  variable: c
+              =
+                variable: a
+                variable: c
+            =
+              variable: a
+              variable: d
+          =
+            variable: b
+            variable: d
+        =
+          variable: c
+          variable: d
+      not
+        or
+          or
+            or
+              and
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: a
+                  variable: c
+              and
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: b
+                  variable: d
+            and
+              =
+                variable: b
+                variable: c
+              =
+                variable: b
+                variable: d
+          and
+            =
+              variable: a
+              variable: c
+            =
+              variable: c
+              variable: d
+    
+
+  <-
+    variable: c
+    35
+  <-
+    variable: d
+    variable: a
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+      c: 
+    variable: c
+      d: 
+    variable: d
+      expr: 
+    and
+      or
+        or
+          or
+            or
+              or
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: b
+                  variable: c
+              =
+                variable: a
+                variable: c
+            =
+              variable: a
+              variable: d
+          =
+            variable: b
+            variable: d
+        =
+          variable: c
+          variable: d
+      not
+        or
+          or
+            or
+              and
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: a
+                  variable: c
+              and
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: b
+                  variable: d
+            and
+              =
+                variable: b
+                variable: c
+              =
+                variable: b
+                variable: d
+          and
+            =
+              variable: a
+              variable: c
+            =
+              variable: c
+              variable: d
+    
+
+  <-
+    variable: b
+    25
+  <-
+    variable: c
+    variable: d
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+      c: 
+    variable: c
+      d: 
+    variable: d
+      expr: 
+    and
+      or
+        or
+          or
+            or
+              or
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: b
+                  variable: c
+              =
+                variable: a
+                variable: c
+            =
+              variable: a
+              variable: d
+          =
+            variable: b
+            variable: d
+        =
+          variable: c
+          variable: d
+      not
+        or
+          or
+            or
+              and
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: a
+                  variable: c
+              and
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: b
+                  variable: d
+            and
+              =
+                variable: b
+                variable: c
+              =
+                variable: b
+                variable: d
+          and
+            =
+              variable: a
+              variable: c
+            =
+              variable: c
+              variable: d
+    
+
+  <-
+    variable: b
+    variable: c
+  <-
+    variable: a
+    25
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+      c: 
+    variable: c
+      d: 
+    variable: d
+      expr: 
+    and
+      or
+        or
+          or
+            or
+              or
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: b
+                  variable: c
+              =
+                variable: a
+                variable: c
+            =
+              variable: a
+              variable: d
+          =
+            variable: b
+            variable: d
+        =
+          variable: c
+          variable: d
+      not
+        or
+          or
+            or
+              and
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: a
+                  variable: c
+              and
+                =
+                  variable: a
+                  variable: b
+                =
+                  variable: b
+                  variable: d
+            and
+              =
+                variable: b
+                variable: c
+              =
+                variable: b
+                variable: d
+          and
+            =
+              variable: a
+              variable: c
+            =
+              variable: c
+              variable: d
+    
+
+  print
+    The following expressions should be identical to the ones above
+
+    even though they are calculated differently.
+
+  <-
+    variable: a
+    15
+  <-
+    variable: b
+    25
+  <-
+    variable: c
+    35
+  <-
+    variable: d
+    45
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+      c: 
+    variable: c
+      d: 
+    variable: d
+      expr: 
+    and
+      not
+        and
+          and
+            and
+              and
+                and
+                  ~=
+                    variable: a
+                    variable: b
+                  ~=
+                    variable: b
+                    variable: c
+                ~=
+                  variable: a
+                  variable: c
+              ~=
+                variable: a
+                variable: d
+            ~=
+              variable: b
+              variable: d
+          ~=
+            variable: c
+            variable: d
+      and
+        and
+          and
+            or
+              ~=
+                variable: a
+                variable: b
+              ~=
+                variable: a
+                variable: c
+            or
+              ~=
+                variable: a
+                variable: b
+              ~=
+                variable: b
+                variable: d
+          or
+            ~=
+              variable: b
+              variable: c
+            ~=
+              variable: b
+              variable: d
+        or
+          ~=
+            variable: a
+            variable: c
+          ~=
+            variable: c
+            variable: d
+    
+
+  <-
+    variable: a
+    25
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+      c: 
+    variable: c
+      d: 
+    variable: d
+      expr: 
+    and
+      not
+        and
+          and
+            and
+              and
+                and
+                  ~=
+                    variable: a
+                    variable: b
+                  ~=
+                    variable: b
+                    variable: c
+                ~=
+                  variable: a
+                  variable: c
+              ~=
+                variable: a
+                variable: d
+            ~=
+              variable: b
+              variable: d
+          ~=
+            variable: c
+            variable: d
+      and
+        and
+          and
+            or
+              ~=
+                variable: a
+                variable: b
+              ~=
+                variable: a
+                variable: c
+            or
+              ~=
+                variable: a
+                variable: b
+              ~=
+                variable: b
+                variable: d
+          or
+            ~=
+              variable: b
+              variable: c
+            ~=
+              variable: b
+              variable: d
+        or
+          ~=
+            variable: a
+            variable: c
+          ~=
+            variable: c
+            variable: d
+    
+
+  <-
+    variable: a
+    35
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+      c: 
+    variable: c
+      d: 
+    variable: d
+      expr: 
+    and
+      not
+        and
+          and
+            and
+              and
+                and
+                  ~=
+                    variable: a
+                    variable: b
+                  ~=
+                    variable: b
+                    variable: c
+                ~=
+                  variable: a
+                  variable: c
+              ~=
+                variable: a
+                variable: d
+            ~=
+              variable: b
+              variable: d
+          ~=
+            variable: c
+            variable: d
+      and
+        and
+          and
+            or
+              ~=
+                variable: a
+                variable: b
+              ~=
+                variable: a
+                variable: c
+            or
+              ~=
+                variable: a
+                variable: b
+              ~=
+                variable: b
+                variable: d
+          or
+            ~=
+              variable: b
+              variable: c
+            ~=
+              variable: b
+              variable: d
+        or
+          ~=
+            variable: a
+            variable: c
+          ~=
+            variable: c
+            variable: d
+    
+
+  <-
+    variable: a
+    45
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+      c: 
+    variable: c
+      d: 
+    variable: d
+      expr: 
+    and
+      not
+        and
+          and
+            and
+              and
+                and
+                  ~=
+                    variable: a
+                    variable: b
+                  ~=
+                    variable: b
+                    variable: c
+                ~=
+                  variable: a
+                  variable: c
+              ~=
+                variable: a
+                variable: d
+            ~=
+              variable: b
+              variable: d
+          ~=
+            variable: c
+            variable: d
+      and
+        and
+          and
+            or
+              ~=
+                variable: a
+                variable: b
+              ~=
+                variable: a
+                variable: c
+            or
+              ~=
+                variable: a
+                variable: b
+              ~=
+                variable: b
+                variable: d
+          or
+            ~=
+              variable: b
+              variable: c
+            ~=
+              variable: b
+              variable: d
+        or
+          ~=
+            variable: a
+            variable: c
+          ~=
+            variable: c
+            variable: d
+    
+
+  <-
+    variable: a
+    15
+  <-
+    variable: b
+    35
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+      c: 
+    variable: c
+      d: 
+    variable: d
+      expr: 
+    and
+      not
+        and
+          and
+            and
+              and
+                and
+                  ~=
+                    variable: a
+                    variable: b
+                  ~=
+                    variable: b
+                    variable: c
+                ~=
+                  variable: a
+                  variable: c
+              ~=
+                variable: a
+                variable: d
+            ~=
+              variable: b
+              variable: d
+          ~=
+            variable: c
+            variable: d
+      and
+        and
+          and
+            or
+              ~=
+                variable: a
+                variable: b
+              ~=
+                variable: a
+                variable: c
+            or
+              ~=
+                variable: a
+                variable: b
+              ~=
+                variable: b
+                variable: d
+          or
+            ~=
+              variable: b
+              variable: c
+            ~=
+              variable: b
+              variable: d
+        or
+          ~=
+            variable: a
+            variable: c
+          ~=
+            variable: c
+            variable: d
+    
+
+  <-
+    variable: b
+    45
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+      c: 
+    variable: c
+      d: 
+    variable: d
+      expr: 
+    and
+      not
+        and
+          and
+            and
+              and
+                and
+                  ~=
+                    variable: a
+                    variable: b
+                  ~=
+                    variable: b
+                    variable: c
+                ~=
+                  variable: a
+                  variable: c
+              ~=
+                variable: a
+                variable: d
+            ~=
+              variable: b
+              variable: d
+          ~=
+            variable: c
+            variable: d
+      and
+        and
+          and
+            or
+              ~=
+                variable: a
+                variable: b
+              ~=
+                variable: a
+                variable: c
+            or
+              ~=
+                variable: a
+                variable: b
+              ~=
+                variable: b
+                variable: d
+          or
+            ~=
+              variable: b
+              variable: c
+            ~=
+              variable: b
+              variable: d
+        or
+          ~=
+            variable: a
+            variable: c
+          ~=
+            variable: c
+            variable: d
+    
+
+  <-
+    variable: b
+    25
+  <-
+    variable: c
+    45
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+      c: 
+    variable: c
+      d: 
+    variable: d
+      expr: 
+    and
+      not
+        and
+          and
+            and
+              and
+                and
+                  ~=
+                    variable: a
+                    variable: b
+                  ~=
+                    variable: b
+                    variable: c
+                ~=
+                  variable: a
+                  variable: c
+              ~=
+                variable: a
+                variable: d
+            ~=
+              variable: b
+              variable: d
+          ~=
+            variable: c
+            variable: d
+      and
+        and
+          and
+            or
+              ~=
+                variable: a
+                variable: b
+              ~=
+                variable: a
+                variable: c
+            or
+              ~=
+                variable: a
+                variable: b
+              ~=
+                variable: b
+                variable: d
+          or
+            ~=
+              variable: b
+              variable: c
+            ~=
+              variable: b
+              variable: d
+        or
+          ~=
+            variable: a
+            variable: c
+          ~=
+            variable: c
+            variable: d
+    
+
+  <-
+    variable: a
+    15
+  <-
+    variable: b
+    variable: a
+  <-
+    variable: c
+    variable: b
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+      c: 
+    variable: c
+      d: 
+    variable: d
+      expr: 
+    and
+      not
+        and
+          and
+            and
+              and
+                and
+                  ~=
+                    variable: a
+                    variable: b
+                  ~=
+                    variable: b
+                    variable: c
+                ~=
+                  variable: a
+                  variable: c
+              ~=
+                variable: a
+                variable: d
+            ~=
+              variable: b
+              variable: d
+          ~=
+            variable: c
+            variable: d
+      and
+        and
+          and
+            or
+              ~=
+                variable: a
+                variable: b
+              ~=
+                variable: a
+                variable: c
+            or
+              ~=
+                variable: a
+                variable: b
+              ~=
+                variable: b
+                variable: d
+          or
+            ~=
+              variable: b
+              variable: c
+            ~=
+              variable: b
+              variable: d
+        or
+          ~=
+            variable: a
+            variable: c
+          ~=
+            variable: c
+            variable: d
+    
+
+  <-
+    variable: c
+    35
+  <-
+    variable: d
+    variable: a
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+      c: 
+    variable: c
+      d: 
+    variable: d
+      expr: 
+    and
+      not
+        and
+          and
+            and
+              and
+                and
+                  ~=
+                    variable: a
+                    variable: b
+                  ~=
+                    variable: b
+                    variable: c
+                ~=
+                  variable: a
+                  variable: c
+              ~=
+                variable: a
+                variable: d
+            ~=
+              variable: b
+              variable: d
+          ~=
+            variable: c
+            variable: d
+      and
+        and
+          and
+            or
+              ~=
+                variable: a
+                variable: b
+              ~=
+                variable: a
+                variable: c
+            or
+              ~=
+                variable: a
+                variable: b
+              ~=
+                variable: b
+                variable: d
+          or
+            ~=
+              variable: b
+              variable: c
+            ~=
+              variable: b
+              variable: d
+        or
+          ~=
+            variable: a
+            variable: c
+          ~=
+            variable: c
+            variable: d
+    
+
+  <-
+    variable: b
+    25
+  <-
+    variable: c
+    variable: d
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+      c: 
+    variable: c
+      d: 
+    variable: d
+      expr: 
+    and
+      not
+        and
+          and
+            and
+              and
+                and
+                  ~=
+                    variable: a
+                    variable: b
+                  ~=
+                    variable: b
+                    variable: c
+                ~=
+                  variable: a
+                  variable: c
+              ~=
+                variable: a
+                variable: d
+            ~=
+              variable: b
+              variable: d
+          ~=
+            variable: c
+            variable: d
+      and
+        and
+          and
+            or
+              ~=
+                variable: a
+                variable: b
+              ~=
+                variable: a
+                variable: c
+            or
+              ~=
+                variable: a
+                variable: b
+              ~=
+                variable: b
+                variable: d
+          or
+            ~=
+              variable: b
+              variable: c
+            ~=
+              variable: b
+              variable: d
+        or
+          ~=
+            variable: a
+            variable: c
+          ~=
+            variable: c
+            variable: d
+    
+
+  <-
+    variable: b
+    variable: c
+  <-
+    variable: a
+    25
+  print
+    a: 
+    variable: a
+      b: 
+    variable: b
+      c: 
+    variable: c
+      d: 
+    variable: d
+      expr: 
+    and
+      not
+        and
+          and
+            and
+              and
+                and
+                  ~=
+                    variable: a
+                    variable: b
+                  ~=
+                    variable: b
+                    variable: c
+                ~=
+                  variable: a
+                  variable: c
+              ~=
+                variable: a
+                variable: d
+            ~=
+              variable: b
+              variable: d
+          ~=
+            variable: c
+            variable: d
+      and
+        and
+          and
+            or
+              ~=
+                variable: a
+                variable: b
+              ~=
+                variable: a
+                variable: c
+            or
+              ~=
+                variable: a
+                variable: b
+              ~=
+                variable: b
+                variable: d
+          or
+            ~=
+              variable: b
+              variable: c
+            ~=
+              variable: b
+              variable: d
+        or
+          ~=
+            variable: a
+            variable: c
+          ~=
+            variable: c
+            variable: d
+    
+
+Code size: 17503 bytes.
+Code execution:
+The following expression should be true if exactly two of the four
+variables have the same value.
+a: 15  b: 25  c: 35  d: 45  expr: false
+a: 25  b: 25  c: 35  d: 45  expr: true
+a: 35  b: 25  c: 35  d: 45  expr: true
+a: 45  b: 25  c: 35  d: 45  expr: true
+a: 15  b: 35  c: 35  d: 45  expr: true
+a: 15  b: 45  c: 35  d: 45  expr: true
+a: 15  b: 25  c: 45  d: 45  expr: true
+a: 15  b: 15  c: 15  d: 45  expr: false
+a: 15  b: 15  c: 35  d: 15  expr: false
+a: 15  b: 25  c: 15  d: 15  expr: false
+a: 25  b: 15  c: 15  d: 15  expr: false
+The following expressions should be identical to the ones above
+even though they are calculated differently.
+a: 15  b: 25  c: 35  d: 45  expr: false
+a: 25  b: 25  c: 35  d: 45  expr: true
+a: 35  b: 25  c: 35  d: 45  expr: true
+a: 45  b: 25  c: 35  d: 45  expr: true
+a: 15  b: 35  c: 35  d: 45  expr: true
+a: 15  b: 45  c: 35  d: 45  expr: true
+a: 15  b: 25  c: 45  d: 45  expr: true
+a: 15  b: 15  c: 15  d: 45  expr: false
+a: 15  b: 15  c: 35  d: 15  expr: false
+a: 15  b: 25  c: 15  d: 15  expr: false
+a: 25  b: 15  c: 15  d: 15  expr: false
+
+
