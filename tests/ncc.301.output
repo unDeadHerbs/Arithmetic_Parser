@@ -1,13 +1,19 @@
 Code tree: 
-statement block
+block
   print
-    The true  value is 
-    true
+    print_s
+      The true  value is 
+    print_b
+      true
+    print_s
     
 
   print
-    The false value is 
-    false
+    print_s
+      The false value is
+    print_b
+      false
+    print_s
     
 
 Code size: 137 bytes.

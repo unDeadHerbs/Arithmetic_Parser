@@ -1,0 +1,20 @@
+Code tree: 
+block
+  int4
+    a
+  print
+    print_s
+      Please input a value: 
+  read
+    a
+  print
+    print_s
+      a doubled:
+    print_i  
+      *
+        2
+        a
+Code size: 89 bytes.
+Code execution:
+Please input a value: a doubled: 469974
+

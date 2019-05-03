@@ -1,0 +1,12 @@
+Code tree: 
+block
+  int4
+    a
+  int4
+    b
+  int4
+    c
+Code size: 7 bytes.
+Code execution:
+
+

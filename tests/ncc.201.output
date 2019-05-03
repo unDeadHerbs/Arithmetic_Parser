@@ -1,0 +1,9 @@
+Code tree: 
+block
+  print
+    print_i
+      3
+Code size: 20 bytes.
+Code execution:
+3
+
