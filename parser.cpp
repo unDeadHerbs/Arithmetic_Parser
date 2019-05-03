@@ -7,31 +7,35 @@ Code_Tree parse_expression(vector<Token>& tokens);
 #define EOF_ERROR(x) Code_Tree(Token(ERROR, -1, -1, x))
 #define ERROR(x, t) \
 	Code_Tree("ERROR", Token(ERROR, t.line, t.col, x), {Code_Tree(t)})
+#define EAT(t, n) t.erase(t.begin(), t.begin() + n)
 #define EAT_OP(t, tokens, op)                                            \
 	if (!tokens.size()) throw EOF_ERROR(_FUN + " Expected '" + #op + "'"); \
 	auto t = tokens[0];                                                    \
 	if (t.id != op) throw ERROR(_FUN + " Expected '" + #op + "'", t);      \
-	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	EAT(tokens, 1);
 
 #define EAT_IDENT(t, tokens, str)                                        \
 	if (!tokens.size()) throw EOF_ERROR(_FUN + " Expected '" + str + "'"); \
 	auto t = tokens[0];                                                    \
 	if (t.id != IDENT) throw ERROR(_FUN + " Expected '" + str + "'", t);   \
 	if (t.text != str) throw ERROR(_FUN + " Expected '" + str + "'", t);   \
-	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	EAT(tokens, 1);
 
 #define EAT_STRING(t, tokens)                                       \
 	if (!tokens.size()) throw EOF_ERROR(_FUN + " Expected 'string'"); \
 	auto t = tokens[0];                                               \
 	if (t.id != STRING) throw ERROR(_FUN + " Expected 'string'", t);  \
-	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	EAT(tokens, 1);
+
+#define is_keyword(t) \
+	(((t) == "print") || ((t) == "read") || ((t) == "true") || ((t) == "false"))
 
 Code_Tree parse_ident(vector<Token>& tokens) {
 	if (!tokens.size()) throw EOF_ERROR("Expected variable name");
 	auto t = tokens[0];
 	if (t.id != IDENT) throw ERROR("Expected identifier name", t);
-	// TODO: check that it's not a keyword
-	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	if (is_keyword(t.text)) throw ERROR("Keywords are not identifiers", t);
+	EAT(tokens, 1);
 	return Code_Tree("Ident", t, {});
 }
 
@@ -39,7 +43,7 @@ Code_Tree parse_number(vector<Token>& tokens) {
 	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
 	auto t = tokens[0];
 	if (t.id == INT || t.id == REAL) {
-		tokens.erase(tokens.begin(), tokens.begin() + 1);
+		EAT(tokens, 1);
 		return Code_Tree("numeric_literal", t);
 	}
 	throw ERROR("Not a Litteral", t);
@@ -77,7 +81,7 @@ Code_Tree parse_unary_signs(vector<Token>& tokens) {
 	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
 	auto t = tokens[0];
 	if (t.id != '+' && t.id != '-') return parse_value(tokens);
-	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	EAT(tokens, 1);
 	return Code_Tree("unary", t, {parse_value(tokens)});
 }
 
@@ -87,7 +91,7 @@ Code_Tree parse_exp(vector<Token>& tokens) {
 	if (!tokens.size()) return ret;
 	auto t = tokens[0];
 	if (t.id != '^') return ret;
-	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	EAT(tokens, 1);
 	return Code_Tree("exp", t, {ret, parse_exp(tokens)});
 }
 
@@ -95,7 +99,7 @@ Code_Tree parse_mul_div_prime(vector<Token>& tokens, Code_Tree accumulator) {
 	if (!tokens.size()) return accumulator;
 	auto t = tokens[0];
 	if (!(t.id == '*' || t.id == '/' || t.text == "mod")) return accumulator;
-	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	EAT(tokens, 1);
 	return parse_mul_div_prime(
 	    tokens, Code_Tree("mul", t, {accumulator, parse_exp(tokens)}));
 }
@@ -110,7 +114,7 @@ Code_Tree parse_sum_dif_prime(vector<Token>& tokens, Code_Tree accumulator) {
 	if (!tokens.size()) return accumulator;
 	auto t = tokens[0];
 	if (!(t.id == '+' || t.id == '-')) return accumulator;
-	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	EAT(tokens, 1);
 	return parse_sum_dif_prime(
 	    tokens, Code_Tree("add", t, {accumulator, parse_mul_div(tokens)}));
 }
@@ -130,24 +134,86 @@ Code_Tree parse_string(vector<Token>& tokens) {
 	return Code_Tree("String", t);
 }
 
+Code_Tree parse_bool_relation(vector<Token>& tokens) {
+	auto fir = parse_expression(tokens);
+	auto nzret = Code_Tree("bool_imp", {fir});
+	if (!tokens.size()) return nzret;
+	auto t = tokens[0];
+	if (!((t.id == '<') || (t.id == LESS_EQ) || (t.id == '>') ||
+	      (t.id == GREATER_EQ) || (t.id == '=') || (t.id == NOT_EQUAL)))
+		return nzret;
+	EAT(tokens, 1);
+	try {
+		auto sec = parse_expression(tokens);  // then eat arith
+		return Code_Tree("bool_rel", {fir, Code_Tree(t), sec});
+	} catch (Code_Tree err) {
+		throw Code_Tree(_FUN + " Expected an arithmetic expresion while parsing",
+		                {fir, Code_Tree(t), err});
+	}
+}
+
+Code_Tree parse_bool_literal(vector<Token>& tokens) {
+	try {
+		auto tmp = tokens;
+		EAT_IDENT(t, tmp, "true");
+		tokens = tmp;
+		return t;
+	} catch (Code_Tree err1) {
+		try {
+			auto tmp = tokens;
+			EAT_IDENT(t, tmp, "false");
+			tokens = tmp;
+			return t;
+		} catch (Code_Tree err2) {
+			throw Code_Tree("Expected true or false", {err1, err2});
+		}
+	}
+}
+
+Code_Tree parse_bool(vector<Token>& tokens) {
+	try {
+		auto tmp = tokens;
+		auto ret = parse_bool_literal(tmp);
+		tokens = tmp;
+		return ret;
+	} catch (Code_Tree err1) {
+		try {
+			auto tmp = tokens;
+			auto ret = parse_bool_relation(tmp);
+			tokens = tmp;
+			return ret;
+		} catch (Code_Tree err2) {
+			throw Code_Tree("Expected a boolean expresion", {err1, err2});
+		}
+	}
+}
+
 Code_Tree parse_printable(vector<Token>& tokens) {
 	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
 	auto t = tokens[0];
-	auto toks = tokens;
 	try {
+		auto toks = tokens;
 		auto ret = Code_Tree("print_i", {parse_expression(toks)});
 		tokens = toks;
 		return ret;
 	} catch (Code_Tree err) {
 		try {
+			auto toks = tokens;
 			auto ret = Code_Tree("print_s", {parse_string(toks)});
 			tokens = toks;
 			return ret;
 		} catch (Code_Tree err2) {
-			throw Code_Tree(
-			    "Expected expression or string.",
-			    Token(ERROR, t.line, t.col, "Expected expression or string."),
-			    {err, err2});
+			try {
+				auto toks = tokens;
+				auto ret = Code_Tree("print_b", {parse_bool(toks)});
+				tokens = toks;
+				return ret;
+			} catch (Code_Tree err3) {
+				throw Code_Tree(
+				    "Expected expression, string, or bool.",
+				    Token(ERROR, t.line, t.col, "Expected expression or string."),
+				    {err, err2, err3});
+			}
 		}
 	}
 }
