@@ -48,7 +48,7 @@ block
     print_s
       Outside body of decision 2.
 
-Code size: 351 bytes.
+Code size: 257 bytes.
 Code execution:
 a: 15  b: 25
 Inside body of decision 1.

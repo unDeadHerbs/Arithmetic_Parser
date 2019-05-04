@@ -94,8 +94,16 @@ void program::operator()() {
 #define BOOL_EAX_AND_ECX program({((char)0x21), ((char)0xc8)})
 //#define BOOL_NOT program({((char)0xf7), ((char)0xd0)})
 #define BOOL_NOT PUSH_EAX + LOADI(1) + POP_EDX + SUB_EAX_EDX
-// TODO: make that not command much more effecent
+// TODO: make that not command much more efficient
+#define _TEST_EAX program({((char)0x85), ((char)0xc0)})
+#define _JE(dist) program({((char)0x0f), ((char)0x84)}) + LITTLEENDIAN4(dist)
+#define IF_EAX(prog) _TEST_EAX + _JE(prog.size()) + prog
 
+/*
+ * All relitive positions are to be calculated from the code body.
+ * All absolute positions are to be obtained from the environment.
+ * TODO: That can be made into a type validation.
+ */
 program generateI(Code_Tree ct, std::shared_ptr<Env> e) {
 	// TODO: Those throws should get the TOKEN's name.
 	if (ct.name == "numeric_literal") {
@@ -203,6 +211,11 @@ program generateI(Code_Tree ct, std::shared_ptr<Env> e) {
 	}
 	if (ct.name == "bool_not") {
 		return generateI(ct.sub_tokens[0], e) + BOOL_NOT;
+	}
+	if (ct.name == "if") {
+		auto test = generateI(ct.sub_tokens[0], e);
+		auto body = generateI(ct.sub_tokens[1], e);
+		return test + IF_EAX(body);
 	}
 	throw "Bad Parse Tree - unknown '"s + ct.name + "'";
 }
