@@ -1,33 +1,43 @@
 Code tree: 
-statement block
-  variable: a
-  variable: b
+block
+  int4
+    a
+  int4
+    b
   <-
-    variable: a
+    a
     3
   <-
-    variable: b
+    b
     4
   print
-    Is 
-    variable: a
-     < 
-    variable: b
-    ? 
-    <
-      variable: a
-      variable: b
+    print_s
+      Is
+    print_i
+      a
+    print_s
+       <
+    print_i
+      b
+    print_s
+      ?
+    print_b
+      bool_rel
+      <
+      a
+      b
+    print_s
     
 
   <-
-    variable: a
-    - (neg)
+    a
+    -
       3
   <-
-    variable: b
-    - (neg)
+    b
+    -
       4
-Code size: 295 bytes.
+Code size: 207 bytes.
 Code execution:
 Is 3 < 4? true
 
