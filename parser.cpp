@@ -365,7 +365,15 @@ Code_Tree parse_control_struct(vector<Token>& tokens) {
 	auto con = parse_bool_expresion(tokens);
 	EAT_OP(tclose, tokens, ')');
 	auto sorb = parse_statment_or_block(tokens);
-	return Code_Tree("if", t, {con, sorb});
+	try {
+		auto toks = tokens;
+		EAT_IDENT(tel, toks, "else");
+		auto sorbelse = parse_statment_or_block(toks);
+		tokens = toks;
+		return Code_Tree("if_else", t, {con, sorb, sorbelse});
+	} catch (Code_Tree err) {
+		return Code_Tree("if", t, {con, sorb});
+	}
 }
 
 Code_Tree parse_statement(vector<Token>& tokens) {
