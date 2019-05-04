@@ -79,25 +79,19 @@ void program::operator()() {
 #define MOV_STACK_EAX(d) \
 	program({((char)0x89), ((char)0x45), ((char)((-4 * (d + 1)) & 0xff))})
 // mov eax,[ebp-4*d]
+#define _BOOL_AL_TO_EAX \
+	program({((char)0xc0), ((char)0x66), ((char)0x98), ((char)0x98)})
 #define CMP_EAX_ECX program({((char)0x39), ((char)0xc8)})
-#define BOOL_IS_LESS                                               \
-	program({((char)0x0f), ((char)0x9c), ((char)0xc0), ((char)0x66), \
-	         ((char)0x98), ((char)0x98)})
-#define BOOL_IS_LESS_EQ                                            \
-	program({((char)0x0f), ((char)0x9e), ((char)0xc0), ((char)0x66), \
-	         ((char)0x98), ((char)0x98)})
-#define BOOL_IS_EQ                                                 \
-	program({((char)0x0f), ((char)0x94), ((char)0xc0), ((char)0x66), \
-	         ((char)0x98), ((char)0x98)})
-#define BOOL_IS_GREATER_EQ                                         \
-	program({((char)0x0f), ((char)0x9d), ((char)0xc0), ((char)0x66), \
-	         ((char)0x98), ((char)0x98)})
-#define BOOL_IS_GREATER                                            \
-	program({((char)0x0f), ((char)0x9f), ((char)0xc0), ((char)0x66), \
-	         ((char)0x98), ((char)0x98)})
-#define BOOL_IS_NE                                                 \
-	program({((char)0x0f), ((char)0x95), ((char)0xc0), ((char)0x66), \
-	         ((char)0x98), ((char)0x98)})
+#define BOOL_IS_LESS program({((char)0x0f), ((char)0x9c)}) + _BOOL_AL_TO_EAX
+#define BOOL_EAX_LESS_ECX CMP_EAX_ECX + BOOL_IS_LESS
+#define BOOL_IS_LESS_EQ program({((char)0x0f), ((char)0x9e)}) + _BOOL_AL_TO_EAX
+#define BOOL_IS_EQ program({((char)0x0f), ((char)0x94)}) + _BOOL_AL_TO_EAX
+#define BOOL_IS_GREATER_EQ \
+	program({((char)0x0f), ((char)0x9d)}) + _BOOL_AL_TO_EAX
+#define BOOL_IS_GREATER program({((char)0x0f), ((char)0x9f)}) + _BOOL_AL_TO_EAX
+#define BOOL_IS_NE program({((char)0x0f), ((char)0x95)}) + _BOOL_AL_TO_EAX
+#define BOOL_EAX_OR_ECX program({((char)0x09), ((char)0xc8)})
+#define BOOL_EAX_AND_ECX program({((char)0x21), ((char)0xc8)})
 
 program generateI(Code_Tree ct, std::shared_ptr<Env> e) {
 	// TODO: Those throws should get the TOKEN's name.
@@ -195,6 +189,14 @@ program generateI(Code_Tree ct, std::shared_ptr<Env> e) {
 		else
 			throw "Expected a boolean realational, got '"s +
 			    ct.sub_tokens[0].t->text + "'";
+	}
+	if (ct.name == "bool_or") {
+		return generateI(ct.sub_tokens[1], e) + PUSH_EAX +
+		       generateI(ct.sub_tokens[0], e) + POP_ECX + BOOL_EAX_OR_ECX;
+	}
+	if (ct.name == "bool_and") {
+		return generateI(ct.sub_tokens[1], e) + PUSH_EAX +
+		       generateI(ct.sub_tokens[0], e) + POP_ECX + BOOL_EAX_AND_ECX;
 	}
 	throw "Bad Parse Tree - unknown '"s + ct.name + "'";
 }

@@ -90,7 +90,7 @@ block
     print_s
     
 
-Code size: 677 bytes.
+Code size: 535 bytes.
 Code execution:
 a: 15
 b: 25
