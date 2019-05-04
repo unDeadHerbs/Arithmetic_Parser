@@ -16,7 +16,7 @@ fi
 
 ls tests | sed 's/[.]\(input\|file\|output\)//' | uniq |
     while read r; do
-	echo "Starting test $r"
+	echo "Running test $r"
 	# existance of file
 	[ -e "$(echo $r | sed 's/[.].*//').bin"  ] || { echo "Unable to find $(echo $r | sed 's/[.].*//').bin" ; exit 1 ; }
 	# existance of output
@@ -45,5 +45,4 @@ ls tests | sed 's/[.]\(input\|file\|output\)//' | uniq |
 	    # exit 1
 	    # fi
 	fi
-	echo "Test $r compleate."
     done
