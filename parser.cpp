@@ -86,7 +86,6 @@ Code_Tree parse_unary_signs(vector<Token>& tokens) {
 }
 
 Code_Tree parse_exp(vector<Token>& tokens) {
-	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
 	auto ret = parse_unary_signs(tokens);
 	if (!tokens.size()) return ret;
 	auto t = tokens[0];
@@ -169,22 +168,87 @@ Code_Tree parse_bool_literal(vector<Token>& tokens) {
 	}
 }
 
-Code_Tree parse_bool(vector<Token>& tokens) {
-	try {
-		auto tmp = tokens;
-		auto ret = parse_bool_literal(tmp);
-		tokens = tmp;
-		return ret;
-	} catch (Code_Tree err1) {
+Code_Tree parse_bool_expresion(vector<Token>&);
+Code_Tree parse_bool_not(vector<Token>& tokens) {
+	// bool_not :='!' (lit | '(' rel ')' | '(' exp ')') | lit | rel | '(' exp ')'
+	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
+	auto t = tokens[0];
+	if (t.id == '!') {
+		EAT(tokens, 1);
 		try {
 			auto tmp = tokens;
-			auto ret = parse_bool_relation(tmp);
+			auto ret = parse_bool_literal(tmp);
 			tokens = tmp;
 			return ret;
-		} catch (Code_Tree err2) {
-			throw Code_Tree("Expected a boolean expresion", {err1, err2});
+		} catch (Code_Tree err1) {
+			try {
+				auto tmp = tokens;
+				EAT_OP(t1, tmp, '(');
+				auto ret = parse_bool_relation(tmp);
+				EAT_OP(t2, tmp, ')');
+				tokens = tmp;
+				return ret;
+			} catch (Code_Tree err2) {
+				try {
+					auto tmp = tokens;
+					EAT_OP(t1, tmp, '(');
+					auto ret = parse_bool_expresion(tmp);
+					EAT_OP(t2, tmp, ')');
+					tokens = tmp;
+					return ret;
+				} catch (Code_Tree err3) {
+					throw Code_Tree("Expected a boolean value expresion", {err1, err2});
+				}
+			}
+		}
+	} else {
+		try {
+			auto tmp = tokens;
+			auto ret = parse_bool_literal(tmp);
+			tokens = tmp;
+			return ret;
+		} catch (Code_Tree err1) {
+			try {
+				auto tmp = tokens;
+				auto ret = parse_bool_relation(tmp);
+				tokens = tmp;
+				return ret;
+			} catch (Code_Tree err2) {
+				try {
+					auto tmp = tokens;
+					EAT_OP(t1, tmp, '(');
+					auto ret = parse_bool_expresion(tmp);
+					EAT_OP(t2, tmp, ')');
+					tokens = tmp;
+					return ret;
+				} catch (Code_Tree err3) {
+					throw Code_Tree("Expected a boolean value expresion", {err1, err2});
+				}
+			}
 		}
 	}
+}
+
+Code_Tree parse_bool_and(vector<Token>& tokens) {
+	auto ret = parse_bool_not(tokens);
+	if (!tokens.size()) return ret;
+	auto t = tokens[0];
+	if (t.id != '&') return ret;
+	EAT(tokens, 1);
+	return Code_Tree("bool_and", t, {ret, parse_bool_and(tokens)});
+}
+
+Code_Tree parse_bool_or(vector<Token>& tokens) {
+	auto ret = parse_bool_and(tokens);
+	if (!tokens.size()) return ret;
+	auto t = tokens[0];
+	if (t.id != '|') return ret;
+	EAT(tokens, 1);
+	return Code_Tree("bool_or", t, {ret, parse_bool_or(tokens)});
+}
+
+Code_Tree parse_bool_expresion(vector<Token>& tokens) {
+	return parse_bool_or(tokens);
 }
 
 Code_Tree parse_printable(vector<Token>& tokens) {
@@ -192,7 +256,7 @@ Code_Tree parse_printable(vector<Token>& tokens) {
 	auto t = tokens[0];
 	try {
 		auto toks = tokens;
-		auto ret = Code_Tree("print_b", {parse_bool(toks)});
+		auto ret = Code_Tree("print_b", {parse_bool_expresion(toks)});
 		tokens = toks;
 		return ret;
 	} catch (Code_Tree err3) {
