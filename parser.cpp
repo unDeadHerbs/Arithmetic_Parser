@@ -136,16 +136,15 @@ Code_Tree parse_string(vector<Token>& tokens) {
 
 Code_Tree parse_bool_relation(vector<Token>& tokens) {
 	auto fir = parse_expression(tokens);
-	auto nzret = Code_Tree("bool_imp", {fir});
-	if (!tokens.size()) return nzret;
+	if (!tokens.size()) throw Code_Tree("Expected a relational, got EOF", {fir});
 	auto t = tokens[0];
 	if (!((t.id == '<') || (t.id == LESS_EQ) || (t.id == '>') ||
 	      (t.id == GREATER_EQ) || (t.id == '=') || (t.id == NOT_EQUAL)))
-		return nzret;
+		throw Code_Tree("Expected a relational operator", {fir, t});
 	EAT(tokens, 1);
 	try {
-		auto sec = parse_expression(tokens);  // then eat arith
-		return Code_Tree("bool_rel", {fir, Code_Tree(t), sec});
+		auto sec = parse_expression(tokens);
+		return Code_Tree("bool_rel", {Code_Tree(t), fir, sec});
 	} catch (Code_Tree err) {
 		throw Code_Tree(_FUN + " Expected an arithmetic expresion while parsing",
 		                {fir, Code_Tree(t), err});
@@ -157,13 +156,13 @@ Code_Tree parse_bool_literal(vector<Token>& tokens) {
 		auto tmp = tokens;
 		EAT_IDENT(t, tmp, "true");
 		tokens = tmp;
-		return t;
+		return Code_Tree("bool_literal", {t});
 	} catch (Code_Tree err1) {
 		try {
 			auto tmp = tokens;
 			EAT_IDENT(t, tmp, "false");
 			tokens = tmp;
-			return t;
+			return Code_Tree("bool_literal", {t});
 		} catch (Code_Tree err2) {
 			throw Code_Tree("Expected true or false", {err1, err2});
 		}
@@ -193,22 +192,22 @@ Code_Tree parse_printable(vector<Token>& tokens) {
 	auto t = tokens[0];
 	try {
 		auto toks = tokens;
-		auto ret = Code_Tree("print_i", {parse_expression(toks)});
+		auto ret = Code_Tree("print_b", {parse_bool(toks)});
 		tokens = toks;
 		return ret;
-	} catch (Code_Tree err) {
+	} catch (Code_Tree err3) {
 		try {
 			auto toks = tokens;
-			auto ret = Code_Tree("print_s", {parse_string(toks)});
+			auto ret = Code_Tree("print_i", {parse_expression(toks)});
 			tokens = toks;
 			return ret;
-		} catch (Code_Tree err2) {
+		} catch (Code_Tree err) {
 			try {
 				auto toks = tokens;
-				auto ret = Code_Tree("print_b", {parse_bool(toks)});
+				auto ret = Code_Tree("print_s", {parse_string(toks)});
 				tokens = toks;
 				return ret;
-			} catch (Code_Tree err3) {
+			} catch (Code_Tree err2) {
 				throw Code_Tree(
 				    "Expected expression, string, or bool.",
 				    Token(ERROR, t.line, t.col, "Expected expression or string."),
