@@ -357,32 +357,54 @@ Code_Tree parse_assignment(vector<Token>& tokens) {
 	return Code_Tree("Assignment", t1, {var, val});
 }
 
+Code_Tree parse_statment_or_block(vector<Token>&);
+Code_Tree parse_control_struct(vector<Token>& tokens) {
+	// if(bool)sorb
+	EAT_IDENT(t, tokens, "if");
+	EAT_OP(topen, tokens, '(');
+	auto con = parse_bool_expresion(tokens);
+	EAT_OP(tclose, tokens, ')');
+	auto sorb = parse_statment_or_block(tokens);
+	return Code_Tree("if", t, {con, sorb});
+}
+
 Code_Tree parse_statement(vector<Token>& tokens) {
 	if (!tokens.size()) throw EOF_ERROR("Expected variable name");
 	auto t = tokens[0];
-	auto toks = tokens;
 	try {
+		auto toks = tokens;
 		auto ret = parse_func_f(toks);
 		tokens = toks;
 		return ret;
 	} catch (Code_Tree err) {
 		try {
+			auto toks = tokens;
 			auto ret = parse_declare(toks);
 			tokens = toks;
 			return ret;
 		} catch (Code_Tree err2) {
 			try {
+				auto toks = tokens;
 				auto ret = parse_assignment(toks);
 				// TODO: move assignment to being a normal operator rather than
 				// a builtin
 				tokens = toks;
 				return ret;
 			} catch (Code_Tree err3) {
-				throw Code_Tree(
-				    "Expected a function, decleration, or assignment.",
-				    Token(ERROR, t.line, t.col,
-				          "Expected a function, decleration, or assignment."),
-				    {err, err2, err3});
+				try {
+					auto toks = tokens;
+					auto ret = parse_control_struct(toks);
+					tokens = toks;
+					return ret;
+				} catch (Code_Tree err4) {
+					throw Code_Tree(
+					    "Expected a function, decleration, assignment, or control "
+					    "structure.",
+					    Token(ERROR, t.line, t.col,
+					          "Expected a function, decleration, assignment or control "
+					          "structure."),
+					    {err, err2, err3, err4});
+				}
 			}
 		}
 	}
@@ -408,6 +430,24 @@ Code_Tree parse_block(vector<Token>& tokens) {
 	return Code_Tree("block", t1, {ret});
 }
 
+Code_Tree parse_statment_or_block(vector<Token>& tokens) {
+	try {
+		auto toks = tokens;
+		auto ret = parse_block(toks);
+		tokens = toks;
+		return ret;
+	} catch (Code_Tree err1) {
+		try {
+			auto toks = tokens;
+			auto ret = parse_statement(toks);
+			tokens = toks;
+			return ret;
+		} catch (Code_Tree err2) {
+			throw Code_Tree("Expected a block of statments or a statement",
+			                {err1, err2});
+		}
+	}
+}
 Code_Tree parse(vector<Token>& tokens) {
 	try {
 		return parse_global_block(tokens);

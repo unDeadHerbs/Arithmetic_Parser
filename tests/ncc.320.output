@@ -1,39 +1,52 @@
 Code tree: 
-statement block
-  variable: a
-  variable: b
+block
+  int4
+    a
+  int4
+    b
   <-
-    variable: a
+    a
     15
   <-
-    variable: b
+    b
     25
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
+    print_s
+      a: 
+    print_i
+      a
+    print_s  
+        b: 
+    print_i
+      b
+    print_s
     
 
   if
-    <
-      variable: a
-      variable: b
+    bool_rel
+      <
+      a
+      b
     print
-      Inside body of decision 1.
+      print_s
+        Inside body of decision 1.
 
   print
-    Outside body of decision 1.
+    print_s
+      Outside body of decision 1.
 
   if
-    <
-      variable: a
-      variable: b
+    bool_rel
+      >
+      a
+      b
     print
-      Inside body of decision 2.
+      print_s
+        Inside body of decision 2.
 
   print
-    Outside body of decision 2.
+    print_s
+      Outside body of decision 2.
 
 Code size: 351 bytes.
 Code execution:
