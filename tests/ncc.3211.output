@@ -104,11 +104,9 @@ block
       print_s
         a is not not equal to b
 
-Code size: 757 bytes.
+Code size: 617 bytes.
 Code execution:
-Input a value for a: 3
-Input a value for b: 4
-a: 3  b: 4
+Input a value for a: Input a value for b: a: 3  b: 4
 a is less than b
 a is not greater than b
 a is less than or equal to b

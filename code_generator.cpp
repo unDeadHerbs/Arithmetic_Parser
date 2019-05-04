@@ -97,7 +97,12 @@ void program::operator()() {
 // TODO: make that not command much more efficient
 #define _TEST_EAX program({((char)0x85), ((char)0xc0)})
 #define _JE(dist) program({((char)0x0f), ((char)0x84)}) + LITTLEENDIAN4(dist)
-#define IF_EAX(prog) _TEST_EAX + _JE(prog.size()) + prog
+#define IF_EAX(prog) _TEST_EAX + _JE((prog).size()) + prog
+#define _JMP(dist) program({((char)0xe9)}) + LITTLEENDIAN4(dist)
+#define _IF_ELSE_EAX(prog1, prog2, d) \
+	_TEST_EAX + _JE((d)) + prog1 + _JMP((prog2).size()) + prog2
+#define IF_ELSE_EAX(prog1, prog2) \
+	_IF_ELSE_EAX(prog1, prog2, (prog1 + _JMP((prog2).size())).size())
 
 /*
  * All relitive positions are to be calculated from the code body.
@@ -216,6 +221,12 @@ program generateI(Code_Tree ct, std::shared_ptr<Env> e) {
 		auto test = generateI(ct.sub_tokens[0], e);
 		auto body = generateI(ct.sub_tokens[1], e);
 		return test + IF_EAX(body);
+	}
+	if (ct.name == "if_else") {
+		auto test = generateI(ct.sub_tokens[0], e);
+		auto body = generateI(ct.sub_tokens[1], e);
+		auto elsebody = generateI(ct.sub_tokens[2], e);
+		return test + IF_ELSE_EAX(body, elsebody);
 	}
 	throw "Bad Parse Tree - unknown '"s + ct.name + "'";
 }
