@@ -1,85 +1,119 @@
 Code tree: 
-statement block
+block
   print
-    Not true is  
-    not
-      true
+    print_s
+      Not true is  
+    print_b
+      !
+        true
+    print_s
     
 
   print
-    Not false is 
-    not
-      false
+    print_s
+      Not false is 
+    print_b
+      !
+        false
+    print_s
     
 
-  variable: a
-  variable: b
+  int4
+    a
+  int4
+    b
   <-
-    variable: a
+    a
     15
   <-
-    variable: b
+    b
     25
   print
-    a: 
-    variable: a
+    print_s
+      a: 
+    print_i
+      a
+    print_s
     
 
   print
-    b: 
-    variable: b
+    print_s
+      b:
+    print_i
+      b
+    print_s
     
 
   print
-    Is a >= 10 and b >= 10? 
-    and
-      not
-        <
-          variable: a
-          10
-      not
-        <
-          variable: b
-          10
-    
+    print_s
+      Is a >= 10 and b >= 10? 
+    print_b
+      &
+        !
+          bool_rel
+	    <
+            a
+            10
+        !
+          bool_rel
+	    <
+            b
+            10
+    print_s
+
 
   print
-    Is a >= 20 and b >= 10? 
-    and
-      not
-        <
-          variable: a
-          20
-      not
-        <
-          variable: b
-          10
-    
+    print_s
+      Is a >= 20 and b >= 10? 
+    print_b
+      &
+        !
+          bool_rel
+	    <
+            a
+            20
+        !
+          bool_rel
+	    <
+            b
+            10
+    print_s
+
 
   print
-    Is a >= 10 and b >= 30? 
-    and
-      not
-        <
-          variable: a
-          10
-      not
-        <
-          variable: b
-          30
-    
+    print_s
+      Is a >= 10 and b >= 30? 
+    print_b
+      &
+        !
+          bool_rel
+	    <
+            a
+            10
+        !
+          bool_rel
+	    <
+            b
+            30
+    print_s
+
 
   print
-    Is a >= 20 and b >= 30? 
-    and
-      not
-        <
-          variable: a
-          20
-      not
-        <
-          variable: b
-          30
+    print_s
+      Is a >= 20 and b >= 30? 
+    print_b
+      &
+        !
+          bool_rel
+	    <
+            a
+            20
+        !
+          bool_rel
+	    <
+            b
+            30
+    print_s
     
 
 Code size: 833 bytes.

@@ -179,15 +179,17 @@ Code_Tree parse_bool_not(vector<Token>& tokens) {
 			auto tmp = tokens;
 			auto ret = parse_bool_literal(tmp);
 			tokens = tmp;
-			return ret;
+			return Code_Tree("!", {ret});
 		} catch (Code_Tree err1) {
 			try {
 				auto tmp = tokens;
-				EAT_OP(t1, tmp, '(');
+				// TODO: apparently these aren't required
+				// add them back after the class because i find this grammar dumb
+				// EAT_OP(t1, tmp, '(');
 				auto ret = parse_bool_relation(tmp);
-				EAT_OP(t2, tmp, ')');
+				// EAT_OP(t2, tmp, ')');
 				tokens = tmp;
-				return ret;
+				return Code_Tree("!", {ret});
 			} catch (Code_Tree err2) {
 				try {
 					auto tmp = tokens;
@@ -195,7 +197,7 @@ Code_Tree parse_bool_not(vector<Token>& tokens) {
 					auto ret = parse_bool_expresion(tmp);
 					EAT_OP(t2, tmp, ')');
 					tokens = tmp;
-					return ret;
+					return Code_Tree("!", {ret});
 				} catch (Code_Tree err3) {
 					throw Code_Tree("Expected a boolean value expresion", {err1, err2});
 				}

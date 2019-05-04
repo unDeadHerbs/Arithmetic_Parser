@@ -1,68 +1,96 @@
 Code tree: 
-statement block
-  variable: a
-  variable: b
+block
+  int4
+    a
+  int4
+    b
   <-
-    variable: a
+    a
     15
   <-
-    variable: b
+    b
     25
   print
-    a: 
-    variable: a
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+      
+
+  print
+    print_s
+      b: 
+    print_i
+      b
+    print_s
     
 
   print
-    b: 
-    variable: b
+    print_s
+      Is a < 10 and b < 10?
+    print_b
+      &
+        bool_rel
+	  <
+          a
+          10
+        bool_rel
+	  <
+          b
+          10
+    print_s
     
 
   print
-    Is a < 10 and b < 10? 
-    and
-      <
-        variable: a
-        10
-      <
-        variable: b
-        10
+    print_s
+      Is a < 20 and b < 10?
+    print_b
+      &
+        bool_rel
+          <
+          a
+          20
+        bool_rel
+	  <
+          b
+          10
+    print_s
     
 
   print
-    Is a < 20 and b < 10? 
-    and
-      <
-        variable: a
-        20
-      <
-        variable: b
-        10
+    print_s
+      Is a < 10 and b < 30?
+    print_b
+      &
+        bool_rel
+	  <
+          a
+          10
+        bool_rel
+	  <
+          b
+          30
+    print_s
     
 
   print
-    Is a < 10 and b < 30? 
-    and
-      <
-        variable: a
-        10
-      <
-        variable: b
-        30
+    print_s
+      Is a < 20 and b < 30?
+    print_b
+      &
+        bool_rel
+	  <
+          a
+          20
+        bool_rel
+	  <
+          b
+          30
+    print_s
     
 
-  print
-    Is a < 20 and b < 30? 
-    and
-      <
-        variable: a
-        20
-      <
-        variable: b
-        30
-    
-
-Code size: 677 bytes.
+Code size: 535 bytes.
 Code execution:
 a: 15
 b: 25
