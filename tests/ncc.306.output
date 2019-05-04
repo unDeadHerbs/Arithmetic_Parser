@@ -116,7 +116,7 @@ block
     print_s
     
 
-Code size: 833 bytes.
+Code size: 751 bytes.
 Code execution:
 Not true is  false
 Not false is true

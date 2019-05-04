@@ -92,6 +92,9 @@ void program::operator()() {
 #define BOOL_IS_NE program({((char)0x0f), ((char)0x95)}) + _BOOL_AL_TO_EAX
 #define BOOL_EAX_OR_ECX program({((char)0x09), ((char)0xc8)})
 #define BOOL_EAX_AND_ECX program({((char)0x21), ((char)0xc8)})
+//#define BOOL_NOT program({((char)0xf7), ((char)0xd0)})
+#define BOOL_NOT PUSH_EAX + LOADI(1) + POP_EDX + SUB_EAX_EDX
+// TODO: make that not command much more effecent
 
 program generateI(Code_Tree ct, std::shared_ptr<Env> e) {
 	// TODO: Those throws should get the TOKEN's name.
@@ -197,6 +200,9 @@ program generateI(Code_Tree ct, std::shared_ptr<Env> e) {
 	if (ct.name == "bool_and") {
 		return generateI(ct.sub_tokens[1], e) + PUSH_EAX +
 		       generateI(ct.sub_tokens[0], e) + POP_ECX + BOOL_EAX_AND_ECX;
+	}
+	if (ct.name == "bool_not") {
+		return generateI(ct.sub_tokens[0], e) + BOOL_NOT;
 	}
 	throw "Bad Parse Tree - unknown '"s + ct.name + "'";
 }

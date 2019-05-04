@@ -1,1642 +1,2200 @@
 Code tree: 
-statement block
-  variable: a
-  variable: b
-  variable: c
-  variable: d
+block
+  int4
+    a
+  int4
+    b
+  int4
+    c
+  int4
+    d
   print
-    The following expression should be true if exactly two of the four
+    print_s
+      The following expression should be true if exactly two of the four
 
-    variables have the same value.
+    print_s
+      variables have the same value.
 
   <-
-    variable: a
+    a
     15
   <-
-    variable: b
+    b
     25
   <-
-    variable: c
+    c
     35
   <-
-    variable: d
+    d
     45
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
-      c: 
-    variable: c
-      d: 
-    variable: d
-      expr: 
-    and
-      or
-        or
-          or
-            or
-              or
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: b
-                  variable: c
-              =
-                variable: a
-                variable: c
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
+        c: 
+    print_i
+      c
+    print_s
+        d: 
+    print_i
+      d
+    print_s
+        expr: 
+    print_b
+      &
+        |
+          bool_rel
             =
-              variable: a
-              variable: d
-          =
-            variable: b
-            variable: d
-        =
-          variable: c
-          variable: d
-      not
-        or
-          or
-            or
-              and
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: a
-                  variable: c
-              and
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: b
-                  variable: d
-            and
+            a
+            b
+          |
+            bool_rel
               =
-                variable: b
-                variable: c
-              =
-                variable: b
-                variable: d
-          and
-            =
-              variable: a
-              variable: c
-            =
-              variable: c
-              variable: d
-    
+              b
+              c
+            |
+              bool_rel
+                =
+                a
+                c
+              |
+                bool_rel
+                  =
+                  a
+                  d
+                |
+                  bool_rel
+                    =
+                    b
+                    d
+                  bool_rel
+                    =
+                    c
+                    d
+        !
+          |
+            &
+              bool_rel
+                =
+                a
+                b
+              bool_rel
+                =
+                a
+                c
+            |
+              &
+                bool_rel
+                  =
+                  a
+                  b
+                bool_rel
+                  =
+                  b
+                  d
+              |
+                &
+                  bool_rel
+                    =
+                    b
+                    c
+                  bool_rel
+                    =
+                    b
+                    d
+                &
+                  bool_rel
+                    =
+                    a
+                    c
+                  bool_rel
+                    =
+                    c
+                    d
+    print_s
+      
 
   <-
-    variable: a
+    a
     25
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
-      c: 
-    variable: c
-      d: 
-    variable: d
-      expr: 
-    and
-      or
-        or
-          or
-            or
-              or
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: b
-                  variable: c
-              =
-                variable: a
-                variable: c
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
+        c: 
+    print_i
+      c
+    print_s
+        d: 
+    print_i
+      d
+    print_s
+        expr: 
+    print_b
+      &
+        |
+          bool_rel
             =
-              variable: a
-              variable: d
-          =
-            variable: b
-            variable: d
-        =
-          variable: c
-          variable: d
-      not
-        or
-          or
-            or
-              and
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: a
-                  variable: c
-              and
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: b
-                  variable: d
-            and
+            a
+            b
+          |
+            bool_rel
               =
-                variable: b
-                variable: c
-              =
-                variable: b
-                variable: d
-          and
-            =
-              variable: a
-              variable: c
-            =
-              variable: c
-              variable: d
-    
+              b
+              c
+            |
+              bool_rel
+                =
+                a
+                c
+              |
+                bool_rel
+                  =
+                  a
+                  d
+                |
+                  bool_rel
+                    =
+                    b
+                    d
+                  bool_rel
+                    =
+                    c
+                    d
+        !
+          |
+            &
+              bool_rel
+                =
+                a
+                b
+              bool_rel
+                =
+                a
+                c
+            |
+              &
+                bool_rel
+                  =
+                  a
+                  b
+                bool_rel
+                  =
+                  b
+                  d
+              |
+                &
+                  bool_rel
+                    =
+                    b
+                    c
+                  bool_rel
+                    =
+                    b
+                    d
+                &
+                  bool_rel
+                    =
+                    a
+                    c
+                  bool_rel
+                    =
+                    c
+                    d
+    print_s
+      
 
   <-
-    variable: a
+    a
     35
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
-      c: 
-    variable: c
-      d: 
-    variable: d
-      expr: 
-    and
-      or
-        or
-          or
-            or
-              or
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: b
-                  variable: c
-              =
-                variable: a
-                variable: c
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
+        c: 
+    print_i
+      c
+    print_s
+        d: 
+    print_i
+      d
+    print_s
+        expr: 
+    print_b
+      &
+        |
+          bool_rel
             =
-              variable: a
-              variable: d
-          =
-            variable: b
-            variable: d
-        =
-          variable: c
-          variable: d
-      not
-        or
-          or
-            or
-              and
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: a
-                  variable: c
-              and
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: b
-                  variable: d
-            and
+            a
+            b
+          |
+            bool_rel
               =
-                variable: b
-                variable: c
-              =
-                variable: b
-                variable: d
-          and
-            =
-              variable: a
-              variable: c
-            =
-              variable: c
-              variable: d
-    
+              b
+              c
+            |
+              bool_rel
+                =
+                a
+                c
+              |
+                bool_rel
+                  =
+                  a
+                  d
+                |
+                  bool_rel
+                    =
+                    b
+                    d
+                  bool_rel
+                    =
+                    c
+                    d
+        !
+          |
+            &
+              bool_rel
+                =
+                a
+                b
+              bool_rel
+                =
+                a
+                c
+            |
+              &
+                bool_rel
+                  =
+                  a
+                  b
+                bool_rel
+                  =
+                  b
+                  d
+              |
+                &
+                  bool_rel
+                    =
+                    b
+                    c
+                  bool_rel
+                    =
+                    b
+                    d
+                &
+                  bool_rel
+                    =
+                    a
+                    c
+                  bool_rel
+                    =
+                    c
+                    d
+    print_s
+      
 
   <-
-    variable: a
+    a
     45
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
-      c: 
-    variable: c
-      d: 
-    variable: d
-      expr: 
-    and
-      or
-        or
-          or
-            or
-              or
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: b
-                  variable: c
-              =
-                variable: a
-                variable: c
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
+        c: 
+    print_i
+      c
+    print_s
+        d: 
+    print_i
+      d
+    print_s
+        expr: 
+    print_b
+      &
+        |
+          bool_rel
             =
-              variable: a
-              variable: d
-          =
-            variable: b
-            variable: d
-        =
-          variable: c
-          variable: d
-      not
-        or
-          or
-            or
-              and
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: a
-                  variable: c
-              and
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: b
-                  variable: d
-            and
+            a
+            b
+          |
+            bool_rel
               =
-                variable: b
-                variable: c
-              =
-                variable: b
-                variable: d
-          and
-            =
-              variable: a
-              variable: c
-            =
-              variable: c
-              variable: d
-    
+              b
+              c
+            |
+              bool_rel
+                =
+                a
+                c
+              |
+                bool_rel
+                  =
+                  a
+                  d
+                |
+                  bool_rel
+                    =
+                    b
+                    d
+                  bool_rel
+                    =
+                    c
+                    d
+        !
+          |
+            &
+              bool_rel
+                =
+                a
+                b
+              bool_rel
+                =
+                a
+                c
+            |
+              &
+                bool_rel
+                  =
+                  a
+                  b
+                bool_rel
+                  =
+                  b
+                  d
+              |
+                &
+                  bool_rel
+                    =
+                    b
+                    c
+                  bool_rel
+                    =
+                    b
+                    d
+                &
+                  bool_rel
+                    =
+                    a
+                    c
+                  bool_rel
+                    =
+                    c
+                    d
+    print_s
+      
 
   <-
-    variable: a
+    a
     15
   <-
-    variable: b
+    b
     35
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
-      c: 
-    variable: c
-      d: 
-    variable: d
-      expr: 
-    and
-      or
-        or
-          or
-            or
-              or
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: b
-                  variable: c
-              =
-                variable: a
-                variable: c
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
+        c: 
+    print_i
+      c
+    print_s
+        d: 
+    print_i
+      d
+    print_s
+        expr: 
+    print_b
+      &
+        |
+          bool_rel
             =
-              variable: a
-              variable: d
-          =
-            variable: b
-            variable: d
-        =
-          variable: c
-          variable: d
-      not
-        or
-          or
-            or
-              and
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: a
-                  variable: c
-              and
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: b
-                  variable: d
-            and
+            a
+            b
+          |
+            bool_rel
               =
-                variable: b
-                variable: c
-              =
-                variable: b
-                variable: d
-          and
-            =
-              variable: a
-              variable: c
-            =
-              variable: c
-              variable: d
-    
+              b
+              c
+            |
+              bool_rel
+                =
+                a
+                c
+              |
+                bool_rel
+                  =
+                  a
+                  d
+                |
+                  bool_rel
+                    =
+                    b
+                    d
+                  bool_rel
+                    =
+                    c
+                    d
+        !
+          |
+            &
+              bool_rel
+                =
+                a
+                b
+              bool_rel
+                =
+                a
+                c
+            |
+              &
+                bool_rel
+                  =
+                  a
+                  b
+                bool_rel
+                  =
+                  b
+                  d
+              |
+                &
+                  bool_rel
+                    =
+                    b
+                    c
+                  bool_rel
+                    =
+                    b
+                    d
+                &
+                  bool_rel
+                    =
+                    a
+                    c
+                  bool_rel
+                    =
+                    c
+                    d
+    print_s
+      
 
   <-
-    variable: b
+    b
     45
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
-      c: 
-    variable: c
-      d: 
-    variable: d
-      expr: 
-    and
-      or
-        or
-          or
-            or
-              or
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: b
-                  variable: c
-              =
-                variable: a
-                variable: c
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
+        c: 
+    print_i
+      c
+    print_s
+        d: 
+    print_i
+      d
+    print_s
+        expr: 
+    print_b
+      &
+        |
+          bool_rel
             =
-              variable: a
-              variable: d
-          =
-            variable: b
-            variable: d
-        =
-          variable: c
-          variable: d
-      not
-        or
-          or
-            or
-              and
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: a
-                  variable: c
-              and
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: b
-                  variable: d
-            and
+            a
+            b
+          |
+            bool_rel
               =
-                variable: b
-                variable: c
-              =
-                variable: b
-                variable: d
-          and
-            =
-              variable: a
-              variable: c
-            =
-              variable: c
-              variable: d
-    
+              b
+              c
+            |
+              bool_rel
+                =
+                a
+                c
+              |
+                bool_rel
+                  =
+                  a
+                  d
+                |
+                  bool_rel
+                    =
+                    b
+                    d
+                  bool_rel
+                    =
+                    c
+                    d
+        !
+          |
+            &
+              bool_rel
+                =
+                a
+                b
+              bool_rel
+                =
+                a
+                c
+            |
+              &
+                bool_rel
+                  =
+                  a
+                  b
+                bool_rel
+                  =
+                  b
+                  d
+              |
+                &
+                  bool_rel
+                    =
+                    b
+                    c
+                  bool_rel
+                    =
+                    b
+                    d
+                &
+                  bool_rel
+                    =
+                    a
+                    c
+                  bool_rel
+                    =
+                    c
+                    d
+    print_s
+      
 
   <-
-    variable: b
+    b
     25
   <-
-    variable: c
+    c
     45
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
-      c: 
-    variable: c
-      d: 
-    variable: d
-      expr: 
-    and
-      or
-        or
-          or
-            or
-              or
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: b
-                  variable: c
-              =
-                variable: a
-                variable: c
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
+        c: 
+    print_i
+      c
+    print_s
+        d: 
+    print_i
+      d
+    print_s
+        expr: 
+    print_b
+      &
+        |
+          bool_rel
             =
-              variable: a
-              variable: d
-          =
-            variable: b
-            variable: d
-        =
-          variable: c
-          variable: d
-      not
-        or
-          or
-            or
-              and
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: a
-                  variable: c
-              and
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: b
-                  variable: d
-            and
+            a
+            b
+          |
+            bool_rel
               =
-                variable: b
-                variable: c
-              =
-                variable: b
-                variable: d
-          and
-            =
-              variable: a
-              variable: c
-            =
-              variable: c
-              variable: d
-    
+              b
+              c
+            |
+              bool_rel
+                =
+                a
+                c
+              |
+                bool_rel
+                  =
+                  a
+                  d
+                |
+                  bool_rel
+                    =
+                    b
+                    d
+                  bool_rel
+                    =
+                    c
+                    d
+        !
+          |
+            &
+              bool_rel
+                =
+                a
+                b
+              bool_rel
+                =
+                a
+                c
+            |
+              &
+                bool_rel
+                  =
+                  a
+                  b
+                bool_rel
+                  =
+                  b
+                  d
+              |
+                &
+                  bool_rel
+                    =
+                    b
+                    c
+                  bool_rel
+                    =
+                    b
+                    d
+                &
+                  bool_rel
+                    =
+                    a
+                    c
+                  bool_rel
+                    =
+                    c
+                    d
+    print_s
+      
 
   <-
-    variable: a
+    a
     15
   <-
-    variable: b
-    variable: a
+    b
+    a
   <-
-    variable: c
-    variable: b
+    c
+    b
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
-      c: 
-    variable: c
-      d: 
-    variable: d
-      expr: 
-    and
-      or
-        or
-          or
-            or
-              or
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: b
-                  variable: c
-              =
-                variable: a
-                variable: c
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
+        c: 
+    print_i
+      c
+    print_s
+        d: 
+    print_i
+      d
+    print_s
+        expr: 
+    print_b
+      &
+        |
+          bool_rel
             =
-              variable: a
-              variable: d
-          =
-            variable: b
-            variable: d
-        =
-          variable: c
-          variable: d
-      not
-        or
-          or
-            or
-              and
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: a
-                  variable: c
-              and
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: b
-                  variable: d
-            and
+            a
+            b
+          |
+            bool_rel
               =
-                variable: b
-                variable: c
-              =
-                variable: b
-                variable: d
-          and
-            =
-              variable: a
-              variable: c
-            =
-              variable: c
-              variable: d
-    
+              b
+              c
+            |
+              bool_rel
+                =
+                a
+                c
+              |
+                bool_rel
+                  =
+                  a
+                  d
+                |
+                  bool_rel
+                    =
+                    b
+                    d
+                  bool_rel
+                    =
+                    c
+                    d
+        !
+          |
+            &
+              bool_rel
+                =
+                a
+                b
+              bool_rel
+                =
+                a
+                c
+            |
+              &
+                bool_rel
+                  =
+                  a
+                  b
+                bool_rel
+                  =
+                  b
+                  d
+              |
+                &
+                  bool_rel
+                    =
+                    b
+                    c
+                  bool_rel
+                    =
+                    b
+                    d
+                &
+                  bool_rel
+                    =
+                    a
+                    c
+                  bool_rel
+                    =
+                    c
+                    d
+    print_s
+      
 
   <-
-    variable: c
+    c
     35
   <-
-    variable: d
-    variable: a
+    d
+    a
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
-      c: 
-    variable: c
-      d: 
-    variable: d
-      expr: 
-    and
-      or
-        or
-          or
-            or
-              or
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: b
-                  variable: c
-              =
-                variable: a
-                variable: c
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
+        c: 
+    print_i
+      c
+    print_s
+        d: 
+    print_i
+      d
+    print_s
+        expr: 
+    print_b
+      &
+        |
+          bool_rel
             =
-              variable: a
-              variable: d
-          =
-            variable: b
-            variable: d
-        =
-          variable: c
-          variable: d
-      not
-        or
-          or
-            or
-              and
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: a
-                  variable: c
-              and
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: b
-                  variable: d
-            and
+            a
+            b
+          |
+            bool_rel
               =
-                variable: b
-                variable: c
-              =
-                variable: b
-                variable: d
-          and
-            =
-              variable: a
-              variable: c
-            =
-              variable: c
-              variable: d
-    
+              b
+              c
+            |
+              bool_rel
+                =
+                a
+                c
+              |
+                bool_rel
+                  =
+                  a
+                  d
+                |
+                  bool_rel
+                    =
+                    b
+                    d
+                  bool_rel
+                    =
+                    c
+                    d
+        !
+          |
+            &
+              bool_rel
+                =
+                a
+                b
+              bool_rel
+                =
+                a
+                c
+            |
+              &
+                bool_rel
+                  =
+                  a
+                  b
+                bool_rel
+                  =
+                  b
+                  d
+              |
+                &
+                  bool_rel
+                    =
+                    b
+                    c
+                  bool_rel
+                    =
+                    b
+                    d
+                &
+                  bool_rel
+                    =
+                    a
+                    c
+                  bool_rel
+                    =
+                    c
+                    d
+    print_s
+      
 
   <-
-    variable: b
+    b
     25
   <-
-    variable: c
-    variable: d
+    c
+    d
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
-      c: 
-    variable: c
-      d: 
-    variable: d
-      expr: 
-    and
-      or
-        or
-          or
-            or
-              or
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: b
-                  variable: c
-              =
-                variable: a
-                variable: c
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
+        c: 
+    print_i
+      c
+    print_s
+        d: 
+    print_i
+      d
+    print_s
+        expr: 
+    print_b
+      &
+        |
+          bool_rel
             =
-              variable: a
-              variable: d
-          =
-            variable: b
-            variable: d
-        =
-          variable: c
-          variable: d
-      not
-        or
-          or
-            or
-              and
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: a
-                  variable: c
-              and
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: b
-                  variable: d
-            and
+            a
+            b
+          |
+            bool_rel
               =
-                variable: b
-                variable: c
-              =
-                variable: b
-                variable: d
-          and
-            =
-              variable: a
-              variable: c
-            =
-              variable: c
-              variable: d
-    
+              b
+              c
+            |
+              bool_rel
+                =
+                a
+                c
+              |
+                bool_rel
+                  =
+                  a
+                  d
+                |
+                  bool_rel
+                    =
+                    b
+                    d
+                  bool_rel
+                    =
+                    c
+                    d
+        !
+          |
+            &
+              bool_rel
+                =
+                a
+                b
+              bool_rel
+                =
+                a
+                c
+            |
+              &
+                bool_rel
+                  =
+                  a
+                  b
+                bool_rel
+                  =
+                  b
+                  d
+              |
+                &
+                  bool_rel
+                    =
+                    b
+                    c
+                  bool_rel
+                    =
+                    b
+                    d
+                &
+                  bool_rel
+                    =
+                    a
+                    c
+                  bool_rel
+                    =
+                    c
+                    d
+    print_s
+      
 
   <-
-    variable: b
-    variable: c
+    b
+    c
   <-
-    variable: a
+    a
     25
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
-      c: 
-    variable: c
-      d: 
-    variable: d
-      expr: 
-    and
-      or
-        or
-          or
-            or
-              or
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: b
-                  variable: c
-              =
-                variable: a
-                variable: c
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
+        c: 
+    print_i
+      c
+    print_s
+        d: 
+    print_i
+      d
+    print_s
+        expr: 
+    print_b
+      &
+        |
+          bool_rel
             =
-              variable: a
-              variable: d
-          =
-            variable: b
-            variable: d
-        =
-          variable: c
-          variable: d
-      not
-        or
-          or
-            or
-              and
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: a
-                  variable: c
-              and
-                =
-                  variable: a
-                  variable: b
-                =
-                  variable: b
-                  variable: d
-            and
+            a
+            b
+          |
+            bool_rel
               =
-                variable: b
-                variable: c
-              =
-                variable: b
-                variable: d
-          and
-            =
-              variable: a
-              variable: c
-            =
-              variable: c
-              variable: d
-    
+              b
+              c
+            |
+              bool_rel
+                =
+                a
+                c
+              |
+                bool_rel
+                  =
+                  a
+                  d
+                |
+                  bool_rel
+                    =
+                    b
+                    d
+                  bool_rel
+                    =
+                    c
+                    d
+        !
+          |
+            &
+              bool_rel
+                =
+                a
+                b
+              bool_rel
+                =
+                a
+                c
+            |
+              &
+                bool_rel
+                  =
+                  a
+                  b
+                bool_rel
+                  =
+                  b
+                  d
+              |
+                &
+                  bool_rel
+                    =
+                    b
+                    c
+                  bool_rel
+                    =
+                    b
+                    d
+                &
+                  bool_rel
+                    =
+                    a
+                    c
+                  bool_rel
+                    =
+                    c
+                    d
+    print_s
+      
 
   print
-    The following expressions should be identical to the ones above
+    print_s
+      The following expressions should be identical to the ones above
 
-    even though they are calculated differently.
+    print_s
+      even though they are calculated differently.
 
   <-
-    variable: a
+    a
     15
   <-
-    variable: b
+    b
     25
   <-
-    variable: c
+    c
     35
   <-
-    variable: d
+    d
     45
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
-      c: 
-    variable: c
-      d: 
-    variable: d
-      expr: 
-    and
-      not
-        and
-          and
-            and
-              and
-                and
-                  ~=
-                    variable: a
-                    variable: b
-                  ~=
-                    variable: b
-                    variable: c
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
+        c: 
+    print_i
+      c
+    print_s
+        d: 
+    print_i
+      d
+    print_s
+        expr: 
+    print_b
+      &
+        !
+          &
+            bool_rel
+              ~=
+              a
+              b
+            &
+              bool_rel
                 ~=
-                  variable: a
-                  variable: c
+                b
+                c
+              &
+                bool_rel
+                  ~=
+                  a
+                  c
+                &
+                  bool_rel
+                    ~=
+                    a
+                    d
+                  &
+                    bool_rel
+                      ~=
+                      b
+                      d
+                    bool_rel
+                      ~=
+                      c
+                      d
+        &
+          |
+            bool_rel
               ~=
-                variable: a
-                variable: d
-            ~=
-              variable: b
-              variable: d
-          ~=
-            variable: c
-            variable: d
-      and
-        and
-          and
-            or
+              a
+              b
+            bool_rel
               ~=
-                variable: a
-                variable: b
-              ~=
-                variable: a
-                variable: c
-            or
-              ~=
-                variable: a
-                variable: b
-              ~=
-                variable: b
-                variable: d
-          or
-            ~=
-              variable: b
-              variable: c
-            ~=
-              variable: b
-              variable: d
-        or
-          ~=
-            variable: a
-            variable: c
-          ~=
-            variable: c
-            variable: d
-    
+              a
+              c
+          &
+            |
+              bool_rel
+                ~=
+                a
+                b
+              bool_rel
+                ~=
+                b
+                d
+            &
+              |
+                bool_rel
+                  ~=
+                  b
+                  c
+                bool_rel
+                  ~=
+                  b
+                  d
+              |
+                bool_rel
+                  ~=
+                  a
+                  c
+                bool_rel
+                  ~=
+                  c
+                  d
+    print_s
+      
 
   <-
-    variable: a
+    a
     25
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
-      c: 
-    variable: c
-      d: 
-    variable: d
-      expr: 
-    and
-      not
-        and
-          and
-            and
-              and
-                and
-                  ~=
-                    variable: a
-                    variable: b
-                  ~=
-                    variable: b
-                    variable: c
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
+        c: 
+    print_i
+      c
+    print_s
+        d: 
+    print_i
+      d
+    print_s
+        expr: 
+    print_b
+      &
+        !
+          &
+            bool_rel
+              ~=
+              a
+              b
+            &
+              bool_rel
                 ~=
-                  variable: a
-                  variable: c
+                b
+                c
+              &
+                bool_rel
+                  ~=
+                  a
+                  c
+                &
+                  bool_rel
+                    ~=
+                    a
+                    d
+                  &
+                    bool_rel
+                      ~=
+                      b
+                      d
+                    bool_rel
+                      ~=
+                      c
+                      d
+        &
+          |
+            bool_rel
               ~=
-                variable: a
-                variable: d
-            ~=
-              variable: b
-              variable: d
-          ~=
-            variable: c
-            variable: d
-      and
-        and
-          and
-            or
+              a
+              b
+            bool_rel
               ~=
-                variable: a
-                variable: b
-              ~=
-                variable: a
-                variable: c
-            or
-              ~=
-                variable: a
-                variable: b
-              ~=
-                variable: b
-                variable: d
-          or
-            ~=
-              variable: b
-              variable: c
-            ~=
-              variable: b
-              variable: d
-        or
-          ~=
-            variable: a
-            variable: c
-          ~=
-            variable: c
-            variable: d
-    
+              a
+              c
+          &
+            |
+              bool_rel
+                ~=
+                a
+                b
+              bool_rel
+                ~=
+                b
+                d
+            &
+              |
+                bool_rel
+                  ~=
+                  b
+                  c
+                bool_rel
+                  ~=
+                  b
+                  d
+              |
+                bool_rel
+                  ~=
+                  a
+                  c
+                bool_rel
+                  ~=
+                  c
+                  d
+    print_s
+      
 
   <-
-    variable: a
+    a
     35
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
-      c: 
-    variable: c
-      d: 
-    variable: d
-      expr: 
-    and
-      not
-        and
-          and
-            and
-              and
-                and
-                  ~=
-                    variable: a
-                    variable: b
-                  ~=
-                    variable: b
-                    variable: c
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
+        c: 
+    print_i
+      c
+    print_s
+        d: 
+    print_i
+      d
+    print_s
+        expr: 
+    print_b
+      &
+        !
+          &
+            bool_rel
+              ~=
+              a
+              b
+            &
+              bool_rel
                 ~=
-                  variable: a
-                  variable: c
+                b
+                c
+              &
+                bool_rel
+                  ~=
+                  a
+                  c
+                &
+                  bool_rel
+                    ~=
+                    a
+                    d
+                  &
+                    bool_rel
+                      ~=
+                      b
+                      d
+                    bool_rel
+                      ~=
+                      c
+                      d
+        &
+          |
+            bool_rel
               ~=
-                variable: a
-                variable: d
-            ~=
-              variable: b
-              variable: d
-          ~=
-            variable: c
-            variable: d
-      and
-        and
-          and
-            or
+              a
+              b
+            bool_rel
               ~=
-                variable: a
-                variable: b
-              ~=
-                variable: a
-                variable: c
-            or
-              ~=
-                variable: a
-                variable: b
-              ~=
-                variable: b
-                variable: d
-          or
-            ~=
-              variable: b
-              variable: c
-            ~=
-              variable: b
-              variable: d
-        or
-          ~=
-            variable: a
-            variable: c
-          ~=
-            variable: c
-            variable: d
-    
+              a
+              c
+          &
+            |
+              bool_rel
+                ~=
+                a
+                b
+              bool_rel
+                ~=
+                b
+                d
+            &
+              |
+                bool_rel
+                  ~=
+                  b
+                  c
+                bool_rel
+                  ~=
+                  b
+                  d
+              |
+                bool_rel
+                  ~=
+                  a
+                  c
+                bool_rel
+                  ~=
+                  c
+                  d
+    print_s
+      
 
   <-
-    variable: a
+    a
     45
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
-      c: 
-    variable: c
-      d: 
-    variable: d
-      expr: 
-    and
-      not
-        and
-          and
-            and
-              and
-                and
-                  ~=
-                    variable: a
-                    variable: b
-                  ~=
-                    variable: b
-                    variable: c
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
+        c: 
+    print_i
+      c
+    print_s
+        d: 
+    print_i
+      d
+    print_s
+        expr: 
+    print_b
+      &
+        !
+          &
+            bool_rel
+              ~=
+              a
+              b
+            &
+              bool_rel
                 ~=
-                  variable: a
-                  variable: c
+                b
+                c
+              &
+                bool_rel
+                  ~=
+                  a
+                  c
+                &
+                  bool_rel
+                    ~=
+                    a
+                    d
+                  &
+                    bool_rel
+                      ~=
+                      b
+                      d
+                    bool_rel
+                      ~=
+                      c
+                      d
+        &
+          |
+            bool_rel
               ~=
-                variable: a
-                variable: d
-            ~=
-              variable: b
-              variable: d
-          ~=
-            variable: c
-            variable: d
-      and
-        and
-          and
-            or
+              a
+              b
+            bool_rel
               ~=
-                variable: a
-                variable: b
-              ~=
-                variable: a
-                variable: c
-            or
-              ~=
-                variable: a
-                variable: b
-              ~=
-                variable: b
-                variable: d
-          or
-            ~=
-              variable: b
-              variable: c
-            ~=
-              variable: b
-              variable: d
-        or
-          ~=
-            variable: a
-            variable: c
-          ~=
-            variable: c
-            variable: d
-    
+              a
+              c
+          &
+            |
+              bool_rel
+                ~=
+                a
+                b
+              bool_rel
+                ~=
+                b
+                d
+            &
+              |
+                bool_rel
+                  ~=
+                  b
+                  c
+                bool_rel
+                  ~=
+                  b
+                  d
+              |
+                bool_rel
+                  ~=
+                  a
+                  c
+                bool_rel
+                  ~=
+                  c
+                  d
+    print_s
+      
 
   <-
-    variable: a
+    a
     15
   <-
-    variable: b
+    b
     35
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
-      c: 
-    variable: c
-      d: 
-    variable: d
-      expr: 
-    and
-      not
-        and
-          and
-            and
-              and
-                and
-                  ~=
-                    variable: a
-                    variable: b
-                  ~=
-                    variable: b
-                    variable: c
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
+        c: 
+    print_i
+      c
+    print_s
+        d: 
+    print_i
+      d
+    print_s
+        expr: 
+    print_b
+      &
+        !
+          &
+            bool_rel
+              ~=
+              a
+              b
+            &
+              bool_rel
                 ~=
-                  variable: a
-                  variable: c
+                b
+                c
+              &
+                bool_rel
+                  ~=
+                  a
+                  c
+                &
+                  bool_rel
+                    ~=
+                    a
+                    d
+                  &
+                    bool_rel
+                      ~=
+                      b
+                      d
+                    bool_rel
+                      ~=
+                      c
+                      d
+        &
+          |
+            bool_rel
               ~=
-                variable: a
-                variable: d
-            ~=
-              variable: b
-              variable: d
-          ~=
-            variable: c
-            variable: d
-      and
-        and
-          and
-            or
+              a
+              b
+            bool_rel
               ~=
-                variable: a
-                variable: b
-              ~=
-                variable: a
-                variable: c
-            or
-              ~=
-                variable: a
-                variable: b
-              ~=
-                variable: b
-                variable: d
-          or
-            ~=
-              variable: b
-              variable: c
-            ~=
-              variable: b
-              variable: d
-        or
-          ~=
-            variable: a
-            variable: c
-          ~=
-            variable: c
-            variable: d
-    
+              a
+              c
+          &
+            |
+              bool_rel
+                ~=
+                a
+                b
+              bool_rel
+                ~=
+                b
+                d
+            &
+              |
+                bool_rel
+                  ~=
+                  b
+                  c
+                bool_rel
+                  ~=
+                  b
+                  d
+              |
+                bool_rel
+                  ~=
+                  a
+                  c
+                bool_rel
+                  ~=
+                  c
+                  d
+    print_s
+      
 
   <-
-    variable: b
+    b
     45
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
-      c: 
-    variable: c
-      d: 
-    variable: d
-      expr: 
-    and
-      not
-        and
-          and
-            and
-              and
-                and
-                  ~=
-                    variable: a
-                    variable: b
-                  ~=
-                    variable: b
-                    variable: c
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
+        c: 
+    print_i
+      c
+    print_s
+        d: 
+    print_i
+      d
+    print_s
+        expr: 
+    print_b
+      &
+        !
+          &
+            bool_rel
+              ~=
+              a
+              b
+            &
+              bool_rel
                 ~=
-                  variable: a
-                  variable: c
+                b
+                c
+              &
+                bool_rel
+                  ~=
+                  a
+                  c
+                &
+                  bool_rel
+                    ~=
+                    a
+                    d
+                  &
+                    bool_rel
+                      ~=
+                      b
+                      d
+                    bool_rel
+                      ~=
+                      c
+                      d
+        &
+          |
+            bool_rel
               ~=
-                variable: a
-                variable: d
-            ~=
-              variable: b
-              variable: d
-          ~=
-            variable: c
-            variable: d
-      and
-        and
-          and
-            or
+              a
+              b
+            bool_rel
               ~=
-                variable: a
-                variable: b
-              ~=
-                variable: a
-                variable: c
-            or
-              ~=
-                variable: a
-                variable: b
-              ~=
-                variable: b
-                variable: d
-          or
-            ~=
-              variable: b
-              variable: c
-            ~=
-              variable: b
-              variable: d
-        or
-          ~=
-            variable: a
-            variable: c
-          ~=
-            variable: c
-            variable: d
-    
+              a
+              c
+          &
+            |
+              bool_rel
+                ~=
+                a
+                b
+              bool_rel
+                ~=
+                b
+                d
+            &
+              |
+                bool_rel
+                  ~=
+                  b
+                  c
+                bool_rel
+                  ~=
+                  b
+                  d
+              |
+                bool_rel
+                  ~=
+                  a
+                  c
+                bool_rel
+                  ~=
+                  c
+                  d
+    print_s
+      
 
   <-
-    variable: b
+    b
     25
   <-
-    variable: c
+    c
     45
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
-      c: 
-    variable: c
-      d: 
-    variable: d
-      expr: 
-    and
-      not
-        and
-          and
-            and
-              and
-                and
-                  ~=
-                    variable: a
-                    variable: b
-                  ~=
-                    variable: b
-                    variable: c
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
+        c: 
+    print_i
+      c
+    print_s
+        d: 
+    print_i
+      d
+    print_s
+        expr: 
+    print_b
+      &
+        !
+          &
+            bool_rel
+              ~=
+              a
+              b
+            &
+              bool_rel
                 ~=
-                  variable: a
-                  variable: c
+                b
+                c
+              &
+                bool_rel
+                  ~=
+                  a
+                  c
+                &
+                  bool_rel
+                    ~=
+                    a
+                    d
+                  &
+                    bool_rel
+                      ~=
+                      b
+                      d
+                    bool_rel
+                      ~=
+                      c
+                      d
+        &
+          |
+            bool_rel
               ~=
-                variable: a
-                variable: d
-            ~=
-              variable: b
-              variable: d
-          ~=
-            variable: c
-            variable: d
-      and
-        and
-          and
-            or
+              a
+              b
+            bool_rel
               ~=
-                variable: a
-                variable: b
-              ~=
-                variable: a
-                variable: c
-            or
-              ~=
-                variable: a
-                variable: b
-              ~=
-                variable: b
-                variable: d
-          or
-            ~=
-              variable: b
-              variable: c
-            ~=
-              variable: b
-              variable: d
-        or
-          ~=
-            variable: a
-            variable: c
-          ~=
-            variable: c
-            variable: d
-    
+              a
+              c
+          &
+            |
+              bool_rel
+                ~=
+                a
+                b
+              bool_rel
+                ~=
+                b
+                d
+            &
+              |
+                bool_rel
+                  ~=
+                  b
+                  c
+                bool_rel
+                  ~=
+                  b
+                  d
+              |
+                bool_rel
+                  ~=
+                  a
+                  c
+                bool_rel
+                  ~=
+                  c
+                  d
+    print_s
+      
 
   <-
-    variable: a
+    a
     15
   <-
-    variable: b
-    variable: a
+    b
+    a
   <-
-    variable: c
-    variable: b
+    c
+    b
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
-      c: 
-    variable: c
-      d: 
-    variable: d
-      expr: 
-    and
-      not
-        and
-          and
-            and
-              and
-                and
-                  ~=
-                    variable: a
-                    variable: b
-                  ~=
-                    variable: b
-                    variable: c
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
+        c: 
+    print_i
+      c
+    print_s
+        d: 
+    print_i
+      d
+    print_s
+        expr: 
+    print_b
+      &
+        !
+          &
+            bool_rel
+              ~=
+              a
+              b
+            &
+              bool_rel
                 ~=
-                  variable: a
-                  variable: c
+                b
+                c
+              &
+                bool_rel
+                  ~=
+                  a
+                  c
+                &
+                  bool_rel
+                    ~=
+                    a
+                    d
+                  &
+                    bool_rel
+                      ~=
+                      b
+                      d
+                    bool_rel
+                      ~=
+                      c
+                      d
+        &
+          |
+            bool_rel
               ~=
-                variable: a
-                variable: d
-            ~=
-              variable: b
-              variable: d
-          ~=
-            variable: c
-            variable: d
-      and
-        and
-          and
-            or
+              a
+              b
+            bool_rel
               ~=
-                variable: a
-                variable: b
-              ~=
-                variable: a
-                variable: c
-            or
-              ~=
-                variable: a
-                variable: b
-              ~=
-                variable: b
-                variable: d
-          or
-            ~=
-              variable: b
-              variable: c
-            ~=
-              variable: b
-              variable: d
-        or
-          ~=
-            variable: a
-            variable: c
-          ~=
-            variable: c
-            variable: d
-    
+              a
+              c
+          &
+            |
+              bool_rel
+                ~=
+                a
+                b
+              bool_rel
+                ~=
+                b
+                d
+            &
+              |
+                bool_rel
+                  ~=
+                  b
+                  c
+                bool_rel
+                  ~=
+                  b
+                  d
+              |
+                bool_rel
+                  ~=
+                  a
+                  c
+                bool_rel
+                  ~=
+                  c
+                  d
+    print_s
+      
 
   <-
-    variable: c
+    c
     35
   <-
-    variable: d
-    variable: a
+    d
+    a
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
-      c: 
-    variable: c
-      d: 
-    variable: d
-      expr: 
-    and
-      not
-        and
-          and
-            and
-              and
-                and
-                  ~=
-                    variable: a
-                    variable: b
-                  ~=
-                    variable: b
-                    variable: c
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
+        c: 
+    print_i
+      c
+    print_s
+        d: 
+    print_i
+      d
+    print_s
+        expr: 
+    print_b
+      &
+        !
+          &
+            bool_rel
+              ~=
+              a
+              b
+            &
+              bool_rel
                 ~=
-                  variable: a
-                  variable: c
+                b
+                c
+              &
+                bool_rel
+                  ~=
+                  a
+                  c
+                &
+                  bool_rel
+                    ~=
+                    a
+                    d
+                  &
+                    bool_rel
+                      ~=
+                      b
+                      d
+                    bool_rel
+                      ~=
+                      c
+                      d
+        &
+          |
+            bool_rel
               ~=
-                variable: a
-                variable: d
-            ~=
-              variable: b
-              variable: d
-          ~=
-            variable: c
-            variable: d
-      and
-        and
-          and
-            or
+              a
+              b
+            bool_rel
               ~=
-                variable: a
-                variable: b
-              ~=
-                variable: a
-                variable: c
-            or
-              ~=
-                variable: a
-                variable: b
-              ~=
-                variable: b
-                variable: d
-          or
-            ~=
-              variable: b
-              variable: c
-            ~=
-              variable: b
-              variable: d
-        or
-          ~=
-            variable: a
-            variable: c
-          ~=
-            variable: c
-            variable: d
-    
+              a
+              c
+          &
+            |
+              bool_rel
+                ~=
+                a
+                b
+              bool_rel
+                ~=
+                b
+                d
+            &
+              |
+                bool_rel
+                  ~=
+                  b
+                  c
+                bool_rel
+                  ~=
+                  b
+                  d
+              |
+                bool_rel
+                  ~=
+                  a
+                  c
+                bool_rel
+                  ~=
+                  c
+                  d
+    print_s
+      
 
   <-
-    variable: b
+    b
     25
   <-
-    variable: c
-    variable: d
+    c
+    d
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
-      c: 
-    variable: c
-      d: 
-    variable: d
-      expr: 
-    and
-      not
-        and
-          and
-            and
-              and
-                and
-                  ~=
-                    variable: a
-                    variable: b
-                  ~=
-                    variable: b
-                    variable: c
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
+        c: 
+    print_i
+      c
+    print_s
+        d: 
+    print_i
+      d
+    print_s
+        expr: 
+    print_b
+      &
+        !
+          &
+            bool_rel
+              ~=
+              a
+              b
+            &
+              bool_rel
                 ~=
-                  variable: a
-                  variable: c
+                b
+                c
+              &
+                bool_rel
+                  ~=
+                  a
+                  c
+                &
+                  bool_rel
+                    ~=
+                    a
+                    d
+                  &
+                    bool_rel
+                      ~=
+                      b
+                      d
+                    bool_rel
+                      ~=
+                      c
+                      d
+        &
+          |
+            bool_rel
               ~=
-                variable: a
-                variable: d
-            ~=
-              variable: b
-              variable: d
-          ~=
-            variable: c
-            variable: d
-      and
-        and
-          and
-            or
+              a
+              b
+            bool_rel
               ~=
-                variable: a
-                variable: b
-              ~=
-                variable: a
-                variable: c
-            or
-              ~=
-                variable: a
-                variable: b
-              ~=
-                variable: b
-                variable: d
-          or
-            ~=
-              variable: b
-              variable: c
-            ~=
-              variable: b
-              variable: d
-        or
-          ~=
-            variable: a
-            variable: c
-          ~=
-            variable: c
-            variable: d
-    
+              a
+              c
+          &
+            |
+              bool_rel
+                ~=
+                a
+                b
+              bool_rel
+                ~=
+                b
+                d
+            &
+              |
+                bool_rel
+                  ~=
+                  b
+                  c
+                bool_rel
+                  ~=
+                  b
+                  d
+              |
+                bool_rel
+                  ~=
+                  a
+                  c
+                bool_rel
+                  ~=
+                  c
+                  d
+    print_s
+      
 
   <-
-    variable: b
-    variable: c
+    b
+    c
   <-
-    variable: a
+    a
     25
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
-      c: 
-    variable: c
-      d: 
-    variable: d
-      expr: 
-    and
-      not
-        and
-          and
-            and
-              and
-                and
-                  ~=
-                    variable: a
-                    variable: b
-                  ~=
-                    variable: b
-                    variable: c
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
+        c: 
+    print_i
+      c
+    print_s
+        d: 
+    print_i
+      d
+    print_s
+        expr: 
+    print_b
+      &
+        !
+          &
+            bool_rel
+              ~=
+              a
+              b
+            &
+              bool_rel
                 ~=
-                  variable: a
-                  variable: c
+                b
+                c
+              &
+                bool_rel
+                  ~=
+                  a
+                  c
+                &
+                  bool_rel
+                    ~=
+                    a
+                    d
+                  &
+                    bool_rel
+                      ~=
+                      b
+                      d
+                    bool_rel
+                      ~=
+                      c
+                      d
+        &
+          |
+            bool_rel
               ~=
-                variable: a
-                variable: d
-            ~=
-              variable: b
-              variable: d
-          ~=
-            variable: c
-            variable: d
-      and
-        and
-          and
-            or
+              a
+              b
+            bool_rel
               ~=
-                variable: a
-                variable: b
-              ~=
-                variable: a
-                variable: c
-            or
-              ~=
-                variable: a
-                variable: b
-              ~=
-                variable: b
-                variable: d
-          or
-            ~=
-              variable: b
-              variable: c
-            ~=
-              variable: b
-              variable: d
-        or
-          ~=
-            variable: a
-            variable: c
-          ~=
-            variable: c
-            variable: d
-    
+              a
+              c
+          &
+            |
+              bool_rel
+                ~=
+                a
+                b
+              bool_rel
+                ~=
+                b
+                d
+            &
+              |
+                bool_rel
+                  ~=
+                  b
+                  c
+                bool_rel
+                  ~=
+                  b
+                  d
+              |
+                bool_rel
+                  ~=
+                  a
+                  c
+                bool_rel
+                  ~=
+                  c
+                  d
+    print_s
+      
 
-Code size: 17503 bytes.
+Code size: 11391 bytes.
 Code execution:
 The following expression should be true if exactly two of the four
 variables have the same value.
