@@ -358,7 +358,7 @@ Code_Tree parse_assignment(vector<Token>& tokens) {
 }
 
 Code_Tree parse_statment_or_block(vector<Token>&);
-Code_Tree parse_control_struct(vector<Token>& tokens) {
+Code_Tree parse_if_structure(vector<Token>& tokens) {
 	// if(bool)sorb
 	EAT_IDENT(t, tokens, "if");
 	EAT_OP(topen, tokens, '(');
@@ -368,11 +368,39 @@ Code_Tree parse_control_struct(vector<Token>& tokens) {
 	try {
 		auto toks = tokens;
 		EAT_IDENT(tel, toks, "else");
-		auto sorbelse = parse_statment_or_block(toks);
 		tokens = toks;
-		return Code_Tree("if_else", t, {con, sorb, sorbelse});
 	} catch (Code_Tree err) {
 		return Code_Tree("if", t, {con, sorb});
+	}
+	auto sorbelse = parse_statment_or_block(tokens);
+	return Code_Tree("if_else", t, {con, sorb, sorbelse});
+}
+
+Code_Tree parse_while_structure(vector<Token>& tokens) {
+	EAT_IDENT(t, tokens, "while");
+	EAT_OP(topen, tokens, '(');
+	auto con = parse_bool_expresion(tokens);
+	EAT_OP(tclose, tokens, ')');
+	auto sorb = parse_statment_or_block(tokens);
+	return Code_Tree("while", t, {con, sorb});
+}
+
+Code_Tree parse_control_struct(vector<Token>& tokens) {
+	try {
+		auto toks = tokens;
+		auto ret = parse_if_structure(toks);
+		tokens = toks;
+		return ret;
+	} catch (Code_Tree err1) {
+		try {
+			auto toks = tokens;
+			auto ret = parse_while_structure(toks);
+			tokens = toks;
+			return ret;
+		} catch (Code_Tree err2) {
+			throw Code_Tree("Expected control structure 'if' or 'while'",
+			                {err1, err2});
+		}
 	}
 }
 
@@ -435,7 +463,7 @@ Code_Tree parse_block(vector<Token>& tokens) {
 	EAT_OP(t1, tokens, '{');
 	auto ret = parse_global_block(tokens);
 	EAT_OP(t2, tokens, '}');
-	return Code_Tree("block", t1, {ret});
+	return ret;  // Code_Tree("block", t1, {ret});
 }
 
 Code_Tree parse_statment_or_block(vector<Token>& tokens) {

@@ -1,20 +1,25 @@
 Code tree: 
-statement block
-  variable: i
+block
+  int4
+    i
   while
-    <
-      variable: i
+    bool_rel
+      <
+      i
       10
-    statement block
+    block
       print
-        variable: i
-         
+        print_i
+          i
+         print_s
+	 
       <-
-        variable: i
-        + (add)
-          variable: i
+        i
+        +
+          i
           1
   print
+    print_s
     
 
 Code size: 151 bytes.
