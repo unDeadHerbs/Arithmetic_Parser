@@ -1,6 +1,7 @@
 # Test of simple while loop
 
 int4 i;
+i <- 0;
 
 while(i < 10)
 {
