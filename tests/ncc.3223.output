@@ -1,99 +1,124 @@
 Code tree: 
-statement block
-  variable: a
-  variable: b
+block
+  int4
+    a
+  int4
+    b
   print
-    Input a value for a: 
+    print_s
+      Input a value for a: 
   read
-    variable: a
+    a
   print
-    Input a value for b: 
+    print_s
+      Input a value for b: 
   read
-    variable: b
+    b
   print
-    a: 
-    variable: a
-      b: 
-    variable: b
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+        b: 
+    print_i
+      b
+    print_s
     
 
   if
-    <
-      variable: a
-      variable: b
-    statement block
+    bool_rel
+      <
+      a
+      b
+    block
       print
-        a is less than b
+        print_s
+          a is less than b
 
-    statement block
+    block
       print
-        a is not less than b
-
-  if
-    <
-      variable: a
-      variable: b
-    statement block
-      print
-        a is greater than b
-
-    statement block
-      print
-        a is not greater than b
+        print_s
+          a is not less than b
 
   if
-    <=
-      variable: a
-      variable: b
-    statement block
+    bool_rel
+      >
+      a
+      b
+    block
       print
-        a is less than or equal to b
+        print_s
+          a is greater than b
 
-    statement block
+    block
       print
-        a is not less than or equal to b
-
-  if
-    <=
-      variable: a
-      variable: b
-    statement block
-      print
-        a is greater than or equal to b
-
-    statement block
-      print
-        a is not greater than or equal to b
+        print_s
+          a is not greater than b
 
   if
-    =
-      variable: a
-      variable: b
-    statement block
+    bool_rel
+      <=
+      a
+      b
+    block
       print
-        a is equal to b
+        print_s
+          a is less than or equal to b
 
-    statement block
+    block
       print
-        a is not equal to b
+        print_s
+          a is not less than or equal to b
 
   if
-    ~=
-      variable: a
-      variable: b
-    statement block
+    bool_rel
+      >=
+      a
+      b
+    block
       print
-        a is not equal to b
+        print_s
+          a is greater than or equal to b
 
-    statement block
+    block
       print
-        a is not not equal to b
+        print_s
+          a is not greater than or equal to b
 
-Code size: 757 bytes.
+  if
+    bool_rel
+      =
+      a
+      b
+    block
+      print
+        print_s
+          a is equal to b
+
+    block
+      print
+        print_s
+          a is not equal to b
+
+  if
+    bool_rel
+      ~=
+      a
+      b
+    block
+      print
+        print_s
+          a is not equal to b
+
+    block
+      print
+        print_s
+          a is not not equal to b
+
+Code size: 617 bytes.
 Code execution:
-Input a value for a: 3
-Input a value for b: 3
-a: 3  b: 3
+Input a value for a: Input a value for b: a: 3  b: 3
 a is not less than b
 a is not greater than b
 a is less than or equal to b

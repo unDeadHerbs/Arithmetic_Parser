@@ -13,7 +13,7 @@ else
     int4 thousands;
 
     thousands <- number / 1000;
-    number = number mod 1000;
+    number <- number mod 1000;
 
     if(thousands = 1)
       print("M");

@@ -1,243 +1,311 @@
 Code tree: 
-statement block
+block
   print
-    This program converts a number to roman numerals
+    print_s
+      This program converts a number to roman numerals
 
 
   print
-    Please enter a number between 1 and 3999: 
-  variable: number
+    print_s
+      Please enter a number between 1 and 3999: 
+  int4
+    number
   read
-    variable: number
+    number
   if
-    or
-      <
-        variable: number
+    |
+      bool_rel
+        <
+        number
         1
-      <
-        variable: number
+      bool_rel
+        >
+        number
         3999
     print
-      Invalid number... Exiting.
+      print_s
+        Invalid number... Exiting.
 
-    statement block
-      variable: thousands
+    block
+      int4
+        thousands
       <-
-        variable: thousands
-        / (div)
-          variable: number
+        thousands
+        /
+          number
           1000
       <-
-        variable: number
+        number
         mod
-          variable: number
+          number
           1000
       if
-        =
-          variable: thousands
+        bool_rel
+          =
+          thousands
           1
         print
-          M
+	  print_s
+            M
         if
-          =
-            variable: thousands
+	  bool_rel
+            =
+            thousands
             2
           print
-            MM
+	    print_s
+              MM
           if
-            =
-              variable: thousands
+	    bool_rel
+              =
+              thousands
               3
             print
-              MMM
-      variable: hundreds
+ 	     print_s
+                MMM
+      int4
+        hundreds
       <-
-        variable: hundreds
-        / (div)
-          variable: number
+        hundreds
+        /
+          number
           100
       <-
-        variable: number
+        number
         mod
-          variable: number
+          number
           100
       if
-        =
-          variable: hundreds
+        bool_rel
+          =
+          hundreds
           1
         print
-          C
+	  print_s
+            C
         if
-          =
-            variable: hundreds
+	  bool_rel
+            =
+            hundreds
             2
           print
-            CC
+	    print_s
+              CC
           if
-            =
-              variable: hundreds
+	    bool_rel
+              =
+              hundreds
               3
             print
-              CCC
+	      print_s
+                CCC
             if
-              =
-                variable: hundreds
+	      bool_rel
+                =
+                hundreds
                 4
               print
-                CD
+	        print_s
+                  CD
               if
-                =
-                  variable: hundreds
+	        bool_rel
+                  =
+                  hundreds
                   5
                 print
-                  D
+		  print_s
+                    D
                 if
-                  =
-                    variable: hundreds
+		  bool_rel
+                    =
+                    hundreds
                     6
                   print
-                    DC
+		    print_s
+                      DC
                   if
-                    =
-                      variable: hundreds
+                    bool_rel
+		      =
+                      hundreds
                       7
                     print
-                      DCC
+		      print_s
+                        DCC
                     if
-                      =
-                        variable: hundreds
+		      bool_rel
+                        =
+                        hundreds
                         8
                       print
-                        DCCC
+		        print_s
+                          DCCC
                       if
-                        =
-                          variable: hundreds
+		        bool_rel
+                          =
+                          hundreds
                           9
                         print
-                          CM
-      variable: tens
+			  print_s
+                            CM
+      int4
+        tens
       <-
-        variable: tens
-        / (div)
-          variable: number
+        tens
+        /
+          number
           10
       <-
-        variable: number
+        number
         mod
-          variable: number
+          number
           10
       if
-        =
-          variable: tens
+        bool_rel
+          =
+          tens
           1
         print
-          X
+	  print_s
+            X
         if
-          =
-            variable: tens
+	  bool_rel
+            =
+            tens
             2
           print
-            XX
+	    print_s
+              XX
           if
-            =
-              variable: tens
+	    bool_rel
+              =
+              tens
               3
             print
-              XXX
+	      print_s
+                XXX
             if
-              =
-                variable: tens
+	      bool_rel
+                =
+                tens
                 4
               print
-                XL
+	        print_s
+                  XL
               if
-                =
-                  variable: tens
+	        bool_rel
+                  =
+                  tens
                   5
                 print
-                  L
+		  print_s
+                    L
                 if
-                  =
-                    variable: tens
+		  bool_rel
+                    =
+                    tens
                     6
                   print
-                    LX
+		    print_s
+                      LX
                   if
-                    =
-                      variable: tens
+		    bool_rel
+                      =
+                      tens
                       7
                     print
-                      LXX
+		      print_s
+		        LXX
                     if
-                      =
-                        variable: tens
+		      bool_rel
+                        =
+                        tens
                         8
                       print
-                        LXXX
+		        print_s
+                          LXXX
                       if
-                        =
-                          variable: tens
+		        bool_rel
+                          =
+                          tens
                           9
                         print
-                          XC
+			  print_s
+                            XC
       if
-        =
-          variable: number
+        bool_rel
+          =
+          number
           1
         print
-          I
+	  print_s
+            I
         if
-          =
-            variable: number
+	  bool_rel
+            =
+            number
             2
           print
-            II
+	    print_s
+              II
           if
-            =
-              variable: number
+	    bool_rel
+              =
+              number
               3
             print
-              III
+	      print_s
+                III
             if
-              =
-                variable: number
+	      bool_rel
+                =
+                number
                 4
               print
-                IV
+	        print_s
+                  IV
               if
-                =
-                  variable: number
+	        bool_rel
+                  =
+                  number
                   5
                 print
-                  V
+		  print_s
+                    V
                 if
-                  =
-                    variable: number
+		  bool_rel
+                    =
+                    number
                     6
                   print
-                    VI
+		    print_s
+                      VI
                   if
-                    =
-                      variable: number
+		    bool_rel
+                      =
+                      number
                       7
                     print
-                      VII
+		      print_s
+                        VII
                     if
-                      =
-                        variable: number
+		      bool_rel
+                        =
+                        number
                         8
                       print
-                        VIII
+		        print_s
+                          VIII
                       if
-                        =
-                          variable: number
+		        bool_rel
+                          =
+                          number
                           9
                         print
-                          IX
-Code size: 2093 bytes.
+			  print_s
+                            IX
+Code size: 1851 bytes.
 Code execution:
 This program converts a number to roman numerals
 
-Please enter a number between 1 and 3999: 1888
-MDCCCLXXXVIII
+Please enter a number between 1 and 3999: MDCCCLXXXVIII
 
