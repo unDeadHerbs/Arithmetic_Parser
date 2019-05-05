@@ -1,6 +1,12 @@
 #include "parser.hpp"
 using std::vector;
 
+#if 1
+#include <iostream>
+using std::cout;
+using std::endl;
+#endif
+
 Code_Tree parse_expression(vector<Token>& tokens);
 
 #define _FUN std::string(__func__)

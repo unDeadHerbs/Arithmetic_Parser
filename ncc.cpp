@@ -39,6 +39,7 @@ int main(int argc, char* argv[]) {
 		auto prog = generate(ct);
 		cout << "Code size: " << prog.size() << " bytes." << endl
 		     << "Code execution:" << endl;
+		// prog.disam();
 		prog();
 		cout << endl << endl;
 	} catch (std::string err) {

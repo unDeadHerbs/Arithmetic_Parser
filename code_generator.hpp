@@ -7,6 +7,8 @@
 #include <utility>
 #include "code_tree.hpp"
 
+#include "disasm.hpp"
+
 typedef unsigned char binary;
 
 struct sym_props {};
@@ -65,6 +67,7 @@ struct program {
 	// operator += vec<opcode>
 	// operator [] for indexing
 	// Add an insert? Nope that's hard.
+	void disam();
 };
 program generate(Code_Tree);
 

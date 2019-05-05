@@ -25,7 +25,7 @@ ls tests | sed 's/[.]\(input\|file\|output\)//' | uniq |
 	if [ -e "tests/$r.input" ]; then
 	    cat "tests/$r.input"
 	fi |
-	timeout 2 "./$(echo $r|sed 's/[.].*//').bin" $([ -e "tests/$r.file" ] && \
+	timeout 1 "./$(echo $r|sed 's/[.].*//').bin" $([ -e "tests/$r.file" ] && \
 				 echo "tests/$r.file") 2>&1 |
 	if [ -e "tests/$r.output" ]; then
 	    if diff -baC 1 - "tests/$r.output"; then

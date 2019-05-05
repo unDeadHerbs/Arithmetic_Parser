@@ -31,6 +31,18 @@ void program::operator()() {
 	((int (*)())prog)();
 	munmap(prog, buffer.size());
 }
+void program::disam() {
+	auto prog =
+	    (char*)mmap(NULL /*we don't care where we point to.*/,
+	                buffer.size() /*size of buffer*/,
+	                PROT_EXEC | PROT_READ | PROT_WRITE /*permissions*/,
+	                MAP_PRIVATE | MAP_ANONYMOUS /**/,
+	                -1 /*ignored as not a file*/, 0 /*ignored as not a file*/);
+	if (!prog) throw "Failed to alocate space"s;
+	int end(0);
+	for (auto c : buffer) prog[end++] = c;
+	disassemble((unsigned char*)prog, buffer.size());
+}
 #define LITTLEENDIAN4(x)                                                       \
 	program({(char)(((x) >> 0x08 * 0) & 0xFF), (char)(((x) >> 0x08 * 1) & 0xFF), \
 	         (char)(((x) >> 0x08 * 2) & 0xFF),                                   \
