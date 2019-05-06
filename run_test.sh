@@ -4,8 +4,9 @@ set -e
 
 # Needs atleast one of `.in`, `.file`, or `.out`.
 
-if [ $# -ne 0 ]; then
-    echo "This script takes no arguments."
+if [ $# -ge 2 ]; then
+    echo "This script takes zero or one arguments."
+    echo "If one argument is provided then only the test with that name is run"
     echo "All tests are infered from the tests/ directory"
     echo "A test will be run if it has any of the following"
     echo " 1) An input file \"bin_name.input\""
@@ -16,7 +17,8 @@ fi
 
 ls tests | sed 's/[.]\(input\|file\|output\)//' | uniq |
     while read r; do
-	echo "Starting test $r"
+	[ $# -ne 0 ] && [[ "$@" != "$r" ]] && continue
+	echo "Running test $r"
 	# existance of file
 	[ -e "$(echo $r | sed 's/[.].*//').bin"  ] || { echo "Unable to find $(echo $r | sed 's/[.].*//').bin" ; exit 1 ; }
 	# existance of output
@@ -45,5 +47,4 @@ ls tests | sed 's/[.]\(input\|file\|output\)//' | uniq |
 	    # exit 1
 	    # fi
 	fi
-	echo "Test $r compleate."
     done

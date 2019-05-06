@@ -1,0 +1,59 @@
+# Single relative operator
+
+int4 a;
+int4 b;
+
+a <- 3;
+b <- 4;
+
+print("Is ", a, " < ", b, "? ", a < b, "\n");
+print("Is ", a, " <= ", b, "? ", a <= b, "\n");
+
+print("Is ", a, " > ", b, "? ", a > b, "\n");
+print("Is ", a, " >= ", b, "? ", a >= b, "\n");
+
+print("Is ", a, " = ", b, "? ", a = b, "\n");
+print("Is ", a, " ~= ", b, "? ", a ~= b, "\n");
+
+print("\n");
+
+a<--3;
+b<--4;
+
+print("Is ", a, " < ", b, "? ", a < b, "\n");
+print("Is ", a, " <= ", b, "? ", a <= b, "\n");
+
+print("Is ", a, " > ", b, "? ", a > b, "\n");
+print("Is ", a, " >= ", b, "? ", a >= b, "\n");
+
+print("Is ", a, " = ", b, "? ", a = b, "\n");
+print("Is ", a, " ~= ", b, "? ", a ~= b, "\n");
+
+print("\n");
+
+a <- 3;
+b <- -4;
+
+print("Is ", a, " < ", b, "? ", a < b, "\n");
+print("Is ", a, " <= ", b, "? ", a <= b, "\n");
+
+print("Is ", a, " > ", b, "? ", a > b, "\n");
+print("Is ", a, " >= ", b, "? ", a >= b, "\n");
+
+print("Is ", a, " = ", b, "? ", a = b, "\n");
+print("Is ", a, " ~= ", b, "? ", a ~= b, "\n");
+
+print("\n");
+
+a <- 3;
+b <- 3;
+
+print("Is ", a, " < ", b, "? ", a < b, "\n");
+print("Is ", a, " <= ", b, "? ", a <= b, "\n");
+
+print("Is ", a, " > ", b, "? ", a > b, "\n");
+print("Is ", a, " >= ", b, "? ", a >= b, "\n");
+
+print("Is ", a, " = ", b, "? ", a = b, "\n");
+print("Is ", a, " ~= ", b, "? ", a ~= b, "\n");
+

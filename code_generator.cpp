@@ -8,8 +8,9 @@ using namespace std::string_literals;
 namespace {
 #include <iostream>
 #include <string>
-void print_int(long long int x) { std::cout << x; }
+void print_int(int x) { std::cout << x; }
 void print_str(char* s) { std::cout << s; }
+void print_bool(int b) { std::cout << (b ? "true" : "false"); }
 int read_int() {
 	int x;
 	std::cin >> x;
@@ -56,9 +57,9 @@ void program::operator()() {
 #define POP_RDI program({((char)(0x58 + 0x07))})
 #define MOV_RDI_RAX program({((char)0x89), ((char)0xc7)})
 #define MOD_EDAX_ECX DIV_EDAX_ECX + PUSH_EDX + POP_EAX
-#define _LOADI(x) _MOVI_EAX + LITTLEENDIAN4((int)(x))
-#define ZERO _LOADI(0)
-#define LOADI(x) _LOADI(strtol(x.c_str(), NULL, 10))
+#define LOADI(x) _MOVI_EAX + LITTLEENDIAN4((int)(x))
+#define ZERO_EAX LOADI(0)
+#define LOADI_S(x) LOADI(strtol(x.c_str(), NULL, 10))
 #define _MOVI_RSI program({((char)(0x48)), ((char)(0xbe))})
 #define _MOVI_RDI program({((char)(0x48)), ((char)(0xbf))})
 #define _MOVI_RAX program({((char)(0x48)), ((char)(0xc8))})
@@ -69,18 +70,62 @@ void program::operator()() {
 #define CALL_RSI program({((char)(0xff)), ((char)(0xd6))})
 #define PRINT_EAX_I \
 	MOV_RDI_RAX + LOADLL_RSI((long long int)print_int) + CALL_RSI
+#define PRINT_EAX_BOOL \
+	MOV_RDI_RAX + LOADLL_RSI((long long int)print_bool) + CALL_RSI
+#define PRINT_STR LOADLL_RSI((long long int)print_str) + CALL_RSI
 #define READ_EAX LOADLL_RSI((long long int)read_int) + CALL_RSI
 #define MOV_EAX_STACK(d) \
 	program({((char)0x8b), ((char)0x45), ((char)((-4 * (d + 1)) & 0xff))})
 #define MOV_STACK_EAX(d) \
 	program({((char)0x89), ((char)0x45), ((char)((-4 * (d + 1)) & 0xff))})
 // mov eax,[ebp-4*d]
+#define _BOOL_AL_TO_EAX \
+	program({((char)0xc0), ((char)0x66), ((char)0x98), ((char)0x98)})
+#define CMP_EAX_ECX program({((char)0x39), ((char)0xc8)})
+#define BOOL_IS_LESS program({((char)0x0f), ((char)0x9c)}) + _BOOL_AL_TO_EAX
+#define BOOL_EAX_LESS_ECX CMP_EAX_ECX + BOOL_IS_LESS
+#define BOOL_IS_LESS_EQ program({((char)0x0f), ((char)0x9e)}) + _BOOL_AL_TO_EAX
+#define BOOL_IS_EQ program({((char)0x0f), ((char)0x94)}) + _BOOL_AL_TO_EAX
+#define BOOL_IS_GREATER_EQ \
+	program({((char)0x0f), ((char)0x9d)}) + _BOOL_AL_TO_EAX
+#define BOOL_IS_GREATER program({((char)0x0f), ((char)0x9f)}) + _BOOL_AL_TO_EAX
+#define BOOL_IS_NE program({((char)0x0f), ((char)0x95)}) + _BOOL_AL_TO_EAX
+#define BOOL_EAX_OR_ECX program({((char)0x09), ((char)0xc8)})
+#define BOOL_EAX_AND_ECX program({((char)0x21), ((char)0xc8)})
+//#define BOOL_NOT program({((char)0xf7), ((char)0xd0)})
+#define BOOL_NOT PUSH_EAX + LOADI(1) + POP_EDX + SUB_EAX_EDX
+// TODO: make that not command much more efficient
+#define _TEST_EAX program({((char)0x85), ((char)0xc0)})
+#define _JE(dist) program({((char)0x0f), ((char)0x84)}) + LITTLEENDIAN4(dist)
+#define _JNE(dist) program({((char)0x0f), ((char)0x85)}) + LITTLEENDIAN4(dist)
+#define IF(test, prog) (test) + _TEST_EAX + _JE((prog).size()) + prog
+#define _JMP(dist) program({((char)0xe9)}) + LITTLEENDIAN4(dist)
+#define _IF_ELSE_EAX(prog1, prog2, d) \
+	_TEST_EAX + _JE((d)) + prog1 + _JMP((prog2).size()) + prog2
+#define IF_ELSE(test, prog1, prog2) \
+	(test) + _IF_ELSE_EAX(prog1, prog2, (prog1 + _JMP((prog2).size())).size())
+//#define WHILE(test, body)		    \
+//	_JMP((body).size()) + body + test + \
+//	    _JNE((-1 * (body + test + _JNE((-1 * (body + test).size()))).size()))
+#define WHILE(test, body)                      \
+	test + _JE((body + _JMP(0)).size()) + body + \
+	    _JMP(-((test + _JE(0) + body + _JMP(0)).size()))
 
+/*
+ * All relitive positions are to be calculated from the code body.
+ * All absolute positions are to be obtained from the environment.
+ * TODO: That can be made into a type validation.
+ */
 program generateI(Code_Tree ct, std::shared_ptr<Env> e) {
 	// TODO: Those throws should get the TOKEN's name.
 	if (ct.name == "numeric_literal") {
-		if (ct.t->id == INT) return LOADI(ct.t->text);
-		throw "Unusported Literal Type"s;
+		if (ct.t->id == INT) return LOADI_S(ct.t->text);
+		throw "Unsupported Literal Type"s;
+	}
+	if (ct.name == "bool_literal") {
+		if (ct.t->text == "true") return LOADI(1);
+		if (ct.t->text == "false") return LOADI(0);
+		throw "Unsupported bool literal '"s + ct.t->text + "'";
 	}
 	if (ct.name == "add") {
 		auto p1 = generateI(ct.sub_tokens[0], e);
@@ -95,22 +140,22 @@ program generateI(Code_Tree ct, std::shared_ptr<Env> e) {
 		if (ct.t->id == '*') return p2 + PUSH_EAX + p1 + POP_EDX + MUL_EAX_EDX;
 		if (ct.t->id == '/')
 			// TODO: properly handel sign extention
-			return ZERO + PUSH_EAX + p2 + PUSH_EAX + p1 + POP_ECX + POP_EDX +
+			return ZERO_EAX + PUSH_EAX + p2 + PUSH_EAX + p1 + POP_ECX + POP_EDX +
 			       DIV_EDAX_ECX;
 		if (ct.t->text == "mod")
-			return ZERO + PUSH_EAX + p2 + PUSH_EAX + p1 + POP_ECX + POP_EDX +
+			return ZERO_EAX + PUSH_EAX + p2 + PUSH_EAX + p1 + POP_ECX + POP_EDX +
 			       MOD_EDAX_ECX;
 		throw "Unknown mul OP "s + (char)ct.t->id;
 	}
 	if (ct.name == "exp") {
 		if (ct.t->id == '^') return generateI(ct.sub_tokens[0], e);
+		// TODO: impliment this
 		throw "Unknown exp OP "s + (char)ct.t->id;
 	}
 	if (ct.name == "unary") {
 		auto p = generateI(ct.sub_tokens[0], e);
 		if (ct.t->id == '+') return p;
-		if (ct.t->id == '-')
-			return p + PUSH_EAX + program(ZERO) + POP_EDX + program({SUB_EAX_EDX});
+		if (ct.t->id == '-') return p + PUSH_EAX + ZERO_EAX + POP_EDX + SUB_EAX_EDX;
 		throw "Unknown Unary Op "s + (char)ct.t->id;
 	}
 	if (ct.name == "block") {
@@ -125,8 +170,9 @@ program generateI(Code_Tree ct, std::shared_ptr<Env> e) {
 				ret += generateI(c.sub_tokens[0], e) + PRINT_EAX_I;
 			else if (c.name == "print_s") {
 				auto p = e->push(c.sub_tokens[0].t->text);
-				ret += LOADLL_STR((long long int)p) +
-				       LOADLL_RSI((long long int)print_str) + CALL_RSI;
+				ret += LOADLL_STR((long long int)p) + PRINT_STR;
+			} else if (c.name == "print_b") {
+				ret += generateI(c.sub_tokens[0], e) + PRINT_EAX_BOOL;
 			} else
 				throw "Unknown print mode "s + c.name;
 		return ret;
@@ -147,6 +193,52 @@ program generateI(Code_Tree ct, std::shared_ptr<Env> e) {
 	if (ct.name == "Assignment") {
 		auto var = ct.sub_tokens[0].t->text;
 		return generateI(ct.sub_tokens[1], e) + MOV_STACK_EAX(e->lookup(var));
+	}
+	if (ct.name == "bool_rel") {
+		auto ret = generateI(ct.sub_tokens[2], e) + PUSH_EAX +
+		           generateI(ct.sub_tokens[1], e) + POP_ECX + CMP_EAX_ECX;
+		if (ct.sub_tokens[0].t->id == '<')
+			return ret + BOOL_IS_LESS;
+		else if (ct.sub_tokens[0].t->id == LESS_EQ)
+			return ret + BOOL_IS_LESS_EQ;
+		else if (ct.sub_tokens[0].t->id == '=')
+			return ret + BOOL_IS_EQ;
+		else if (ct.sub_tokens[0].t->id == GREATER_EQ)
+			return ret + BOOL_IS_GREATER_EQ;
+		else if (ct.sub_tokens[0].t->id == '>')
+			return ret + BOOL_IS_GREATER;
+		else if (ct.sub_tokens[0].t->id == NOT_EQUAL)
+			return ret + BOOL_IS_NE;
+		else
+			throw "Expected a boolean realational, got '"s +
+			    ct.sub_tokens[0].t->text + "'";
+	}
+	if (ct.name == "bool_or") {
+		return generateI(ct.sub_tokens[1], e) + PUSH_EAX +
+		       generateI(ct.sub_tokens[0], e) + POP_ECX + BOOL_EAX_OR_ECX;
+	}
+	if (ct.name == "bool_and") {
+		return generateI(ct.sub_tokens[1], e) + PUSH_EAX +
+		       generateI(ct.sub_tokens[0], e) + POP_ECX + BOOL_EAX_AND_ECX;
+	}
+	if (ct.name == "bool_not") {
+		return generateI(ct.sub_tokens[0], e) + BOOL_NOT;
+	}
+	if (ct.name == "if") {
+		auto test = generateI(ct.sub_tokens[0], e);
+		auto body = generateI(ct.sub_tokens[1], e);
+		return IF(test, body);
+	}
+	if (ct.name == "if_else") {
+		auto test = generateI(ct.sub_tokens[0], e);
+		auto body = generateI(ct.sub_tokens[1], e);
+		auto elsebody = generateI(ct.sub_tokens[2], e);
+		return IF_ELSE(test, body, elsebody);
+	}
+	if (ct.name == "while") {
+		auto test = generateI(ct.sub_tokens[0], e);
+		auto body = generateI(ct.sub_tokens[1], e);
+		return WHILE(test, body);
 	}
 	throw "Bad Parse Tree - unknown '"s + ct.name + "'";
 }

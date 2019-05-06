@@ -1,0 +1,44 @@
+Code tree: 
+block
+  int4
+    a
+  int4
+    b
+  <-
+    a
+    3
+  <-
+    b
+    4
+  print
+    print_s
+      Is
+    print_i
+      a
+    print_s
+       <
+    print_i
+      b
+    print_s
+      ?
+    print_b
+      bool_rel
+      <
+      a
+      b
+    print_s
+    
+
+  <-
+    a
+    -
+      3
+  <-
+    b
+    -
+      4
+Code size: 207 bytes.
+Code execution:
+Is 3 < 4? true
+
+

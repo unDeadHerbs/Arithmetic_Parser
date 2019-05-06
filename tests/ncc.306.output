@@ -1,0 +1,130 @@
+Code tree: 
+block
+  print
+    print_s
+      Not true is  
+    print_b
+      !
+        true
+    print_s
+    
+
+  print
+    print_s
+      Not false is 
+    print_b
+      !
+        false
+    print_s
+    
+
+  int4
+    a
+  int4
+    b
+  <-
+    a
+    15
+  <-
+    b
+    25
+  print
+    print_s
+      a: 
+    print_i
+      a
+    print_s
+    
+
+  print
+    print_s
+      b:
+    print_i
+      b
+    print_s
+    
+
+  print
+    print_s
+      Is a >= 10 and b >= 10? 
+    print_b
+      &
+        !
+          bool_rel
+	    <
+            a
+            10
+        !
+          bool_rel
+	    <
+            b
+            10
+    print_s
+
+
+  print
+    print_s
+      Is a >= 20 and b >= 10? 
+    print_b
+      &
+        !
+          bool_rel
+	    <
+            a
+            20
+        !
+          bool_rel
+	    <
+            b
+            10
+    print_s
+
+
+  print
+    print_s
+      Is a >= 10 and b >= 30? 
+    print_b
+      &
+        !
+          bool_rel
+	    <
+            a
+            10
+        !
+          bool_rel
+	    <
+            b
+            30
+    print_s
+
+
+  print
+    print_s
+      Is a >= 20 and b >= 30? 
+    print_b
+      &
+        !
+          bool_rel
+	    <
+            a
+            20
+        !
+          bool_rel
+	    <
+            b
+            30
+    print_s
+    
+
+Code size: 751 bytes.
+Code execution:
+Not true is  false
+Not false is true
+a: 15
+b: 25
+Is a >= 10 and b >= 10? true
+Is a >= 20 and b >= 10? false
+Is a >= 10 and b >= 30? false
+Is a >= 20 and b >= 30? false
+
+

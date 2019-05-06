@@ -1,0 +1,93 @@
+# Test of nested if/else
+
+print("This program converts a number to roman numerals\n\n");
+print("Please enter a number between 1 and 3999: ");
+
+int4 number;
+read(number);
+
+if(number < 1 | number > 3999)
+  print("Invalid number... Exiting.\n");
+else
+  {
+    int4 thousands;
+
+    thousands <- number / 1000;
+    number <- number mod 1000;
+
+    if(thousands = 1)
+      print("M");
+    else if (thousands = 2)
+      print("MM");
+    else if (thousands = 3)
+      print("MMM");
+
+    int4 hundreds;
+
+    hundreds <- number / 100;
+    number <- number mod 100;
+
+    if(hundreds = 1)
+      print("C");
+    else if (hundreds = 2)
+      print("CC");     
+    else if (hundreds = 3)
+      print("CCC");     
+    else if (hundreds = 4)
+      print("CD");     
+    else if (hundreds = 5)
+      print("D");     
+    else if (hundreds = 6)
+      print("DC");     
+    else if (hundreds = 7)
+      print("DCC");     
+    else if (hundreds = 8)
+      print("DCCC");     
+    else if (hundreds = 9)
+      print("CM");
+
+    int4 tens;
+    tens <- number / 10;
+    number <- number mod 10;
+
+    if(tens = 1)
+      print("X");
+    else if (tens = 2)
+      print("XX");     
+    else if (tens = 3)
+      print("XXX");     
+    else if (tens = 4)
+      print("XL");     
+    else if (tens = 5)
+      print("L");     
+    else if (tens = 6)
+      print("LX");     
+    else if (tens = 7)
+      print("LXX");     
+    else if (tens = 8)
+      print("LXXX");     
+    else if (tens = 9)
+      print("XC");
+
+    
+    if(number = 1)
+      print("I");
+    else if (number = 2)
+      print("II");     
+    else if (number = 3)
+      print("III");     
+    else if (number = 4)
+      print("IV");     
+    else if (number = 5)
+      print("V");     
+    else if (number = 6)
+      print("VI");     
+    else if (number = 7)
+      print("VII");     
+    else if (number = 8)
+      print("VIII");     
+    else if (number = 9)
+      print("IX");
+
+  }
+

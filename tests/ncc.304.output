@@ -1,0 +1,102 @@
+Code tree: 
+block
+  int4
+    a
+  int4
+    b
+  <-
+    a
+    15
+  <-
+    b
+    25
+  print
+    print_s
+      a:
+    print_i
+      a
+    print_s
+    
+
+  print
+    print_s
+      b:
+    print_i
+      b
+    print_s
+    
+
+  print
+    print_s
+      Is a < 10 or b < 10?
+    print_b
+      |
+        bool_rel
+          <
+          a
+          10
+        bool_rel
+	  <
+          b
+          10
+    print_s
+    
+
+  print
+    print_s
+      Is a < 20 or b < 10? 
+    print_b
+      |
+        bool_rel
+          <
+          a
+          20
+        bool_rel
+	  <
+          b
+          10
+    print_s
+    
+
+  print
+    print_s
+      Is a < 10 or b < 30? 
+    print_b
+      |
+        bool_rel
+	  <
+          a
+          10
+        bool_rel
+	  <
+          b
+          30
+    print_s
+   
+
+  print
+    print_s
+      Is a < 20 or b < 30?
+    print_b
+      |
+        bool_rel
+          <
+          a
+          20
+        bool_rel
+	  <
+          b
+          30
+    print_s
+    
+
+Code size: 535 bytes.
+Code execution:
+a: 15
+b: 25
+Is a < 10 or b < 10? false
+Is a < 20 or b < 10? true
+Is a < 10 or b < 30? true
+Is a < 20 or b < 30? true
+
+

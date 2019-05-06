@@ -1,0 +1,58 @@
+Code tree: 
+block
+  int4
+    a
+  int4
+    b
+  <-
+    a
+    15
+  <-
+    b
+    25
+  print
+    print_s
+      a: 
+    print_i
+      a
+    print_s  
+        b: 
+    print_i
+      b
+    print_s
+    
+
+  if
+    bool_rel
+      <
+      a
+      b
+    print
+      print_s
+        Inside body of decision 1.
+
+  print
+    print_s
+      Outside body of decision 1.
+
+  if
+    bool_rel
+      >
+      a
+      b
+    print
+      print_s
+        Inside body of decision 2.
+
+  print
+    print_s
+      Outside body of decision 2.
+
+Code size: 257 bytes.
+Code execution:
+a: 15  b: 25
+Inside body of decision 1.
+Outside body of decision 1.
+Outside body of decision 2.
+
+

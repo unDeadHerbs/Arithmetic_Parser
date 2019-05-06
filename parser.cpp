@@ -7,31 +7,35 @@ Code_Tree parse_expression(vector<Token>& tokens);
 #define EOF_ERROR(x) Code_Tree(Token(ERROR, -1, -1, x))
 #define ERROR(x, t) \
 	Code_Tree("ERROR", Token(ERROR, t.line, t.col, x), {Code_Tree(t)})
+#define EAT(t, n) t.erase(t.begin(), t.begin() + n)
 #define EAT_OP(t, tokens, op)                                            \
 	if (!tokens.size()) throw EOF_ERROR(_FUN + " Expected '" + #op + "'"); \
 	auto t = tokens[0];                                                    \
 	if (t.id != op) throw ERROR(_FUN + " Expected '" + #op + "'", t);      \
-	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	EAT(tokens, 1);
 
 #define EAT_IDENT(t, tokens, str)                                        \
 	if (!tokens.size()) throw EOF_ERROR(_FUN + " Expected '" + str + "'"); \
 	auto t = tokens[0];                                                    \
 	if (t.id != IDENT) throw ERROR(_FUN + " Expected '" + str + "'", t);   \
 	if (t.text != str) throw ERROR(_FUN + " Expected '" + str + "'", t);   \
-	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	EAT(tokens, 1);
 
 #define EAT_STRING(t, tokens)                                       \
 	if (!tokens.size()) throw EOF_ERROR(_FUN + " Expected 'string'"); \
 	auto t = tokens[0];                                               \
 	if (t.id != STRING) throw ERROR(_FUN + " Expected 'string'", t);  \
-	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	EAT(tokens, 1);
+
+#define is_keyword(t) \
+	(((t) == "print") || ((t) == "read") || ((t) == "true") || ((t) == "false"))
 
 Code_Tree parse_ident(vector<Token>& tokens) {
 	if (!tokens.size()) throw EOF_ERROR("Expected variable name");
 	auto t = tokens[0];
 	if (t.id != IDENT) throw ERROR("Expected identifier name", t);
-	// TODO: check that it's not a keyword
-	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	if (is_keyword(t.text)) throw ERROR("Keywords are not identifiers", t);
+	EAT(tokens, 1);
 	return Code_Tree("Ident", t, {});
 }
 
@@ -39,7 +43,7 @@ Code_Tree parse_number(vector<Token>& tokens) {
 	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
 	auto t = tokens[0];
 	if (t.id == INT || t.id == REAL) {
-		tokens.erase(tokens.begin(), tokens.begin() + 1);
+		EAT(tokens, 1);
 		return Code_Tree("numeric_literal", t);
 	}
 	throw ERROR("Not a Litteral", t);
@@ -77,17 +81,16 @@ Code_Tree parse_unary_signs(vector<Token>& tokens) {
 	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
 	auto t = tokens[0];
 	if (t.id != '+' && t.id != '-') return parse_value(tokens);
-	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	EAT(tokens, 1);
 	return Code_Tree("unary", t, {parse_value(tokens)});
 }
 
 Code_Tree parse_exp(vector<Token>& tokens) {
-	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
 	auto ret = parse_unary_signs(tokens);
 	if (!tokens.size()) return ret;
 	auto t = tokens[0];
 	if (t.id != '^') return ret;
-	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	EAT(tokens, 1);
 	return Code_Tree("exp", t, {ret, parse_exp(tokens)});
 }
 
@@ -95,7 +98,7 @@ Code_Tree parse_mul_div_prime(vector<Token>& tokens, Code_Tree accumulator) {
 	if (!tokens.size()) return accumulator;
 	auto t = tokens[0];
 	if (!(t.id == '*' || t.id == '/' || t.text == "mod")) return accumulator;
-	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	EAT(tokens, 1);
 	return parse_mul_div_prime(
 	    tokens, Code_Tree("mul", t, {accumulator, parse_exp(tokens)}));
 }
@@ -110,7 +113,7 @@ Code_Tree parse_sum_dif_prime(vector<Token>& tokens, Code_Tree accumulator) {
 	if (!tokens.size()) return accumulator;
 	auto t = tokens[0];
 	if (!(t.id == '+' || t.id == '-')) return accumulator;
-	tokens.erase(tokens.begin(), tokens.begin() + 1);
+	EAT(tokens, 1);
 	return parse_sum_dif_prime(
 	    tokens, Code_Tree("add", t, {accumulator, parse_mul_div(tokens)}));
 }
@@ -130,24 +133,152 @@ Code_Tree parse_string(vector<Token>& tokens) {
 	return Code_Tree("String", t);
 }
 
+Code_Tree parse_bool_relation(vector<Token>& tokens) {
+	auto fir = parse_expression(tokens);
+	if (!tokens.size()) throw Code_Tree("Expected a relational, got EOF", {fir});
+	auto t = tokens[0];
+	if (!((t.id == '<') || (t.id == LESS_EQ) || (t.id == '>') ||
+	      (t.id == GREATER_EQ) || (t.id == '=') || (t.id == NOT_EQUAL)))
+		throw Code_Tree("Expected a relational operator", {fir, t});
+	EAT(tokens, 1);
+	try {
+		auto sec = parse_expression(tokens);
+		return Code_Tree("bool_rel", {Code_Tree(t), fir, sec});
+	} catch (Code_Tree err) {
+		throw Code_Tree(_FUN + " Expected an arithmetic expresion while parsing",
+		                {fir, Code_Tree(t), err});
+	}
+}
+
+Code_Tree parse_bool_literal(vector<Token>& tokens) {
+	try {
+		auto tmp = tokens;
+		EAT_IDENT(t, tmp, "true");
+		tokens = tmp;
+		return Code_Tree("bool_literal", {t});
+	} catch (Code_Tree err1) {
+		try {
+			auto tmp = tokens;
+			EAT_IDENT(t, tmp, "false");
+			tokens = tmp;
+			return Code_Tree("bool_literal", {t});
+		} catch (Code_Tree err2) {
+			throw Code_Tree("Expected true or false", {err1, err2});
+		}
+	}
+}
+
+Code_Tree parse_bool_expresion(vector<Token>&);
+Code_Tree parse_bool_not(vector<Token>& tokens) {
+	// bool_not :='!' (lit | '(' rel ')' | '(' exp ')') | lit | rel | '(' exp ')'
+	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
+	auto t = tokens[0];
+	if (t.id == '!') {
+		EAT(tokens, 1);
+		try {
+			auto tmp = tokens;
+			auto ret = parse_bool_literal(tmp);
+			tokens = tmp;
+			return Code_Tree("bool_not", t, {ret});
+		} catch (Code_Tree err1) {
+			try {
+				auto tmp = tokens;
+				// TODO: apparently these aren't required
+				// add them back after the class because i find this grammar dumb
+				// EAT_OP(t1, tmp, '(');
+				auto ret = parse_bool_relation(tmp);
+				// EAT_OP(t2, tmp, ')');
+				tokens = tmp;
+				return Code_Tree("bool_not", t, {ret});
+			} catch (Code_Tree err2) {
+				try {
+					auto tmp = tokens;
+					EAT_OP(t1, tmp, '(');
+					auto ret = parse_bool_expresion(tmp);
+					EAT_OP(t2, tmp, ')');
+					tokens = tmp;
+					return Code_Tree("bool_not", t, {ret});
+				} catch (Code_Tree err3) {
+					throw Code_Tree("Expected a boolean value expresion", {err1, err2});
+				}
+			}
+		}
+	} else {
+		try {
+			auto tmp = tokens;
+			auto ret = parse_bool_literal(tmp);
+			tokens = tmp;
+			return ret;
+		} catch (Code_Tree err1) {
+			try {
+				auto tmp = tokens;
+				auto ret = parse_bool_relation(tmp);
+				tokens = tmp;
+				return ret;
+			} catch (Code_Tree err2) {
+				try {
+					auto tmp = tokens;
+					EAT_OP(t1, tmp, '(');
+					auto ret = parse_bool_expresion(tmp);
+					EAT_OP(t2, tmp, ')');
+					tokens = tmp;
+					return ret;
+				} catch (Code_Tree err3) {
+					throw Code_Tree("Expected a boolean value expresion", {err1, err2});
+				}
+			}
+		}
+	}
+}
+
+Code_Tree parse_bool_and(vector<Token>& tokens) {
+	auto ret = parse_bool_not(tokens);
+	if (!tokens.size()) return ret;
+	auto t = tokens[0];
+	if (t.id != '&') return ret;
+	EAT(tokens, 1);
+	return Code_Tree("bool_and", t, {ret, parse_bool_and(tokens)});
+}
+
+Code_Tree parse_bool_or(vector<Token>& tokens) {
+	auto ret = parse_bool_and(tokens);
+	if (!tokens.size()) return ret;
+	auto t = tokens[0];
+	if (t.id != '|') return ret;
+	EAT(tokens, 1);
+	return Code_Tree("bool_or", t, {ret, parse_bool_or(tokens)});
+}
+
+Code_Tree parse_bool_expresion(vector<Token>& tokens) {
+	return parse_bool_or(tokens);
+}
+
 Code_Tree parse_printable(vector<Token>& tokens) {
 	if (!tokens.size()) throw EOF_ERROR("EOF ERROR");
 	auto t = tokens[0];
-	auto toks = tokens;
 	try {
-		auto ret = Code_Tree("print_i", {parse_expression(toks)});
+		auto toks = tokens;
+		auto ret = Code_Tree("print_b", {parse_bool_expresion(toks)});
 		tokens = toks;
 		return ret;
-	} catch (Code_Tree err) {
+	} catch (Code_Tree err3) {
 		try {
-			auto ret = Code_Tree("print_s", {parse_string(toks)});
+			auto toks = tokens;
+			auto ret = Code_Tree("print_i", {parse_expression(toks)});
 			tokens = toks;
 			return ret;
-		} catch (Code_Tree err2) {
-			throw Code_Tree(
-			    "Expected expression or string.",
-			    Token(ERROR, t.line, t.col, "Expected expression or string."),
-			    {err, err2});
+		} catch (Code_Tree err) {
+			try {
+				auto toks = tokens;
+				auto ret = Code_Tree("print_s", {parse_string(toks)});
+				tokens = toks;
+				return ret;
+			} catch (Code_Tree err2) {
+				throw Code_Tree(
+				    "Expected expression, string, or bool.",
+				    Token(ERROR, t.line, t.col, "Expected expression or string."),
+				    {err, err2, err3});
+			}
 		}
 	}
 }
@@ -226,32 +357,90 @@ Code_Tree parse_assignment(vector<Token>& tokens) {
 	return Code_Tree("Assignment", t1, {var, val});
 }
 
+Code_Tree parse_statment_or_block(vector<Token>&);
+Code_Tree parse_if_structure(vector<Token>& tokens) {
+	// if(bool)sorb
+	EAT_IDENT(t, tokens, "if");
+	EAT_OP(topen, tokens, '(');
+	auto con = parse_bool_expresion(tokens);
+	EAT_OP(tclose, tokens, ')');
+	auto sorb = parse_statment_or_block(tokens);
+	try {
+		auto toks = tokens;
+		EAT_IDENT(tel, toks, "else");
+		tokens = toks;
+	} catch (Code_Tree err) {
+		return Code_Tree("if", t, {con, sorb});
+	}
+	auto sorbelse = parse_statment_or_block(tokens);
+	return Code_Tree("if_else", t, {con, sorb, sorbelse});
+}
+
+Code_Tree parse_while_structure(vector<Token>& tokens) {
+	EAT_IDENT(t, tokens, "while");
+	EAT_OP(topen, tokens, '(');
+	auto con = parse_bool_expresion(tokens);
+	EAT_OP(tclose, tokens, ')');
+	auto sorb = parse_statment_or_block(tokens);
+	return Code_Tree("while", t, {con, sorb});
+}
+
+Code_Tree parse_control_struct(vector<Token>& tokens) {
+	try {
+		auto toks = tokens;
+		auto ret = parse_if_structure(toks);
+		tokens = toks;
+		return ret;
+	} catch (Code_Tree err1) {
+		try {
+			auto toks = tokens;
+			auto ret = parse_while_structure(toks);
+			tokens = toks;
+			return ret;
+		} catch (Code_Tree err2) {
+			throw Code_Tree("Expected control structure 'if' or 'while'",
+			                {err1, err2});
+		}
+	}
+}
+
 Code_Tree parse_statement(vector<Token>& tokens) {
 	if (!tokens.size()) throw EOF_ERROR("Expected variable name");
 	auto t = tokens[0];
-	auto toks = tokens;
 	try {
+		auto toks = tokens;
 		auto ret = parse_func_f(toks);
 		tokens = toks;
 		return ret;
 	} catch (Code_Tree err) {
 		try {
+			auto toks = tokens;
 			auto ret = parse_declare(toks);
 			tokens = toks;
 			return ret;
 		} catch (Code_Tree err2) {
 			try {
+				auto toks = tokens;
 				auto ret = parse_assignment(toks);
 				// TODO: move assignment to being a normal operator rather than
 				// a builtin
 				tokens = toks;
 				return ret;
 			} catch (Code_Tree err3) {
-				throw Code_Tree(
-				    "Expected a function, decleration, or assignment.",
-				    Token(ERROR, t.line, t.col,
-				          "Expected a function, decleration, or assignment."),
-				    {err, err2, err3});
+				try {
+					auto toks = tokens;
+					auto ret = parse_control_struct(toks);
+					tokens = toks;
+					return ret;
+				} catch (Code_Tree err4) {
+					throw Code_Tree(
+					    "Expected a function, decleration, assignment, or control "
+					    "structure.",
+					    Token(ERROR, t.line, t.col,
+					          "Expected a function, decleration, assignment or control "
+					          "structure."),
+					    {err, err2, err3, err4});
+				}
 			}
 		}
 	}
@@ -274,9 +463,27 @@ Code_Tree parse_block(vector<Token>& tokens) {
 	EAT_OP(t1, tokens, '{');
 	auto ret = parse_global_block(tokens);
 	EAT_OP(t2, tokens, '}');
-	return Code_Tree("block", t1, {ret});
+	return ret;  // Code_Tree("block", t1, {ret});
 }
 
+Code_Tree parse_statment_or_block(vector<Token>& tokens) {
+	try {
+		auto toks = tokens;
+		auto ret = parse_block(toks);
+		tokens = toks;
+		return ret;
+	} catch (Code_Tree err1) {
+		try {
+			auto toks = tokens;
+			auto ret = parse_statement(toks);
+			tokens = toks;
+			return ret;
+		} catch (Code_Tree err2) {
+			throw Code_Tree("Expected a block of statments or a statement",
+			                {err1, err2});
+		}
+	}
+}
 Code_Tree parse(vector<Token>& tokens) {
 	try {
 		return parse_global_block(tokens);

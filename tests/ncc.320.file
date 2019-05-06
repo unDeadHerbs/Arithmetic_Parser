@@ -1,0 +1,21 @@
+# Simple decisions
+
+
+int4 a;
+int4 b;
+
+a <- 15;
+b <- 25;
+
+print("a: ", a, "  b: ", b, "\n");
+
+if(a < b)
+  print("Inside body of decision 1.\n");
+
+print ("Outside body of decision 1.\n");
+
+if ( a>b )
+  print("Inside body of decision 2.\n");
+
+print("Outside body of decision 2.\n");
+

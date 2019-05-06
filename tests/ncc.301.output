@@ -1,0 +1,24 @@
+Code tree: 
+block
+  print
+    print_s
+      The true  value is 
+    print_b
+      true
+    print_s
+    
+
+  print
+    print_s
+      The false value is
+    print_b
+      false
+    print_s
+    
+
+Code size: 127 bytes.
+Code execution:
+The true  value is true
+The false value is false
+
+
